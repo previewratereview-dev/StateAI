@@ -43,7 +43,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-card-border shadow-lg"
+          ? "glass-nav shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -80,7 +80,7 @@ export default function Navbar() {
               >
                 <a
                   href={link.href}
-                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-400 hover:text-silver-bright transition-colors duration-200 rounded-lg hover:bg-white/[0.03]"
+                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-400 hover:text-silver-bright transition-colors duration-200 rounded-lg hover:bg-white/[0.05]"
                 >
                   {link.label}
                   {link.dropdown && (
@@ -99,7 +99,7 @@ export default function Navbar() {
                       <a
                         key={item}
                         href={link.href}
-                        className="block px-4 py-2.5 text-sm text-gray-400 hover:text-silver-bright hover:bg-white/[0.03] transition-colors duration-200"
+                        className="block px-4 py-2.5 text-sm text-gray-400 hover:text-silver-bright hover:bg-white/[0.05] transition-colors duration-200"
                         onClick={() => setActiveDropdown(null)}
                       >
                         {item}
@@ -134,7 +134,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileOpen && (
-        <div className="lg:hidden bg-background/98 backdrop-blur-xl border-t border-card-border animate-slide-up">
+        <div className="lg:hidden glass-strong border-t border-white/[0.08] animate-slide-up">
           <div className="px-4 py-6 space-y-1">
               {navLinks.map((link) => (
               <div key={link.label}>

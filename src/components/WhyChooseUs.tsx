@@ -44,7 +44,7 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section id="about" className="section-padding bg-surface relative">
+    <section id="about" className="section-padding glass-section-alt relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-16">
@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
             return (
               <div key={stat.label} className="text-center p-4 sm:p-6 rounded-xl sm:rounded-2xl glass-card-hover silver-shine cursor-default animate-reveal"
                 style={{ animationDelay: `${index * 100}ms`, opacity: 0, animationFillMode: "forwards" }}>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-colors">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl glass-icon flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-colors">
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-silver" />
                 </div>
                 <div className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold gradient-text-silver mb-1 sm:mb-2">

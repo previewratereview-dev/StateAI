@@ -77,7 +77,7 @@ export default function Testimonials() {
   const next = () => goTo((current + 1) % testimonials.length);
 
   return (
-    <section id="testimonials" className="section-padding bg-surface relative">
+    <section id="testimonials" className="section-padding glass-section-alt relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-16">
@@ -119,7 +119,7 @@ export default function Testimonials() {
               </p>
 
               <div className="flex items-center gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-silver font-bold text-xs sm:text-sm">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-icon flex items-center justify-center text-silver font-bold text-xs sm:text-sm">
                   {testimonials[current].avatar}
                 </div>
                 <div>
@@ -179,7 +179,7 @@ export default function Testimonials() {
               (company) => (
                 <div
                   key={company}
-                  className="text-xs sm:text-sm md:text-base font-semibold text-white/[0.08] hover:text-white/[0.15] transition-colors duration-300 cursor-default text-center"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-gray-400 glass-chip rounded-lg hover:text-silver hover:border-white/[0.15] transition-colors duration-300 cursor-default text-center"
                 >
                   {company}
                 </div>

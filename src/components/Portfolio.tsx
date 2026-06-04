@@ -59,7 +59,7 @@ export default function Portfolio() {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="portfolio" className="section-padding bg-background relative">
+    <section id="portfolio" className="section-padding glass-section relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
@@ -81,7 +81,7 @@ export default function Portfolio() {
               onClick={() => setActiveCategory(category)}
               className={`px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-lg text-[11px] sm:text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-silver-bright/15 text-silver-bright border border-silver-bright/20"
+                  ? "glass-strong text-silver-bright border border-silver-bright/20"
                   : "glass-card text-gray-400 hover:text-silver-bright hover:border-white/[0.12]"
               }`}
             >
@@ -116,7 +116,7 @@ export default function Portfolio() {
                 </p>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-xs text-muted bg-white/[0.02] rounded-md border border-white/[0.04]">
+                    <span key={tag} className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-xs text-muted glass-chip rounded-md">
                       {tag}
                     </span>
                   ))}

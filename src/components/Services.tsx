@@ -56,7 +56,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="section-padding bg-background relative">
+    <section id="services" className="section-padding glass-section relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 sm:mb-16">
@@ -108,7 +108,7 @@ export default function Services() {
                   {service.features.map((feature) => (
                     <span
                       key={feature}
-                      className="px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium text-silver/80 bg-white/[0.03] rounded-full border border-white/[0.06]"
+                      className="px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium text-silver/80 glass-chip rounded-full"
                     >
                       {feature}
                     </span>

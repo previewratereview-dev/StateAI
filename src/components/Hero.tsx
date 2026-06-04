@@ -146,7 +146,7 @@ export default function Hero() {
           }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="max-w-2xl md:-ml-8">
+            <div className="max-w-2xl md:-ml-8 glass-subtle rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/[0.08]">
               <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-card mb-6 sm:mb-8 animate-reveal">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-silver animate-pulse" />
                 <span className="text-[11px] sm:text-sm text-silver font-medium">
@@ -216,7 +216,7 @@ export default function Hero() {
                   const Icon = stat.icon;
                   return (
                     <div key={stat.label} className="flex items-center gap-1.5 sm:gap-2.5">
-                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg glass-icon flex items-center justify-center flex-shrink-0">
                         <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-silver" />
                       </div>
                       <div className="min-w-0">
@@ -240,7 +240,7 @@ function FloatingCard({ card }: { card: (typeof aiCards)[number] }) {
   return (
     <div className="glass-card rounded-xl p-4 silver-shine hover:border-white/[0.15] transition-all duration-400 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:-translate-y-0.5">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+        <div className="w-9 h-9 rounded-lg glass-icon flex items-center justify-center flex-shrink-0">
           <Icon className="w-4 h-4 text-silver" />
         </div>
         <h3 className="text-[11px] font-bold text-silver-bright tracking-wider">{card.title}</h3>

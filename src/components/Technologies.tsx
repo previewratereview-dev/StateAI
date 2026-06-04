@@ -23,7 +23,7 @@ const technologies = [
 
 export default function Technologies() {
   return (
-    <section className="section-padding bg-background relative">
+    <section className="section-padding glass-section relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-16">

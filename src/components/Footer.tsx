@@ -71,8 +71,8 @@ export default function Footer() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-background/35" />
-        <div className="absolute inset-0 bg-gradient-to-b from-surface/50 to-background/95" />
+        <div className="absolute inset-0 glass-strong" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/90" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,7 +156,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your email"
-                className="flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-lg text-xs sm:text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-silver/30 transition-colors duration-200"
+                className="flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-2.5 glass-input rounded-lg text-xs sm:text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-silver/30 transition-colors duration-200"
               />
               <button
                 type="submit"

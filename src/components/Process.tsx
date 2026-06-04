@@ -39,7 +39,7 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" className="section-padding bg-surface relative">
+    <section id="process" className="section-padding glass-section-alt relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-16">
@@ -61,9 +61,9 @@ export default function Process() {
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <div key={step.step} className="relative group animate-reveal"
+                <div key={step.step} className="relative group animate-reveal glass-card-hover rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 h-full"
                   style={{ animationDelay: `${index * 120}ms`, opacity: 0, animationFillMode: "forwards" }}>
-                  <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl glass-card border border-white/[0.08] group-hover:border-silver/30 flex items-center justify-center mb-4 sm:mb-6 transition-all duration-400 group-hover:shadow-[0_0_20px_rgba(177,178,180,0.08)]">
+                  <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl glass-icon group-hover:border-silver/30 flex items-center justify-center mb-4 sm:mb-6 transition-all duration-400 group-hover:shadow-[0_0_20px_rgba(177,178,180,0.08)]">
                     <Icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-silver" />
                   </div>
                   <div className="text-[9px] sm:text-[10px] font-bold text-silver-dim mb-1.5 sm:mb-2 tracking-[0.2em] uppercase">

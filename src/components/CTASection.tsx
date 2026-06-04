@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function CTASection() {
   return (
-    <section id="contact" className="section-padding bg-background relative overflow-hidden">
+    <section id="contact" className="section-padding glass-section relative overflow-hidden">
       <div className="silver-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.015] rounded-full blur-[120px]" />
@@ -13,7 +13,7 @@ export default function CTASection() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center p-8 sm:p-12 md:p-16 rounded-2xl sm:rounded-3xl glass-card">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mx-auto mb-6 sm:mb-8">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl glass-icon flex items-center justify-center mx-auto mb-6 sm:mb-8">
             <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-silver" />
           </div>
 
@@ -24,7 +24,7 @@ export default function CTASection() {
           </h2>
 
           <p className="text-sm sm:text-base lg:text-lg text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10">
-            Let's discuss how our AI solutions can help you innovate, optimize,
+            Let&apos;s discuss how our AI solutions can help you innovate, optimize,
             and grow. Our team is ready to bring your vision to life.
           </p>
 
@@ -37,7 +37,7 @@ export default function CTASection() {
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="tel:+1234567890"
+              href="https://wa.me/919186041549"
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 glass-card hover:bg-white/[0.05] text-foreground font-semibold text-sm sm:text-base rounded-lg transition-all duration-300 border border-white/[0.08] hover:border-white/[0.15] whitespace-nowrap"
             >
               Schedule a Call
