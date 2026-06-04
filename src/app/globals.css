@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #08080c;
+  --color-foreground: #fcfcfe;
+  --color-primary: #B1B2B4;
+  --color-primary-dark: #A7A8AC;
+  --color-secondary: #7A7B7F;
+  --color-card-bg: #111118;
+  --color-card-border: #2a2a35;
+  --color-muted: #5D5E60;
+  --color-surface: #0d0d12;
+  --color-silver: #EDEDED;
+  --color-silver-dim: #818286;
+  --color-silver-bright: #F0F0F0;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08080c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B1B2B4;
+}
+
+/* ========================
+   GRADIENT TEXT
+======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #F0F0F0, #B1B2B4, #7A7B7F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-silver {
+  background: linear-gradient(135deg, #fcfcfe, #B1B2B4, #818286);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================
+   GLASSMORPHISM
+======================== */
+.glass {
+  background: rgba(17, 17, 24, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(177, 178, 180, 0.08);
+}
+
+.glass-card {
+  background: rgba(17, 17, 24, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(177, 178, 180, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.glass-card-hover {
+  background: rgba(17, 17, 24, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(177, 178, 180, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(177, 178, 180, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05),
+              0 0 0 1px rgba(177, 178, 180, 0.05);
+  transform: translateY(-2px);
+}
+
+.glass-strong {
+  background: rgba(17, 17, 24, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(177, 178, 180, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glass-subtle {
+  background: rgba(17, 17, 24, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(177, 178, 180, 0.06);
+}
+
+/* ========================
+   ANIMATIONS
+======================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-silver {
+  0%, 100% { box-shadow: 0 0 15px rgba(177, 178, 180, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(177, 178, 180, 0.12); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(177, 178, 180, 0.08); }
+  50% { border-color: rgba(177, 178, 180, 0.2); }
+}
+
+/* Animation utilities */
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-silver 4s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-reveal {
+  animation: reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-border-glow {
+  animation: border-glow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(177, 178, 180, 0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Hero slider */
+.hero-slide {
+  animation: fade-in 1s ease-in-out;
+}
+
+/* ========================
+   SILVER SHINE EFFECT
+======================== */
+.silver-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.silver-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  transition: left 0.6s ease;
+}
+
+.silver-shine:hover::after {
+  left: 100%;
+}
+
+/* ========================
+   SECTION STYLING
+======================== */
+.section-padding {
+  padding: 6rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 7rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 8rem 4rem;
+  }
+}
+
+/* Silver divider line */
+.silver-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(177, 178, 180, 0.15), transparent);
+}
