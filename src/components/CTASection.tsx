@@ -30,7 +30,7 @@ export default function CTASection() {
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
-              href="mailto:contact@stateai.com"
+              href="mailto:info@stateai.in"
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-silver-bright/10 hover:bg-silver-bright/20 text-silver-bright font-semibold text-sm sm:text-base rounded-lg border border-silver-bright/15 hover:border-silver-bright/30 transition-all duration-300 group whitespace-nowrap"
             >
               Start Your Project
