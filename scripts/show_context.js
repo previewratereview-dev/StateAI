@@ -1,0 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+const file = path.resolve(__dirname, '../src/components/Industries.tsx');
+const s = fs.readFileSync(file, 'utf8');
+const idx = 17062;
+const start = Math.max(0, idx - 200);
+const end = Math.min(s.length, idx + 200);
+const snippet = s.slice(start, end);
+console.log('Index:', idx);
+console.log('---Snippet start---');
+console.log(snippet.replace(/\t/g,'    '));
+console.log('---Snippet end---');

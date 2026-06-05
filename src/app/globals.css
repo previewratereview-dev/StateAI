@@ -488,3 +488,114 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgb(177 178 180 / 15%), transparent);
 }
+
+/* Industries decorative elements and accessibility helpers */
+.industries-hero-blob {
+  position: absolute;
+  left: -6rem;
+  top: -6rem;
+  width: 36rem;
+  height: 36rem;
+  filter: blur(60px);
+  opacity: 0.22;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.industries-card-decor {
+  width: 160px;
+  height: 96px;
+  filter: blur(28px);
+  opacity: 0.08;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.focus-visible-ring:focus-visible {
+  outline: 2px solid rgba(240,240,240,0.06);
+  outline-offset: 3px;
+}
+
+/* Micro interactions for Industries cards */
+#industries .industries-card {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms, border-color 320ms;
+  will-change: transform;
+}
+
+#industries .industries-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  border-color: rgb(177 178 180 / 18%);
+}
+
+#industries .industries-card:active {
+  transform: translateY(-2px) scale(0.998);
+}
+
+#industries .industries-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 6px rgb(177 178 180 / 6%);
+}
+
+#industries .industries-icon {
+  transition: transform 360ms cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 360ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#industries .industries-card:hover .industries-icon {
+  transform: translateY(-4px) rotate(-6deg) scale(1.06);
+}
+
+#industries .industry-arrow {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 220ms;
+  opacity: 0.7;
+}
+
+#industries .industries-card:hover .industry-arrow {
+  transform: translateX(8px);
+  opacity: 1;
+}
+
+/* Slightly reduce the blob and decor opacities for less visual weight */
+.industries-hero-blob { opacity: 0.18; }
+.industries-card-decor { opacity: 0.06; }
+
+/* Inline SVG illustrations used in industry cards */
+#industries .industries-svg {
+  color: var(--color-primary);
+}
+
+#industries .industries-svg path,
+#industries .industries-svg circle,
+#industries .industries-svg rect,
+#industries .industries-svg line,
+#industries .industries-svg polyline,
+#industries .industries-svg polygon {
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  transition: stroke-dashoffset 640ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease;
+  opacity: 0.85;
+}
+
+#industries .industries-card:hover .industries-svg path,
+#industries .industries-card:hover .industries-svg circle,
+#industries .industries-card:hover .industries-svg rect,
+#industries .industries-card:hover .industries-svg line,
+#industries .industries-card:hover .industries-svg polyline,
+#industries .industries-card:hover .industries-svg polygon {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* scale down on very small screens */
+@media (max-width: 420px) {
+  #industries .industries-svg { width: 56px; height: 56px; }
+}

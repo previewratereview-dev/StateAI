@@ -4,7 +4,7 @@ import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Technologies from "@/components/Technologies";
 import Process from "@/components/Process";
-import Portfolio from "@/components/Portfolio";
+import Industries from "@/components/Industries";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
 import Team from "@/components/Team";
@@ -19,7 +19,7 @@ export default function Home() {
       <WhyChooseUs />
       <Technologies />
       <Process />
-      <Portfolio />
+      <Industries />
       <Team />
       <Testimonials />
       <CTASection />
