@@ -11,7 +11,7 @@ const assets = [
   "herobg1.jpeg",
   "herobg2.jpeg",
   "footer-bg.jpeg",
-  "Sartaj-ahmad.png",
+  "Sartaj-ahmad.jpeg",
   "Rayees-amin.png",
   "Hikaru-Saito.jpeg",
   "Shamil.jpeg",

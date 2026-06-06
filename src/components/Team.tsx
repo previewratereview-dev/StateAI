@@ -6,7 +6,7 @@ const founders = [
   {
     name: "Sartaj Ahmad",
     role: "Founder & CEO",
-    image: "/assets/Sartaj-ahmad.png",
+    image: "/assets/Sartaj-ahmad.jpeg",
     linkedin: "https://www.linkedin.com/in/sartajahmed/",
   },
   {
