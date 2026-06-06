@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Shield, Zap, Users, Award, CheckCircle } from "lucide-react";
 
 const stats = [
@@ -45,8 +46,19 @@ const features = [
 export default function WhyChooseUs() {
   return (
     <section id="about" className="section-padding glass-section-alt relative overflow-hidden">
-      <div className="silver-divider absolute top-0 left-0 right-0" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/assets/bg2.jpeg"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 glass-strong" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/90" />
+      </div>
+      <div className="silver-divider absolute top-0 left-0 right-0 z-10" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-card mb-4 sm:mb-6">
             <span className="text-[11px] sm:text-sm text-silver font-medium">Why State AI</span>

@@ -1,25 +1,51 @@
 "use client";
 
-const technologies = [
-  { name: "Python", category: "Language" },
-  { name: "TensorFlow", category: "Framework" },
-  { name: "PyTorch", category: "Framework" },
-  { name: "OpenAI", category: "API" },
-  { name: "AWS", category: "Cloud" },
-  { name: "Google Cloud", category: "Cloud" },
-  { name: "Azure", category: "Cloud" },
-  { name: "Kubernetes", category: "DevOps" },
-  { name: "Docker", category: "DevOps" },
-  { name: "React", category: "Frontend" },
-  { name: "Node.js", category: "Backend" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "MongoDB", category: "Database" },
-  { name: "Spark", category: "Big Data" },
-  { name: "Hugging Face", category: "NLP" },
-  { name: "LangChain", category: "LLM" },
-  { name: "Scikit-learn", category: "ML" },
-  { name: "Keras", category: "Framework" },
+import Image from "next/image";
+
+interface TechItem {
+  name: string;
+  category: string;
+  logo: string;
+}
+
+const technologies: TechItem[] = [
+  { name: "Python", category: "Language", logo: "/assets/tech-logos/python.svg" },
+  { name: "TensorFlow", category: "Framework", logo: "/assets/tech-logos/tensorflow.svg" },
+  { name: "PyTorch", category: "Framework", logo: "/assets/tech-logos/pytorch.svg" },
+  { name: "OpenAI", category: "API", logo: "/assets/tech-logos/openai.png" },
+  { name: "AWS", category: "Cloud", logo: "/assets/tech-logos/aws.svg" },
+  { name: "Google Cloud", category: "Cloud", logo: "/assets/tech-logos/google-cloud.svg" },
+  { name: "Azure", category: "Cloud", logo: "/assets/tech-logos/azure.png" },
+  { name: "Kubernetes", category: "DevOps", logo: "/assets/tech-logos/kubernetes.svg" },
+  { name: "Docker", category: "DevOps", logo: "/assets/tech-logos/docker.svg" },
+  { name: "React", category: "Frontend", logo: "/assets/tech-logos/react.svg" },
+  { name: "Node.js", category: "Backend", logo: "/assets/tech-logos/nodejs.svg" },
+  { name: "PostgreSQL", category: "Database", logo: "/assets/tech-logos/postgresql.svg" },
+  { name: "MongoDB", category: "Database", logo: "/assets/tech-logos/mongodb.svg" },
+  { name: "Spark", category: "Big Data", logo: "/assets/tech-logos/spark.svg" },
+  { name: "Hugging Face", category: "NLP", logo: "/assets/tech-logos/huggingface.svg" },
+  { name: "LangChain", category: "LLM", logo: "/assets/tech-logos/langchain.svg" },
+  { name: "Scikit-learn", category: "ML", logo: "/assets/tech-logos/scikit-learn.svg" },
+  { name: "Keras", category: "Framework", logo: "/assets/tech-logos/keras.svg" },
 ];
+
+function TechLogo({ logo, name }: { logo: string; name: string }) {
+  if (!logo) return null;
+  const isAzure = name === "Azure";
+  return (
+    <div className="relative w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3">
+      <Image
+        src={logo}
+        alt={`${name} logo`}
+        fill
+        className={`brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300 ${
+          isAzure ? "object-cover scale-125" : "object-contain"
+        }`}
+        sizes="40px"
+      />
+    </div>
+  );
+}
 
 export default function Technologies() {
   return (
@@ -42,6 +68,7 @@ export default function Technologies() {
           {technologies.map((tech, index) => (
             <div key={tech.name} className="group p-3 sm:p-4 lg:p-5 rounded-xl glass-card-hover silver-shine text-center cursor-default animate-reveal"
               style={{ animationDelay: `${index * 50}ms`, opacity: 0, animationFillMode: "forwards" }}>
+              <TechLogo logo={tech.logo} name={tech.name} />
               <div className="text-xs sm:text-sm lg:text-base font-bold text-silver-bright group-hover:text-white transition-colors duration-300 mb-0.5 sm:mb-1">
                 {tech.name}
               </div>
@@ -54,6 +81,7 @@ export default function Technologies() {
           {technologies.slice(0, 12).map((tech, index) => (
             <div key={tech.name} className="p-3 rounded-xl glass-card text-center animate-reveal"
               style={{ animationDelay: `${index * 50}ms`, opacity: 0, animationFillMode: "forwards" }}>
+              <TechLogo logo={tech.logo} name={tech.name} />
               <div className="text-xs font-bold text-silver-bright mb-0.5">{tech.name}</div>
               <div className="text-[10px] text-muted">{tech.category}</div>
             </div>
