@@ -82,11 +82,27 @@ const stats = [
   { icon: Clock, number: "24/7", label: "AI Workforce Active" },
 ];
 
+const MOBILE_BREAKPOINT = 767;
+
 export default function Hero() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setScrollProgress(0);
+      return;
+    }
+
     const handleScroll = () => {
       if (!heroRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
@@ -94,20 +110,25 @@ export default function Hero() {
       const progress = Math.min(1, scrolled / (heroRef.current.offsetHeight * 0.25));
       setScrollProgress(progress);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
   const textOpacity = Math.max(0, 1 - scrollProgress * 1.6);
   const showCards = scrollProgress > 0.3;
 
   return (
-    <div ref={heroRef} className="relative" style={{ height: "300vh" }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <div
+      ref={heroRef}
+      className="relative min-h-screen md:min-h-0"
+      style={isMobile ? undefined : { height: "300vh" }}
+    >
+      <div className="relative md:sticky md:top-0 h-screen overflow-hidden">
         {/* Phase 1 background */}
         <div
           className="absolute inset-0 transition-opacity duration-500"
-          style={{ opacity: 1 - scrollProgress }}
+          style={isMobile ? undefined : { opacity: 1 - scrollProgress }}
         >
           <Image
             src="/assets/herobg1.jpeg"
@@ -120,9 +141,9 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" />
         </div>
 
-        {/* Phase 2 background - moved to center for mobile */}
+        {/* Phase 2 background - desktop scroll transition only */}
         <div
-          className="absolute inset-0 transition-opacity duration-500"
+          className="hidden md:block absolute inset-0 transition-opacity duration-500"
           style={{ opacity: scrollProgress }}
         >
           <div className="absolute inset-0 md:scale-65 scale-50" style={{ transformOrigin: "center center" }}>
@@ -140,10 +161,14 @@ export default function Hero() {
         {/* PHASE 1 - Text */}
         <div
           className="absolute inset-0 z-10 flex items-center"
-          style={{
-            opacity: textOpacity,
-            transform: `translateY(${-scrollProgress * 30}px) translateX(-${scrollProgress * 15}px)`,
-          }}
+          style={
+            isMobile
+              ? undefined
+              : {
+                  opacity: textOpacity,
+                  transform: `translateY(${-scrollProgress * 30}px) translateX(-${scrollProgress * 15}px)`,
+                }
+          }
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-2xl md:-ml-8 glass-subtle rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/[0.08]">
@@ -178,7 +203,10 @@ export default function Hero() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 transition-opacity duration-300" style={{ opacity: scrollProgress < 0.1 ? 1 : 0 }}>
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 transition-opacity duration-300"
+          style={isMobile ? undefined : { opacity: scrollProgress < 0.1 ? 1 : 0 }}
+        >
           <span className="text-[10px] sm:text-xs text-muted tracking-[0.2em] uppercase">Scroll to Explore</span>
           <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-silver animate-bounce" />
         </div>
@@ -207,8 +235,19 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Stats Bar - improved mobile layout */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 transition-all duration-600" style={{ opacity: showCards ? 1 : 0, transform: showCards ? "translateY(0)" : "translateY(20px)", transitionDelay: "300ms" }}>
+        {/* Stats Bar - always visible on mobile, scroll-revealed on desktop */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-20 transition-all duration-600"
+          style={
+            isMobile
+              ? undefined
+              : {
+                  opacity: showCards ? 1 : 0,
+                  transform: showCards ? "translateY(0)" : "translateY(20px)",
+                  transitionDelay: "300ms",
+                }
+          }
+        >
           <div className="glass-strong border-t border-white/[0.06]">
             <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-2 sm:py-2.5">
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
