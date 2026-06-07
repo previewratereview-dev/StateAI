@@ -197,7 +197,7 @@ const categories: Category[] = [
 ];
 
 export default function Services() {
-  const [activeCategory, setActiveCategory] = useState<CategoryKey>("ai");
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>("software");
 
   const activeServices = categories.find((c) => c.id === activeCategory)?.services ?? [];
 
@@ -242,7 +242,7 @@ export default function Services() {
                 className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "bg-white/[0.08] text-silver-bright border border-white/[0.15] shadow-lg shadow-white/[0.03]"
-                    : "text-gray-400 border border-transparent hover:bg-white/[0.04] hover:text-silver hover:border-white/[0.06]"
+                    : "text-gray-400 bg-blue-500/10 border border-blue-400/20 shadow-lg shadow-blue-500/10 hover:bg-blue-500/20 hover:text-silver hover:border-blue-400/30"
                 }`}
               >
                 <span className={isActive ? "text-silver-bright" : "text-gray-500"}>
@@ -260,28 +260,31 @@ export default function Services() {
           {activeServices.map((service, index) => (
             <div
               key={service.title}
-              className="group glass-card-hover silver-shine rounded-xl sm:rounded-2xl overflow-hidden cursor-default animate-reveal"
+              className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 animate-reveal"
               style={{
                 animationDelay: `${index * 80}ms`,
                 opacity: 0,
                 animationFillMode: "forwards",
               }}
             >
-              <div className="relative h-40 sm:h-44 lg:h-52 overflow-hidden bg-white/[0.02]">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card-bg via-transparent to-transparent opacity-60" />
+              <div className="relative aspect-square overflow-hidden bg-white/[0.02] p-2 z-0">
+                <div className="relative w-full h-full z-0 rounded-[5%] overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-contain group-hover:scale-105 transition-transform duration-500 z-0"
+                    sizes="(max-width: 640px) 100vw, 280px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none z-0" />
+                </div>
               </div>
 
-              <div className="p-4 sm:p-5 lg:p-6">
+              <div className="p-4 sm:p-5 lg:p-6 relative z-10 bg-transparent">
                 <h3 className="text-sm sm:text-base lg:text-lg font-bold text-silver-bright mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
                   {service.title}
                 </h3>
+
                 <p className="text-xs sm:text-sm text-gray-400 leading-relaxed mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
                   {service.description}
                 </p>
