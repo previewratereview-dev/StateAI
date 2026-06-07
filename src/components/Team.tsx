@@ -59,13 +59,13 @@ export default function Team() {
             {founders.map((person) => (
               <div
                 key={person.name}
-                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 h-64 sm:h-72"
+                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-72"
               >
                 <Image
                   src={person.image}
                   alt={person.name}
                   fill
-                  className="object-cover object-top origin-top group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover object-[center_20%] sm:object-top origin-center sm:origin-top sm:group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 100vw, 280px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
@@ -103,13 +103,13 @@ export default function Team() {
             {teamMembers.map((person) => (
               <div
                 key={person.name}
-                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 h-52 sm:h-60"
+                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-60"
               >
                 <Image
                   src={person.image}
                   alt={person.name}
                   fill
-                  className="object-cover object-top origin-top group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover object-[center_20%] sm:object-top origin-center sm:origin-top sm:group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 50vw, 280px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
