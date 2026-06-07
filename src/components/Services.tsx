@@ -17,6 +17,7 @@ interface ServiceItem {
 interface Category {
   id: CategoryKey;
   label: string;
+  shortLabel: string;
   icon: React.ReactNode;
   services: ServiceItem[];
 }
@@ -25,6 +26,7 @@ const categories: Category[] = [
   {
     id: "software",
     label: "Software Development",
+    shortLabel: "Software Dev",
     icon: <Code2 className="w-4 h-4" />,
     services: [
       {
@@ -64,6 +66,7 @@ const categories: Category[] = [
   {
     id: "mobile",
     label: "Mobile App Development",
+    shortLabel: "Mobile Apps",
     icon: <Smartphone className="w-4 h-4" />,
     services: [
       {
@@ -103,6 +106,7 @@ const categories: Category[] = [
   {
     id: "web",
     label: "Web Apps Development",
+    shortLabel: "Web Apps",
     icon: <Globe className="w-4 h-4" />,
     services: [
       {
@@ -142,6 +146,7 @@ const categories: Category[] = [
   {
     id: "ai",
     label: "AI Automation & Development",
+    shortLabel: "AI Automation",
     icon: <Cpu className="w-4 h-4" />,
     services: [
       {
@@ -232,31 +237,49 @@ export default function Services() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-4 mb-8 sm:mb-10">
+        <div
+          className="grid grid-cols-4 sm:grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-3 px-4 mb-8 sm:mb-10 max-w-md sm:max-w-2xl xl:max-w-none mx-auto"
+          role="tablist"
+          aria-label="Service categories"
+        >
           {categories.map((category) => {
             const isActive = activeCategory === category.id;
             return (
               <button
                 key={category.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`${category.label} (${category.services.length} services)`}
+                title={category.label}
                 onClick={() => setActiveCategory(category.id)}
-                className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
+                className={`inline-flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 min-w-0 px-2.5 py-3 sm:px-4 sm:py-2.5 xl:px-5 xl:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "bg-white/[0.08] text-silver-bright border border-white/[0.15] shadow-lg shadow-white/[0.03]"
                     : "text-gray-400 bg-blue-500/10 border border-blue-400/20 shadow-lg shadow-blue-500/10 hover:bg-blue-500/20 hover:text-silver hover:border-blue-400/30"
                 }`}
               >
-                <span className={isActive ? "text-silver-bright" : "text-gray-500"}>
+                <span
+                  className={`shrink-0 [&_svg]:w-5 [&_svg]:h-5 sm:[&_svg]:w-4 sm:[&_svg]:h-4 ${
+                    isActive ? "text-silver-bright" : "text-gray-500"
+                  }`}
+                >
                   {category.icon}
                 </span>
-                {category.label}
-                <span className="text-[10px] opacity-60">({category.services.length})</span>
+                <span className="hidden sm:inline truncate min-w-0">
+                  <span className="xl:hidden">{category.shortLabel}</span>
+                  <span className="hidden xl:inline">{category.label}</span>
+                </span>
+                <span className="hidden sm:inline text-[10px] opacity-60 shrink-0">
+                  ({category.services.length})
+                </span>
               </button>
             );
           })}
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 px-4 sm:px-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 px-4 sm:px-0">
           {activeServices.map((service, index) => (
             <div
               key={service.title}

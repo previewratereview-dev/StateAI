@@ -136,30 +136,15 @@ export default function Navbar() {
       {isMobileOpen && (
         <div className="lg:hidden glass-strong border-t border-white/[0.08] animate-slide-up">
           <div className="px-4 py-6 space-y-1">
-              {navLinks.map((link) => (
-              <div key={link.label}>
-                <a
-                  href={link.href}
-                  className="block px-4 py-3 text-gray-300 hover:text-silver-bright hover:bg-white/[0.03] rounded-lg transition-colors duration-200"
-                  onClick={() => setIsMobileOpen(false)}
-                >
-                  {link.label}
-                </a>
-                {link.dropdown && (
-                  <div className="pl-4">
-                    {link.dropdown.map((item) => (
-                      <a
-                        key={item}
-                        href={link.href}
-                        className="block px-4 py-2 text-sm text-muted hover:text-silver-bright transition-colors duration-200"
-                        onClick={() => setIsMobileOpen(false)}
-                      >
-                        {item}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="block px-4 py-3 text-gray-300 hover:text-silver-bright hover:bg-white/[0.03] rounded-lg transition-colors duration-200"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                {link.label}
+              </a>
             ))}
             <div className="pt-4">
               <a
