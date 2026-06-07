@@ -37,7 +37,7 @@ export default function CTASection() {
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="https://wa.me/919186041549"
+              href="https://wa.me/917006993325"
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 glass-card hover:bg-white/[0.05] text-foreground font-semibold text-sm sm:text-base rounded-lg transition-all duration-300 border border-white/[0.08] hover:border-white/[0.15] whitespace-nowrap"
             >
               Schedule a Call

@@ -174,12 +174,12 @@ export default function Testimonials() {
           <p className="text-center text-xs sm:text-sm text-muted mb-6 sm:mb-8">
             Trusted by innovative companies worldwide
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 px-4">
+          <div className="flex flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 px-2 sm:px-4 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {["JKCS", "AEW", "Nazira Memorial", "Gulposh Tiffin", "Rather Plaza", "Alfalak Transport"].map(
               (company) => (
                 <div
                   key={company}
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-gray-400 glass-chip rounded-lg hover:text-silver hover:border-white/[0.15] transition-colors duration-300 cursor-default text-center"
+                  className="px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 text-[10px] sm:text-xs md:text-sm font-semibold text-gray-400 glass-chip rounded-lg hover:text-silver hover:border-white/[0.15] transition-colors duration-300 cursor-default text-center whitespace-nowrap flex-shrink-0"
                 >
                   {company}
                 </div>
