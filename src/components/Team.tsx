@@ -24,6 +24,11 @@ const teamMembers = [
     image: "/assets/Hikaru-Saito.jpeg",
   },
   {
+    name: "Ghulam Mustafa",
+    role: "AI Automation Engineer",
+    image: "/assets/Ghulam-Mustafa.jpeg",
+  },
+  {
     name: "Shamil",
     role: "Full Stack Developer",
     image: "/assets/Shamil.jpeg",
@@ -99,7 +104,7 @@ export default function Team() {
           <h3 className="text-[10px] sm:text-xs font-bold text-silver-dim uppercase tracking-[0.2em] text-center mb-4 sm:mb-6">
             Team Members
           </h3>
-          <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto px-4 sm:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto px-4 sm:px-0">
             {teamMembers.map((person) => (
               <div
                 key={person.name}

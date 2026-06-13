@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Building2, HeartPulse, GraduationCap, Factory, LandPlot, Shield, Coins, Truck, Zap, Monitor, FlaskConical } from "lucide-react";
+import { ArrowRight, Building2, HeartPulse, GraduationCap, Factory, LandPlot, Shield, Coins, Truck, Zap, Monitor, FlaskConical, Sprout, Users } from "lucide-react";
 
 const industries = [
-  { id: "automotive", name: "Automotive", icon: Truck, description: "AI for vehicle telematics, predictive maintenance, and fleet optimization.", image: null, useCases: ["Fleet Telematics", "Predictive Maintenance"], stats: { accuracy: "94%", speed: "20% faster" }, gradient: "from-sky-500/20 to-indigo-500/10", borderColor: "border-sky-500/30" },
-  { id: "real-estate", name: "Real Estate", icon: LandPlot, description: "Property valuation, site selection, construction monitoring.", image: "/assets/industries/real-estate.jpg", useCases: ["Property Valuation", "Site Analysis"], stats: { accuracy: "89%" }, gradient: "from-stone-500/20 to-slate-500/10", borderColor: "border-stone-500/30" },
-  { id: "entertainment", name: "Entertainment", icon: Monitor, description: "Content personalization, recommendation systems, and media analytics.", image: null, useCases: ["Recommendation Engines", "Content Personalization"], stats: { accuracy: "92%" }, gradient: "from-rose-500/20 to-pink-500/10", borderColor: "border-rose-500/30" },
-  { id: "retail", name: "Retail & E-Commerce", icon: Truck, description: "Personalized recommendations, inventory optimization, demand forecasting.", image: "/assets/industries/retail.jpg", useCases: ["Recommendation Engines", "Demand Forecasting"], stats: { accuracy: "92%" }, gradient: "from-rose-500/20 to-pink-500/10", borderColor: "border-rose-500/30" },
-  { id: "healthcare", name: "Healthcare", icon: HeartPulse, description: "AI-powered diagnostics and clinical decision support.", image: "/assets/industries/healthcare.jpg", useCases: ["Medical Imaging", "Risk Stratification"], stats: { accuracy: "97%" }, gradient: "from-emerald-500/20 to-teal-500/10", borderColor: "border-emerald-500/30" },
-  { id: "transportation", name: "Transportation", icon: Truck, description: "Routing, logistics optimization, and autonomous vehicle systems.", image: null, useCases: ["Routing", "Logistics Optimization"], stats: { accuracy: "93%" }, gradient: "from-indigo-500/20 to-blue-500/10", borderColor: "border-indigo-500/30" },
-  { id: "manufacturing", name: "Manufacturing", icon: Factory, description: "Predictive maintenance, quality control, and supply chain automation.", image: "/assets/industries/manufacturing.jpg", useCases: ["Predictive Maintenance", "Quality Inspection"], stats: { accuracy: "95%" }, gradient: "from-amber-500/20 to-orange-500/10", borderColor: "border-amber-500/30" },
-  { id: "travel", name: "Travel & Tourism", icon: Zap, description: "Customer personalization, demand forecasting, and route optimization.", image: null, useCases: ["Personalization", "Demand Forecasting"], stats: { accuracy: "90%" }, gradient: "from-yellow-500/20 to-amber-500/10", borderColor: "border-yellow-500/30" },
-  { id: "professional-services", name: "Professional Services", icon: Building2, description: "Automation for client services, resource allocation, and project analytics.", image: null, useCases: ["Resource Optimization", "Client Insights"], stats: { accuracy: "91%" }, gradient: "from-stone-500/20 to-slate-500/10", borderColor: "border-stone-500/30" },
-  { id: "software-vendors", name: "Software Vendors", icon: Monitor, description: "Embedded AI features, product analytics, and DevOps automation.", image: "/assets/industries/technology.jpg", useCases: ["Product Analytics", "DevOps Automation"], stats: { accuracy: "96%" }, gradient: "from-purple-500/20 to-violet-500/10", borderColor: "border-purple-500/30" },
-  { id: "finance", name: "Banking & Finance", icon: Coins, description: "Fraud detection, risk scoring, and algorithmic trading.", image: "/assets/industries/finance.jpg", useCases: ["Fraud Detection", "Credit Scoring"], stats: { accuracy: "99.2%" }, gradient: "from-blue-500/20 to-indigo-500/10", borderColor: "border-blue-500/30" },
-  { id: "education", name: "Education", icon: GraduationCap, description: "Adaptive learning, automated assessment, and student analytics.", image: "/assets/industries/education.jpg", useCases: ["Adaptive Learning", "Automated Assessment"], stats: { accuracy: "91%" }, gradient: "from-cyan-500/20 to-sky-500/10", borderColor: "border-cyan-500/30" },
+  { id: "agriculture", name: "Agriculture", icon: Sprout, description: "AI-driven precision farming, crop health monitoring, and yield prediction.", image: "/assets/industries/agriculture.jpeg", useCases: ["Precision Agriculture", "Crop Health Analysis"], stats: { accuracy: "93%", savings: "15% water" }, gradient: "from-green-500/20 to-emerald-500/10", borderColor: "border-green-500/30" },
+  { id: "automotive", name: "Automotive", icon: Truck, description: "AI for vehicle telematics, predictive maintenance, and fleet optimization.", image: "/assets/industries/automotive.jpeg", useCases: ["Fleet Telematics", "Predictive Maintenance"], stats: { accuracy: "94%", speed: "20% faster" }, gradient: "from-sky-500/20 to-indigo-500/10", borderColor: "border-sky-500/30" },
+  { id: "real-estate", name: "Real Estate", icon: LandPlot, description: "Property valuation, site selection, construction monitoring.", image: "/assets/industries/real-estate.jpeg", useCases: ["Property Valuation", "Site Analysis"], stats: { accuracy: "89%" }, gradient: "from-stone-500/20 to-slate-500/10", borderColor: "border-stone-500/30" },
+  { id: "retail", name: "Retail & E-Commerce", icon: Truck, description: "Personalized recommendations, inventory optimization, demand forecasting.", image: "/assets/industries/retail-ecommerce.jpeg", useCases: ["Recommendation Engines", "Demand Forecasting"], stats: { accuracy: "92%" }, gradient: "from-rose-500/20 to-pink-500/10", borderColor: "border-rose-500/30" },
+  { id: "healthcare", name: "Healthcare", icon: HeartPulse, description: "AI-powered diagnostics and clinical decision support.", image: "/assets/industries/healthcare.jpeg", useCases: ["Medical Imaging", "Risk Stratification"], stats: { accuracy: "97%" }, gradient: "from-emerald-500/20 to-teal-500/10", borderColor: "border-emerald-500/30" },
+  { id: "transportation", name: "Transportation", icon: Truck, description: "Routing, logistics optimization, and autonomous vehicle systems.", image: "/assets/industries/transportation.jpeg", useCases: ["Routing", "Logistics Optimization"], stats: { accuracy: "93%" }, gradient: "from-indigo-500/20 to-blue-500/10", borderColor: "border-indigo-500/30" },
+  { id: "manufacturing", name: "Manufacturing", icon: Factory, description: "Predictive maintenance, quality control, and supply chain automation.", image: "/assets/industries/manufacturing.jpeg", useCases: ["Predictive Maintenance", "Quality Inspection"], stats: { accuracy: "95%" }, gradient: "from-amber-500/20 to-orange-500/10", borderColor: "border-amber-500/30" },
+  { id: "travel", name: "Travel & Tourism", icon: Zap, description: "Customer personalization, demand forecasting, and route optimization.", image: "/assets/industries/tourism-travel.jpeg", useCases: ["Personalization", "Demand Forecasting"], stats: { accuracy: "90%" }, gradient: "from-yellow-500/20 to-amber-500/10", borderColor: "border-yellow-500/30" },
+  { id: "professional-services", name: "Professional Services", icon: Building2, description: "Automation for client services, resource allocation, and project analytics.", image: "/assets/industries/professional-services.jpeg", useCases: ["Resource Optimization", "Client Insights"], stats: { accuracy: "91%" }, gradient: "from-stone-500/20 to-slate-500/10", borderColor: "border-stone-500/30" },
+  { id: "software-vendors", name: "Software Vendors", icon: Monitor, description: "Embedded AI features, product analytics, and DevOps automation.", image: "/assets/industries/software-vendor.jpeg", useCases: ["Product Analytics", "DevOps Automation"], stats: { accuracy: "96%" }, gradient: "from-purple-500/20 to-violet-500/10", borderColor: "border-purple-500/30" },
+  { id: "human-resources", name: "Human Resources", icon: Users, description: "AI-enabled talent acquisition, resume parsing, and employee sentiment analysis.", image: "/assets/industries/human-resources.jpeg", useCases: ["Automated Screening", "Sentiment Analysis"], stats: { efficiency: "40% faster", retention: "+18%" }, gradient: "from-teal-500/20 to-cyan-500/10", borderColor: "border-teal-500/30" },
+  { id: "education", name: "Education", icon: GraduationCap, description: "Adaptive learning, automated assessment, and student analytics.", image: "/assets/industries/education.jpeg", useCases: ["Adaptive Learning", "Automated Assessment"], stats: { accuracy: "91%" }, gradient: "from-cyan-500/20 to-sky-500/10", borderColor: "border-cyan-500/30" },
 ];
 
 function IndustrySVG({ id, className }: { id: string; className?: string }) {
@@ -94,6 +94,15 @@ function IndustrySVG({ id, className }: { id: string; className?: string }) {
       return (
         <svg viewBox="0 0 48 48" className={className} style={{ color: 'var(--color-primary)' }} aria-hidden>
           <path d="M8 30 C18 10, 36 10, 40 22 C32 34, 14 42, 8 30 Z" stroke="currentColor" strokeWidth={1.6} fill="none" strokeLinejoin="round" />
+        </svg>
+      );
+    case "human-resources":
+      return (
+        <svg viewBox="0 0 48 48" className={className} style={{ color: 'var(--color-primary)' }} aria-hidden>
+          <circle cx="24" cy="16" r="6" stroke="currentColor" strokeWidth={1.6} fill="none" />
+          <path d="M12 38 C12 30, 36 30, 36 38" stroke="currentColor" strokeWidth={1.6} fill="none" strokeLinecap="round" />
+          <circle cx="12" cy="22" r="4" stroke="currentColor" strokeWidth={1.2} fill="none" />
+          <path d="M4 34 C4 30, 20 30, 20 34" stroke="currentColor" strokeWidth={1.2} fill="none" strokeLinecap="round" />
         </svg>
       );
     case "telecom":
@@ -255,15 +264,23 @@ export default function Industries() {
           {industries.map((industry, index) => {
             const Icon = industry.icon;
             return (
-                <button
+                <div
                   key={industry.id}
-                  onClick={() => handleIndustryClick(industry.id)}
-                  aria-label={industry.name}
-                  tabIndex={0}
-                  className={`group industries-card relative rounded-xl sm:rounded-2xl glass-card-hover silver-shine overflow-hidden cursor-pointer animate-reveal border transition-all duration-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-silver-bright/20 ${industry.borderColor}`}
+                  className={`group industries-card relative rounded-xl sm:rounded-2xl glass-card silver-shine overflow-hidden animate-reveal border transition-all duration-400 ${industry.borderColor}`}
                   style={{ animationDelay: `${index * 60}ms`, opacity: 0, animationFillMode: "forwards" }}
                 >
                   <div className={`h-40 sm:h-44 lg:h-48 bg-gradient-to-br ${industry.gradient} relative overflow-hidden flex items-end`}>
+                    {/* Background image if it exists */}
+                    {industry.image && (
+                      <Image
+                        src={industry.image}
+                        alt={industry.name}
+                        fill
+                        className="object-cover transition-opacity duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 250px"
+                      />
+                    )}
+
                     {/* subtle card decor (SVG) */}
                     <svg className="industries-card-decor absolute -top-6 -right-6 pointer-events-none" viewBox="0 0 200 120" aria-hidden>
                       <defs>
@@ -275,25 +292,24 @@ export default function Industries() {
                       <path d="M0 60 C40 10, 160 10, 200 60 L200 120 L0 120 Z" fill={`url(#${industry.id}-grad)`} />
                     </svg>
 
-                    <IndustrySVG id={industry.id} className="industries-svg absolute bottom-3 right-3 w-20 h-20 opacity-20 group-hover:opacity-40 transition-opacity duration-400 pointer-events-none" />
+                    <IndustrySVG id={industry.id} className="industries-svg absolute bottom-3 right-3 w-20 h-20 opacity-20 transition-opacity duration-400 pointer-events-none" />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
-                    <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
+                    <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative z-10 p-4 sm:p-5 w-full">
-                    <div className="flex items-start justify-between">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg glass-icon flex items-center justify-center flex-shrink-0 industries-icon">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-silver group-hover:text-silver-bright transition-colors" />
+                      <div className="flex items-start justify-between">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg glass-icon flex items-center justify-center flex-shrink-0 industries-icon">
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-silver transition-colors" />
+                        </div>
                       </div>
-                      <ArrowRight className="industry-arrow w-5 h-5 sm:w-6 sm:h-6 text-silver/50 group-hover:text-silver-bright group-hover:translate-x-1 transition-all duration-300 opacity-0 group-hover:opacity-100 flex-shrink-0" />
-                    </div>
-                    <div className="mt-4 sm:mt-5">
-                      <h3 className="text-sm sm:text-base lg:text-lg font-bold text-silver-bright group-hover:text-white transition-colors duration-300 line-clamp-1">
-                        {industry.name}
-                      </h3>
+                      <div className="mt-4 sm:mt-5">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-bold text-silver-bright group-hover:text-white transition-colors duration-300 line-clamp-1">
+                          {industry.name}
+                        </h3>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </button>
             );
           })}
           </div>
