@@ -37,11 +37,17 @@ export async function getContacts(): Promise<{ data?: Contact[]; error?: string 
   }
 }
 
-export async function getContact(id: string): Promise<{ data?: Contact & { deals?: any[]; activities?: any[]; bookings?: any[]; crm_notes?: any[] }; error?: string }> {
+export async function getContact(id: string) {
   try {
     const { data, error } = await supabaseAdmin
       .from("contacts")
-      .select("*, deals(*), activities(*), crm_notes(*)")
+      .select(`
+        *,
+        deals(*),
+        crm_notes(*),
+        activities(*),
+        emails(*)
+      `)
       .eq("id", id)
       .single();
     if (error) return { error: error.message };

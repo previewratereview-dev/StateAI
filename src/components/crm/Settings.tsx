@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateUserRole } from "@/app/actions/settings";
+import { updateUserRole, createRole, updateRole, deleteRole } from "@/app/actions/settings";
 import type { UserProfile } from "@/lib/auth";
 
 function getInitials(name: string | null) {
@@ -12,29 +12,76 @@ function getInitials(name: string | null) {
 export default function SettingsClient({
   currentUser,
   profiles,
+  roles,
 }: {
   currentUser: UserProfile;
   profiles: any[];
+  roles: any[];
 }) {
-  const [tab, setTab] = useState<"general" | "team">("team");
+  const [tab, setTab] = useState<"general" | "team" | "roles">("team");
   const [profileList, setProfileList] = useState(profiles);
+  const [roleList, setRoleList] = useState(roles);
   const [isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
+
+  // Role builder state
+  const [editingRole, setEditingRole] = useState<any>(null);
 
   function showToast(msg: string, type: "success" | "error") {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
   }
 
-  function handleRoleChange(userId: string, role: "admin" | "sales") {
-    if (userId === currentUser.id && role !== "admin") {
+  function handleRoleChange(userId: string, newRole: string) {
+    if (userId === currentUser.id && newRole !== "admin" && currentUser.role === "admin") {
       if (!confirm("Demoting yourself will remove your admin access. Continue?")) return;
     }
-    setProfileList(prev => prev.map(p => p.id === userId ? { ...p, role } : p));
+    setProfileList(prev => prev.map(p => p.id === userId ? { ...p, role: newRole } : p));
     startTransition(async () => {
-      const res = await updateUserRole(userId, role);
+      const res = await updateUserRole(userId, newRole);
       if (!res.success) { setProfileList(profiles); showToast(res.error || "Failed", "error"); }
       else showToast("Role updated!", "success");
+    });
+  }
+
+  function handleSaveRole(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name = fd.get("name") as string;
+    const permissions = {
+      can_manage_roles: fd.get("can_manage_roles") === "on",
+      can_manage_deals: fd.get("can_manage_deals") === "on",
+      can_manage_contacts: fd.get("can_manage_contacts") === "on",
+      can_access_mailbox: fd.get("can_access_mailbox") === "on",
+    };
+
+    startTransition(async () => {
+      if (editingRole.id === "new") {
+        const res = await createRole(name, permissions);
+        if (res.success) {
+          setRoleList(prev => [...prev, res.data]);
+          showToast("Role created", "success");
+          setEditingRole(null);
+        } else showToast(res.error || "Failed", "error");
+      } else {
+        const res = await updateRole(editingRole.id, permissions);
+        if (res.success) {
+          setRoleList(prev => prev.map(r => r.id === editingRole.id ? { ...r, name, permissions } : r));
+          showToast("Role updated", "success");
+          setEditingRole(null);
+        } else showToast(res.error || "Failed", "error");
+      }
+    });
+  }
+
+  function handleDeleteRole(id: string) {
+    if (!confirm("Are you sure you want to delete this role? Users with this role might lose access.")) return;
+    startTransition(async () => {
+      const res = await deleteRole(id);
+      if (res.success) {
+        setRoleList(prev => prev.filter(r => r.id !== id));
+        showToast("Role deleted", "success");
+      } else showToast(res.error || "Failed", "error");
     });
   }
 
@@ -50,47 +97,35 @@ export default function SettingsClient({
     <div style={{ padding: "2rem", minHeight: "100vh", maxWidth: 900, margin: "0 auto" }}>
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
-      {/* Header */}
       <div style={{ marginBottom: "1.75rem" }}>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
         <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
       </div>
 
-      {/* Tabs */}
       <div style={{ display: "flex", gap: 8, marginBottom: "1.5rem" }}>
         <button onClick={() => setTab("general")} style={tabStyle(tab === "general")}>General</button>
         <button onClick={() => setTab("team")} style={tabStyle(tab === "team")}>Team Members</button>
+        <button onClick={() => setTab("roles")} style={tabStyle(tab === "roles")}>Roles & Permissions</button>
       </div>
 
-      {/* General tab */}
       {tab === "general" && (
         <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.5rem" }}>Your Profile</h2>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(177,178,180,0.08)", marginBottom: "1.5rem" }}>
-            <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.1rem", fontWeight: 800, color: "#818cf8", flexShrink: 0 }}>
+            <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", fontSize: "1.1rem", fontWeight: 800, color: "#818cf8", flexShrink: 0 }}>
               {getInitials(currentUser.full_name)}
             </div>
             <div>
               <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe" }}>{currentUser.full_name || "—"}</div>
               <div style={{ fontSize: "0.82rem", color: "#818286", marginTop: 2 }}>{currentUser.email}</div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: currentUser.role === "admin" ? "#f59e0b" : "#10b981", background: currentUser.role === "admin" ? "rgba(245,158,11,0.1)" : "rgba(16,185,129,0.1)", padding: "2px 8px", borderRadius: 999, marginTop: 6, border: `1px solid ${currentUser.role === "admin" ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)"}` }}>
-                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor" }} />
                 {currentUser.role}
               </div>
-            </div>
-          </div>
-          <div style={{ padding: "1rem 1.25rem", background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: 12 }}>
-            <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" style={{ flexShrink: 0, marginTop: 1 }}><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
-              <p style={{ fontSize: "0.82rem", color: "#818286", margin: 0, lineHeight: 1.6 }}>
-                Profile details (name, avatar) are managed through Supabase Auth. Contact your Supabase admin to update your display name or email address.
-              </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Team tab */}
       {tab === "team" && (
         <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
           <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -100,18 +135,16 @@ export default function SettingsClient({
             </div>
           </div>
 
-          {/* Table header */}
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-            {["Member", "Email", "Role", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+            {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
           </div>
 
           {profileList.map(p => {
             const isCurrentUser = p.id === currentUser.id;
             return (
-              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
-                {/* Member */}
+              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.15))", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: "#818cf8", flexShrink: 0 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.15))", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: "#818cf8" }}>
                     {getInitials(p.full_name)}
                   </div>
                   <div>
@@ -122,36 +155,90 @@ export default function SettingsClient({
                   </div>
                 </div>
 
-                {/* Email (from profiles, may be null) */}
-                <div style={{ fontSize: "0.82rem", color: "#5d5e60" }}>—</div>
-
-                {/* Role badge */}
                 <div>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: p.role === "admin" ? "#f59e0b" : "#10b981", background: p.role === "admin" ? "rgba(245,158,11,0.1)" : "rgba(16,185,129,0.1)", border: `1px solid ${p.role === "admin" ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)"}` }}>
-                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor" }} />
                     {p.role}
                   </span>
                 </div>
 
-                {/* Role switcher */}
-                <div style={{ display: "flex", gap: 6 }}>
-                  <button
-                    onClick={() => handleRoleChange(p.id, p.role === "admin" ? "sales" : "admin")}
+                <div>
+                  <select 
+                    value={p.role} 
+                    onChange={(e) => handleRoleChange(p.id, e.target.value)}
                     disabled={isPending}
-                    style={{ padding: "4px 12px", borderRadius: 8, fontSize: "0.75rem", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer", fontFamily: "inherit", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", transition: "all 0.2s" }}
-                    onMouseEnter={e => { (e.currentTarget).style.borderColor = "rgba(177,178,180,0.25)"; (e.currentTarget).style.color = "#fcfcfe"; }}
-                    onMouseLeave={e => { (e.currentTarget).style.borderColor = "rgba(177,178,180,0.12)"; (e.currentTarget).style.color = "#818286"; }}
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", padding: "4px 8px", borderRadius: 6, fontSize: "0.8rem", outline: "none", cursor: "pointer" }}
                   >
-                    → {p.role === "admin" ? "Sales" : "Admin"}
-                  </button>
+                    {roleList.map(r => <option key={r.id} value={r.name} style={{ background: "#0d0d12" }}>{r.name}</option>)}
+                  </select>
                 </div>
               </div>
             );
           })}
+        </div>
+      )}
 
-          {profileList.length === 0 && (
-            <div style={{ padding: "3rem", textAlign: "center", color: "#3d3e40" }}>No team members found.</div>
+      {tab === "roles" && (
+        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
+          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Roles & Permissions</h2>
+              <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>Create and manage custom roles</p>
+            </div>
+            <button onClick={() => setEditingRole({ id: "new", name: "", permissions: {} })} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(99,102,241,0.15)", color: "#818cf8", fontWeight: 600, border: "1px solid rgba(99,102,241,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
+              + New Role
+            </button>
+          </div>
+
+          {editingRole && (
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(99,102,241,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>{editingRole.id === "new" ? "Create New Role" : "Edit Role"}</h3>
+              <form onSubmit={handleSaveRole} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div>
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Role Name</label>
+                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: 250, padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+                  {editingRole.name === 'admin' && <span style={{ marginLeft: 10, fontSize: "0.7rem", color: "#ef4444" }}>Admin name cannot be changed</span>}
+                </div>
+                <div>
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 8 }}>Permissions</label>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {["can_manage_roles", "can_manage_deals", "can_manage_contacts", "can_access_mailbox"].map(perm => (
+                      <label key={perm} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.85rem", color: "#d1d5db" }}>
+                        <input type="checkbox" name={perm} defaultChecked={editingRole.permissions?.[perm]} style={{ accentColor: "#6366f1" }} />
+                        {perm.split('_').join(' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 10, marginTop: "0.5rem" }}>
+                  <button type="submit" disabled={isPending} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#6366f1", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer" }}>Save</button>
+                  <button type="button" onClick={() => setEditingRole(null)} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                </div>
+              </form>
+            </div>
           )}
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+            {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+          </div>
+
+          {roleList.map(r => (
+            <div key={r.id} style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe" }}>{r.name}</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {Object.entries(r.permissions).map(([k, v]) => v ? (
+                  <span key={k} style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(99,102,241,0.1)", color: "#818cf8", borderRadius: 4, border: "1px solid rgba(99,102,241,0.2)" }}>
+                    {k.replace('can_', '')}
+                  </span>
+                ) : null)}
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#d1d5db", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
+                {r.name !== "admin" && r.name !== "sales" && (
+                  <button onClick={() => handleDeleteRole(r.id)} disabled={isPending} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444", fontSize: "0.75rem", cursor: "pointer" }}>Delete</button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

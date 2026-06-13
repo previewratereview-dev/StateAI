@@ -15,9 +15,62 @@ export async function getProfiles() {
   }
 }
 
+export async function getRoles() {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("roles")
+      .select("*")
+      .order("created_at", { ascending: true });
+    if (error) return { error: error.message };
+    return { data };
+  } catch (e: any) {
+    return { error: e.message };
+  }
+}
+
+export async function createRole(name: string, permissions: any) {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("roles")
+      .insert([{ name, permissions }])
+      .select()
+      .single();
+    if (error) return { success: false, error: error.message };
+    return { success: true, data };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function updateRole(id: string, permissions: any) {
+  try {
+    const { error } = await supabaseAdmin
+      .from("roles")
+      .update({ permissions })
+      .eq("id", id);
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function deleteRole(id: string) {
+  try {
+    const { error } = await supabaseAdmin
+      .from("roles")
+      .delete()
+      .eq("id", id);
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
 export async function updateUserRole(
   userId: string,
-  role: "admin" | "sales"
+  role: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabaseAdmin
