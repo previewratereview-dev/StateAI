@@ -225,7 +225,7 @@ export default function Industries() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 sm:mb-12">
           <div className="relative rounded-2xl overflow-hidden glass-card border border-white/[0.06]">
-              <div className="aspect-[16/6] relative">
+              <div className="aspect-[16/8] xs:aspect-[16/7] sm:aspect-[16/6] relative min-h-[240px] sm:min-h-0">
               {/* hero image removed per request; keep subtle gradient and decorative blob */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/100 via-background/60 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center p-6">
@@ -260,7 +260,7 @@ export default function Industries() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
           {industries.map((industry, index) => {
             const Icon = industry.icon;
             return (

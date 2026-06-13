@@ -64,7 +64,7 @@ export default function Team() {
             {founders.map((person) => (
               <div
                 key={person.name}
-                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-72"
+                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-72 max-w-[280px] sm:max-w-none mx-auto w-full"
               >
                 <Image
                   src={person.image}
@@ -108,7 +108,7 @@ export default function Team() {
             {teamMembers.map((person) => (
               <div
                 key={person.name}
-                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-60"
+                className="group relative glass-card rounded-xl sm:rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-400 aspect-[3/4] sm:aspect-auto h-auto sm:h-60 max-w-[280px] sm:max-w-none mx-auto w-full"
               >
                 <Image
                   src={person.image}
