@@ -218,6 +218,28 @@ export default function MailboxClient({
               ) : (
                 <div style={{ whiteSpace: "pre-wrap" }}>{selectedEmail.body_text}</div>
               )}
+
+              {/* Attachments Section */}
+              {selectedEmail.attachments && selectedEmail.attachments.length > 0 && (
+                <div style={{ marginTop: "2rem", borderTop: "1px dashed rgba(177,178,180,0.15)", paddingTop: "1.5rem" }}>
+                  <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#818286", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "1rem" }}>
+                    Attachments ({selectedEmail.attachments.length})
+                  </h3>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                    {selectedEmail.attachments.map((att: any, idx: number) => (
+                      <a key={idx} href={att.url} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "10px 14px", borderRadius: "10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(177,178,180,0.08)", textDecoration: "none", color: "#fcfcfe", width: "fit-content", transition: "background 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.06)"} onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.03)"}>
+                        <div style={{ width: 32, height: 32, borderRadius: 6, background: "rgba(99,102,241,0.15)", color: "#818cf8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <span style={{ fontSize: "0.85rem", fontWeight: 600, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{att.filename || "Attachment"}</span>
+                          <span style={{ fontSize: "0.7rem", color: "#818286", marginTop: 2 }}>{(att.size / 1024).toFixed(1)} KB</span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <div style={{ padding: "1.5rem 2rem", borderTop: "1px solid rgba(177,178,180,0.08)" }}>
               <button onClick={() => {

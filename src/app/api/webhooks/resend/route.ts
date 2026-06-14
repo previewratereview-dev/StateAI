@@ -99,6 +99,62 @@ export async function POST(req: Request) {
       .eq("email", fromAddress)
       .maybeSingle();
 
+    // Process attachments
+    const processedAttachments = [];
+    const rawAttachments = receivedEmail?.attachments || [];
+
+    for (const attachment of rawAttachments) {
+      try {
+        // @ts-ignore - The Resend SDK types might be outdated, but this API exists
+        const { data: attachmentData, error: attachmentError } = await resend.emails.receiving.attachments.get({
+          emailId: eventData.email_id!,
+          id: attachment.id,
+        });
+
+        if (attachmentError || !attachmentData?.download_url) {
+          console.error(`Failed to get download URL for attachment ${attachment.id}:`, attachmentError);
+          continue;
+        }
+
+        // Fetch the file content from the download URL
+        const fileResponse = await fetch(attachmentData.download_url);
+        if (!fileResponse.ok) {
+          console.error(`Failed to download attachment ${attachment.id} from Resend`);
+          continue;
+        }
+
+        const buffer = await fileResponse.arrayBuffer();
+        
+        // Upload to Supabase Storage
+        const filePath = `${eventData.email_id}/${attachment.filename}`;
+        const { error: uploadError } = await supabaseAdmin.storage
+          .from("email-attachments")
+          .upload(filePath, buffer, {
+            contentType: attachment.content_type || "application/octet-stream",
+            upsert: true,
+          });
+
+        if (uploadError) {
+          console.error(`Failed to upload attachment ${attachment.id} to Supabase:`, uploadError);
+          continue;
+        }
+
+        const { data: { publicUrl } } = supabaseAdmin.storage
+          .from("email-attachments")
+          .getPublicUrl(filePath);
+
+        processedAttachments.push({
+          id: attachment.id,
+          filename: attachment.filename,
+          content_type: attachment.content_type,
+          size: attachment.size,
+          url: publicUrl,
+        });
+      } catch (err) {
+        console.error(`Error processing attachment ${attachment.id}:`, err);
+      }
+    }
+
     const emailRecord: Record<string, unknown> = {
       message_id: messageId,
       from_address: fromAddress,
@@ -111,7 +167,8 @@ export async function POST(req: Request) {
       thread_id: eventData.email_id || null,
       contact_id: contact?.id || null,
       read: false,
-      attachments_count: receivedEmail?.attachments?.length ?? eventData.attachments?.length ?? 0,
+      attachments_count: processedAttachments.length,
+      attachments: processedAttachments,
     };
 
     if (receivedAt) {
