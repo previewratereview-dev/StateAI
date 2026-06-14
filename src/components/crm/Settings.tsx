@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateUserRole, createRole, updateRole, deleteRole } from "@/app/actions/settings";
+import { useRouter } from "next/navigation";
+import { updateUserRole, createRole, updateRole, deleteRole, createUser } from "@/app/actions/settings";
+import { useIsMobile } from "@/lib/useIsMobile";
 import type { UserProfile } from "@/lib/auth";
 
 function getInitials(name: string | null) {
@@ -18,6 +20,8 @@ export default function SettingsClient({
   profiles: any[];
   roles: any[];
 }) {
+  const router = useRouter();
+  const isMobile = useIsMobile();
   const [tab, setTab] = useState<"general" | "team" | "roles">("team");
   const [profileList, setProfileList] = useState(profiles);
   const [roleList, setRoleList] = useState(roles);
@@ -26,6 +30,25 @@ export default function SettingsClient({
 
   // Role builder state
   const [editingRole, setEditingRole] = useState<any>(null);
+
+  // Add Team Member modal state
+  const [addingMember, setAddingMember] = useState(false);
+  const [newMemberName, setNewMemberName] = useState("");
+  const [newMemberEmail, setNewMemberEmail] = useState("");
+  const [newMemberPassword, setNewMemberPassword] = useState("");
+  const [newMemberMailbox, setNewMemberMailbox] = useState("");
+  const [mailboxTouched, setMailboxTouched] = useState(false);
+
+  function handleNameChange(name: string) {
+    setNewMemberName(name);
+    // Auto-suggest mailbox only if admin hasn't manually edited it
+    if (!mailboxTouched) {
+      const suggestion = name.trim()
+        ? `${name.trim().toLowerCase().replace(/\s+/g, ".")}.sales@stateai.in`
+        : "";
+      setNewMemberMailbox(suggestion);
+    }
+  }
 
   function showToast(msg: string, type: "success" | "error") {
     setToast({ msg, type });
@@ -41,6 +64,33 @@ export default function SettingsClient({
       const res = await updateUserRole(userId, newRole);
       if (!res.success) { setProfileList(profiles); showToast(res.error || "Failed", "error"); }
       else showToast("Role updated!", "success");
+    });
+  }
+
+  async function handleCreateMember(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!newMemberName.trim() || !newMemberEmail.trim() || !newMemberPassword.trim() || !newMemberMailbox.trim()) return;
+
+    startTransition(async () => {
+      const res = await createUser(
+        newMemberName.trim(),
+        newMemberEmail.trim(),
+        newMemberPassword.trim(),
+        "sales",
+        newMemberMailbox.trim()
+      );
+      if (res.success) {
+        setProfileList(prev => [...prev, res.data]);
+        showToast(`${newMemberName} added with mailbox ${newMemberMailbox}`, "success");
+        setAddingMember(false);
+        setNewMemberName("");
+        setNewMemberEmail("");
+        setNewMemberPassword("");
+        setNewMemberMailbox("");
+        setMailboxTouched(false);
+      } else {
+        showToast(res.error || "Failed to create user", "error");
+      }
     });
   }
 
@@ -94,11 +144,11 @@ export default function SettingsClient({
   });
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh", maxWidth: 900, margin: "0 auto" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh", maxWidth: 1200, margin: "0 auto" }}>
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
       <div style={{ marginBottom: "1.75rem" }}>
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
+        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
         <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
       </div>
 
@@ -109,7 +159,7 @@ export default function SettingsClient({
       </div>
 
       {tab === "general" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, padding: "1.75rem" }}>
+        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, padding: isMobile ? "1.25rem" : "1.75rem" }}>
           <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.5rem" }}>Your Profile</h2>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(177,178,180,0.08)", marginBottom: "1.5rem" }}>
             <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", fontSize: "1.1rem", fontWeight: 800, color: "#818cf8", flexShrink: 0 }}>
@@ -133,15 +183,87 @@ export default function SettingsClient({
               <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Team Members</h2>
               <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>{profileList.length} members · Manage roles below</p>
             </div>
+            <button onClick={() => setAddingMember(true)} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(16,185,129,0.15)", color: "#10b981", fontWeight: 600, border: "1px solid rgba(16,185,129,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
+              + Add Team Member
+            </button>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-            {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
-          </div>
+          {/* Add Team Member Modal */}
+          {addingMember && (
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(16,185,129,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>Add New Sales Team Member</h3>
+              <form onSubmit={handleCreateMember} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Full Name *</label>
+                    <input
+                      value={newMemberName}
+                      onChange={(e) => handleNameChange(e.target.value)}
+                      required
+                      placeholder="e.g. Muzamil Khan"
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Login Email *</label>
+                    <input
+                      type="email"
+                      value={newMemberEmail}
+                      onChange={(e) => setNewMemberEmail(e.target.value)}
+                      required
+                      placeholder="muzamil@company.com"
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Initial Password *</label>
+                    <input
+                      type="password"
+                      value={newMemberPassword}
+                      onChange={(e) => setNewMemberPassword(e.target.value)}
+                      required
+                      minLength={6}
+                      placeholder="Min 6 characters"
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Assigned Mailbox *</label>
+                    <input
+                      value={newMemberMailbox}
+                      onChange={(e) => { setNewMemberMailbox(e.target.value); setMailboxTouched(true); }}
+                      required
+                      placeholder="e.g. muzamil.sales@stateai.in"
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", color: "#10b981", fontSize: "0.85rem", fontWeight: 600, outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 10, marginTop: "0.25rem" }}>
+                  <button type="submit" disabled={isPending || !newMemberName.trim() || !newMemberMailbox.trim()} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#10b981", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer", opacity: isPending ? 0.6 : 1 }}>
+                    {isPending ? "Creating..." : "Create User"}
+                  </button>
+                  <button type="button" onClick={() => { setAddingMember(false); setNewMemberName(""); setNewMemberEmail(""); setNewMemberPassword(""); setNewMemberMailbox(""); setMailboxTouched(false); }} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {!isMobile && (
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+              {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            </div>
+          )}
 
           {profileList.map(p => {
             const isCurrentUser = p.id === currentUser.id;
-            return (
+            return isMobile ? (
+              <div key={p.id} style={{ padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)" }}>
+                <div style={{ fontWeight: 600, color: "#fcfcfe" }}>{p.full_name}</div>
+                <div style={{ fontSize: "0.75rem", color: "#818286" }}>{p.role}</div>
+              </div>
+            ) : (
               <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.15))", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: "#818cf8" }}>
@@ -152,6 +274,9 @@ export default function SettingsClient({
                       {p.full_name || "Unnamed User"}
                       {isCurrentUser && <span style={{ fontSize: "0.65rem", background: "rgba(99,102,241,0.15)", color: "#818cf8", padding: "1px 7px", borderRadius: 999, marginLeft: 8, fontWeight: 700 }}>You</span>}
                     </div>
+                    {p.assigned_mailbox && (
+                      <div style={{ fontSize: "0.72rem", color: "#10b981", marginTop: 2 }}>📬 {p.assigned_mailbox}</div>
+                    )}
                   </div>
                 </div>
 
@@ -195,7 +320,7 @@ export default function SettingsClient({
               <form onSubmit={handleSaveRole} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div>
                   <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Role Name</label>
-                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: 250, padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: "100%", maxWidth: 250, padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
                   {editingRole.name === 'admin' && <span style={{ marginLeft: 10, fontSize: "0.7rem", color: "#ef4444" }}>Admin name cannot be changed</span>}
                 </div>
                 <div>
@@ -217,13 +342,15 @@ export default function SettingsClient({
             </div>
           )}
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-            {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
-          </div>
+          {!isMobile && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+              {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            </div>
+          )}
 
           {roleList.map(r => (
-            <div key={r.id} style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe" }}>{r.name}</div>
+            <div key={r.id} style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe", marginBottom: isMobile ? "0.5rem" : 0 }}>{r.name}</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {Object.entries(r.permissions).map(([k, v]) => v ? (
                   <span key={k} style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(99,102,241,0.1)", color: "#818cf8", borderRadius: 4, border: "1px solid rgba(99,102,241,0.2)" }}>
@@ -231,7 +358,7 @@ export default function SettingsClient({
                   </span>
                 ) : null)}
               </div>
-              <div style={{ display: "flex", gap: 8 }}>
+              <div style={{ display: "flex", gap: 8, marginTop: isMobile ? "0.75rem" : 0 }}>
                 <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#d1d5db", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
                 {r.name !== "admin" && r.name !== "sales" && (
                   <button onClick={() => handleDeleteRole(r.id)} disabled={isPending} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444", fontSize: "0.75rem", cursor: "pointer" }}>Delete</button>

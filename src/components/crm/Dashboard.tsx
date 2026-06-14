@@ -1,6 +1,7 @@
 "use client";
 
 import type { UserProfile } from "@/lib/auth";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const STAGE_CONFIG = {
   new: { label: "New", color: "#6366f1" },
@@ -55,6 +56,7 @@ export default function DashboardClient({
     activities: any[];
   };
 }) {
+  const isMobile = useIsMobile();
   const { contacts, deals, tasks, bookings, activities } = stats;
 
   // Compute KPIs
@@ -95,12 +97,12 @@ export default function DashboardClient({
   const firstName = profile.full_name?.split(" ")[0] || profile.email?.split("@")[0];
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh" }}>
       {/* Header */}
       <div style={{ marginBottom: "2rem" }}>
         <h1
           style={{
-            fontSize: "1.6rem",
+            fontSize: isMobile ? "1.25rem" : "1.6rem",
             fontWeight: 700,
             color: "#fcfcfe",
             margin: 0,
@@ -118,7 +120,7 @@ export default function DashboardClient({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "1rem",
           marginBottom: "1.75rem",
         }}
@@ -221,7 +223,7 @@ export default function DashboardClient({
       </div>
 
       {/* Main grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "1.25rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 340px", gap: "1.25rem" }}>
         {/* Left col */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           {/* Pipeline by stage */}

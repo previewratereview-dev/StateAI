@@ -9,17 +9,23 @@ import { revalidatePath } from "next/cache";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function getEmails(folder: "inbox" | "sent" | "archived" | "trash" = "inbox") {
-  await requireAuth();
+  const profile = await requireAuth();
   const supabase = await createSupabaseServerClient();
 
-  // If the user doesn't have mailbox permissions, block them (assuming roles table setup allows this check later, 
-  // for now we let everyone who is authenticated view the shared inbox)
-
-  const { data, error } = await supabase
+  let query = supabase
     .from("emails")
     .select("*, contacts(id, first_name, last_name)")
     .eq("status", folder)
     .order("created_at", { ascending: false });
+
+  // Sales users only see emails to/from their assigned mailbox
+  if (profile.role === "sales" && profile.assigned_mailbox) {
+    query = query.or(
+      `to_addresses.cs.{"${profile.assigned_mailbox}"},from_address.eq.${profile.assigned_mailbox}`
+    );
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Failed to load emails:", error);

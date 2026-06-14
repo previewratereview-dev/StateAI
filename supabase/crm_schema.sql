@@ -7,7 +7,8 @@ create table if not exists public.profiles (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   full_name text,
   role text default 'sales' not null check (role in ('admin', 'sales')),
-  avatar_url text
+  avatar_url text,
+  assigned_mailbox text
 );
 
 alter table public.profiles enable row level security;
@@ -25,12 +26,22 @@ create policy "Admin can update any profile" on public.profiles
   for update to authenticated
   using (exists (select 1 from public.profiles where id = auth.uid() and role = 'admin'));
 
+drop policy if exists "Admin can insert profiles" on public.profiles;
+create policy "Admin can insert profiles" on public.profiles
+  for insert to authenticated
+  with check (exists (select 1 from public.profiles where id = auth.uid() and role = 'admin'));
+
 -- Auto-create profile on signup
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into public.profiles (id, full_name)
-  values (new.id, new.raw_user_meta_data->>'full_name');
+  insert into public.profiles (id, full_name, role, assigned_mailbox)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
+    coalesce(new.raw_user_meta_data->>'role', 'sales'),
+    new.raw_user_meta_data->>'assigned_mailbox'
+  );
   return new;
 end;
 $$;

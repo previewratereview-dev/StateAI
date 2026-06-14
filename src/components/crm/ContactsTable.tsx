@@ -4,6 +4,7 @@ import { useState, useTransition, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import type { Contact, ContactStatus } from "@/app/actions/contacts";
 import { createContact, updateContact, deleteContact } from "@/app/actions/contacts";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const STATUS_CFG: Record<ContactStatus, { label: string; color: string; bg: string }> = {
   lead: { label: "Lead", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
@@ -83,7 +84,7 @@ function ContactDrawer({
         width: 460, background: "#0d0d12", borderLeft: "1px solid rgba(177,178,180,0.1)",
         height: "100%", overflowY: "auto", padding: "1.75rem",
         boxShadow: "-20px 0 60px rgba(0,0,0,0.5)",
-      }}>
+      }} className="crm-drawer-panel">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
             {editing ? "Edit Contact" : "New Contact"}
@@ -157,6 +158,7 @@ function ContactDrawer({
 // ─── Main Component ────────────────────────────────────────────────────────────
 export default function ContactsTable({ initialContacts, isAdmin }: { initialContacts: Contact[]; isAdmin: boolean }) {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [contacts, setContacts] = useState(initialContacts);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<ContactStatus | "all">("all");
@@ -202,7 +204,7 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
   }, [contacts]);
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh" }}>
       {/* Toast */}
       {toast && (
         <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>
@@ -215,12 +217,12 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       )}
 
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <div>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Contacts</h1>
+          <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Contacts</h1>
           <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>{contacts.length} total contacts</p>
         </div>
-        <button onClick={() => setDrawer({ open: true })} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)" }}>
+        <button onClick={() => setDrawer({ open: true })} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)", minHeight: 44 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
           Add Contact
         </button>
@@ -251,19 +253,56 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
 
       {/* Table */}
       <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-        {/* Table header */}
-        <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-          {["Contact", "Company", "Status", "Source", "Created", ""].map(h => (
-            <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
-          ))}
-        </div>
+        {/* Table header - hidden on mobile */}
+        {!isMobile && (
+          <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+            {["Contact", "Company", "Status", "Source", "Created", ""].map(h => (
+              <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
+            ))}
+          </div>
+        )}
 
         {filtered.length === 0 ? (
           <div style={{ padding: "3rem", textAlign: "center", color: "#3d3e40" }}>
             <div style={{ fontSize: "2rem", marginBottom: 8 }}>👤</div>
             No contacts found. {search ? "Try a different search." : "Add your first contact!"}
           </div>
+        ) : isMobile ? (
+          /* Mobile card layout */
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {filtered.map(contact => {
+              const cfg = STATUS_CFG[contact.status];
+              return (
+                <div key={contact.id} style={{ padding: "1rem", borderBottom: "1px solid rgba(177,178,180,0.06)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${cfg.color}30, ${cfg.color}10)`, border: `1px solid ${cfg.color}25`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: cfg.color, flexShrink: 0 }}>
+                      {getInitials(contact.first_name, contact.last_name)}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <a href={`/crm/contacts/${contact.id}`} style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe", textDecoration: "none", display: "block" }}>
+                        {contact.first_name} {contact.last_name}
+                      </a>
+                      <div style={{ fontSize: "0.75rem", color: "#5d5e60", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{contact.email}</div>
+                    </div>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.05em", color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30`, flexShrink: 0 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: cfg.color, boxShadow: `0 0 5px ${cfg.color}` }} />
+                      {cfg.label}
+                    </span>
+                  </div>
+                  {contact.company && <div style={{ fontSize: "0.78rem", color: "#818286", marginBottom: 4 }}>{contact.company}{contact.job_title ? ` · ${contact.job_title}` : ""}</div>}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ fontSize: "0.72rem", color: "#3d3e40" }}>{formatDate(contact.created_at)}</div>
+                    <div style={{ display: "flex", gap: 6 }}>
+                      <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.1)", color: "#818286", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Edit</button>
+                      {isAdmin && <button onClick={() => handleDelete(contact.id)} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "transparent", border: "1px solid rgba(239,68,68,0.2)", color: "rgba(239,68,68,0.6)", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Del</button>}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
+          /* Desktop table layout */
           filtered.map(contact => {
             const cfg = STATUS_CFG[contact.status];
             return (

@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { Deal, DealStage } from "@/app/actions/deals";
 import { createDeal, updateDealStage, deleteDeal } from "@/app/actions/deals";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const STAGES: { key: DealStage; label: string; color: string; prob: number }[] = [
   { key: "new", label: "New", color: "#6366f1", prob: 10 },
@@ -145,6 +146,7 @@ function AddDealDrawer({ contacts, onClose, onSaved }: { contacts: { id: string;
 }
 
 export default function LeadsPipeline({ initialDeals, contacts, isAdmin }: { initialDeals: Deal[]; contacts: any[]; isAdmin: boolean }) {
+  const isMobile = useIsMobile();
   const router = useRouter();
   const [deals, setDeals] = useState(initialDeals);
   const [showAddDeal, setShowAddDeal] = useState(false);
@@ -181,15 +183,17 @@ export default function LeadsPipeline({ initialDeals, contacts, isAdmin }: { ini
   }
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
       {showAddDeal && <AddDealDrawer contacts={contacts} onClose={() => setShowAddDeal(false)} onSaved={handleDealSaved} />}
 
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <div>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Pipeline</h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>{deals.length} deals total</p>
+          <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Pipeline</h1>
+          <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>
+            {deals.length} deals · <span style={{ color: "#10b981" }}>${(deals.reduce((acc, d) => acc + (d.value || 0), 0)).toLocaleString()} total</span>
+          </p>
         </div>
         <button onClick={() => setShowAddDeal(true)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
@@ -203,7 +207,7 @@ export default function LeadsPipeline({ initialDeals, contacts, isAdmin }: { ini
           const stageDeals = deals.filter(d => d.stage === stage.key);
           const stageValue = stageDeals.reduce((s, d) => s + (d.value || 0), 0);
           return (
-            <div key={stage.key} style={{ minWidth: 260, flex: "0 0 260px", display: "flex", flexDirection: "column" }}>
+            <div key={stage.key} style={{ flex: isMobile ? "0 0 240px" : "0 0 280px", display: "flex", flexDirection: "column" }}>
               {/* Column header */}
               <div style={{ padding: "0.875rem", background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 14, marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

@@ -10,6 +10,7 @@ export interface UserProfile {
   role: UserRole;
   avatar_url: string | null;
   email?: string;
+  assigned_mailbox?: string | null;
 }
 
 export async function getSession() {
@@ -49,6 +50,7 @@ export async function getProfile(): Promise<UserProfile | null> {
     ...profile,
     email: user.email,
     role: (profile.role as UserRole) || "sales",
+    assigned_mailbox: profile.assigned_mailbox || null,
   };
 }
 

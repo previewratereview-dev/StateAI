@@ -105,3 +105,42 @@ export async function getDashboardStats() {
     return { contacts: [], deals: [], tasks: [], bookings: [], activities: [] };
   }
 }
+
+export async function createUser(
+  fullName: string,
+  email: string,
+  password: string,
+  role: string,
+  assignedMailbox: string
+): Promise<{ success: boolean; error?: string; data?: any }> {
+  try {
+    // Create the auth user with metadata. The handle_new_user() trigger will
+    // auto-create the profiles row with role + assigned_mailbox.
+    const { data, error } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true, // Skip email verification
+      user_metadata: {
+        full_name: fullName,
+        role,
+        assigned_mailbox: assignedMailbox,
+      },
+    });
+
+    if (error) return { success: false, error: error.message };
+
+    return {
+      success: true,
+      data: {
+        id: data.user.id,
+        full_name: fullName,
+        role,
+        assigned_mailbox: assignedMailbox,
+        email,
+      },
+    };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+

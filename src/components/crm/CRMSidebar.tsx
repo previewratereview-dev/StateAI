@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
 import type { UserProfile } from "@/lib/auth";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const NAV_ITEMS = [
   {
@@ -144,42 +145,65 @@ function getInitials(name: string | null | undefined) {
 
 export default function CRMSidebar({ profile }: { profile: UserProfile }) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.classList.add("crm-scroll-lock");
+    } else {
+      document.body.classList.remove("crm-scroll-lock");
+    }
+    return () => document.body.classList.remove("crm-scroll-lock");
+  }, [mobileOpen]);
 
   const visibleNav = NAV_ITEMS.filter((item) =>
     item.roles.includes(profile.role)
   );
 
-  return (
+  // On mobile, always show full (not collapsed) sidebar content
+  const showLabels = isMobile ? true : !collapsed;
+  const sidebarWidth = isMobile ? 260 : collapsed ? 64 : 220;
+
+  const sidebarContent = (
     <aside
       style={{
-        width: collapsed ? 64 : 220,
-        minWidth: collapsed ? 64 : 220,
+        width: sidebarWidth,
+        minWidth: sidebarWidth,
         height: "100vh",
-        position: "sticky",
+        position: isMobile ? "fixed" : "sticky",
         top: 0,
+        left: 0,
         background: "rgb(9 9 14 / 95%)",
         backdropFilter: "blur(24px)",
         borderRight: "1px solid rgb(177 178 180 / 8%)",
         display: "flex",
         flexDirection: "column",
-        transition: "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
-        zIndex: 50,
+        transition: isMobile ? "none" : "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
+        zIndex: 100,
         overflow: "hidden",
+        ...(isMobile ? { animation: "crm-slide-in-left 0.25s ease forwards" } : {}),
       }}
     >
       {/* Header */}
       <div
         style={{
-          padding: collapsed ? "1.25rem 0" : "1.25rem 1rem",
+          padding: showLabels ? "1.25rem 1rem" : "1.25rem 0",
           borderBottom: "1px solid rgb(177 178 180 / 6%)",
           display: "flex",
           alignItems: "center",
-          justifyContent: collapsed ? "center" : "space-between",
+          justifyContent: showLabels ? "space-between" : "center",
           gap: 10,
         }}
       >
-        {!collapsed && (
+        {showLabels && (
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div
               style={{
@@ -205,29 +229,53 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
             </span>
           </div>
         )}
-        <button
-          onClick={() => setCollapsed((c) => !c)}
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: 7,
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(177,178,180,0.1)",
-            color: "#5d5e60",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            transition: "all 0.2s",
-          }}
-          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-            style={{ transform: collapsed ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
+        {isMobile ? (
+          <button
+            onClick={() => setMobileOpen(false)}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 7,
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(177,178,180,0.1)",
+              color: "#5d5e60",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        ) : (
+          <button
+            onClick={() => setCollapsed((c) => !c)}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 7,
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(177,178,180,0.1)",
+              color: "#5d5e60",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              transition: "all 0.2s",
+            }}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              style={{ transform: collapsed ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Nav */}
@@ -238,12 +286,12 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
             <Link
               key={item.href}
               href={item.href}
-              title={collapsed ? item.label : undefined}
+              title={!showLabels ? item.label : undefined}
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: collapsed ? 0 : 10,
-                padding: collapsed ? "0.6rem" : "0.6rem 0.75rem",
+                gap: showLabels ? 10 : 0,
+                padding: showLabels ? "0.6rem 0.75rem" : "0.6rem",
                 borderRadius: 10,
                 marginBottom: 2,
                 color: isActive ? "#818cf8" : "#818286",
@@ -255,11 +303,12 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                 transition: "all 0.2s",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
-                justifyContent: collapsed ? "center" : "flex-start",
+                justifyContent: showLabels ? "flex-start" : "center",
+                minHeight: 44, // Touch-friendly
               }}
             >
               <span style={{ flexShrink: 0 }}>{item.icon}</span>
-              {!collapsed && <span>{item.label}</span>}
+              {showLabels && <span>{item.label}</span>}
             </Link>
           );
         })}
@@ -272,7 +321,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
           borderTop: "1px solid rgb(177 178 180 / 6%)",
         }}
       >
-        {!collapsed && (
+        {showLabels && (
           <div
             style={{
               display: "flex",
@@ -334,7 +383,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
             type="submit"
             style={{
               width: "100%",
-              padding: collapsed ? "0.6rem" : "0.55rem 0.75rem",
+              padding: showLabels ? "0.55rem 0.75rem" : "0.6rem",
               borderRadius: 10,
               background: "transparent",
               border: "1px solid rgba(239,68,68,0.15)",
@@ -344,10 +393,11 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               fontWeight: 600,
               display: "flex",
               alignItems: "center",
-              justifyContent: collapsed ? "center" : "flex-start",
+              justifyContent: showLabels ? "flex-start" : "center",
               gap: 8,
               transition: "all 0.2s",
               fontFamily: "inherit",
+              minHeight: 44,
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background = "rgba(239,68,68,0.08)";
@@ -363,10 +413,41 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               <polyline points="16 17 21 12 16 7" />
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
-            {!collapsed && "Sign Out"}
+            {showLabels && "Sign Out"}
           </button>
         </form>
       </div>
     </aside>
   );
+
+  if (isMobile) {
+    return (
+      <>
+        {/* Floating hamburger button */}
+        {!mobileOpen && (
+          <button
+            className="crm-hamburger"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        )}
+
+        {/* Overlay sidebar */}
+        {mobileOpen && (
+          <>
+            <div className="crm-sidebar-backdrop" onClick={() => setMobileOpen(false)} />
+            {sidebarContent}
+          </>
+        )}
+      </>
+    );
+  }
+
+  return sidebarContent;
 }

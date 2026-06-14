@@ -599,3 +599,73 @@ body {
 @media (max-width: 420px) {
   #industries .industries-svg { width: 56px; height: 56px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CRM Mobile Responsive Utilities
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Scroll lock when mobile sidebar/drawer is open */
+body.crm-scroll-lock {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Mobile sidebar overlay backdrop */
+.crm-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  animation: crm-fade-in 0.2s ease forwards;
+}
+
+@keyframes crm-fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes crm-slide-in-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes crm-slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Mobile hamburger button */
+.crm-hamburger {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 98;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85));
+  border: 1px solid rgba(99,102,241,0.4);
+  color: #fcfcfe;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.3), 0 8px 32px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.crm-hamburger:active {
+  transform: scale(0.92);
+}
+
+/* CRM drawer responsive — full-screen on mobile */
+@media (max-width: 767px) {
+  .crm-drawer-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+  }
+}

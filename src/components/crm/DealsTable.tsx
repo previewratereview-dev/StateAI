@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useTransition, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import type { Deal, DealStage } from "@/app/actions/deals";
 import { createDeal, updateDeal, deleteDeal } from "@/app/actions/deals";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const STAGE_CFG: Record<DealStage, { label: string; color: string; bg: string }> = {
   new: { label: "New", color: "#6366f1", bg: "rgba(99,102,241,0.1)" },
@@ -23,10 +25,12 @@ function formatDate(d: string | null) {
 }
 
 export default function DealsTable({ initialDeals, contacts, isAdmin }: { initialDeals: Deal[]; contacts: any[]; isAdmin: boolean }) {
+  const router = useRouter();
+  const isMobile = useIsMobile();
   const [deals, setDeals] = useState(initialDeals);
   const [search, setSearch] = useState("");
   const [stageFilter, setStageFilter] = useState<DealStage | "all">("all");
-  const [showAdd, setShowAdd] = useState(false);
+  const [drawer, setDrawer] = useState<{ open: boolean; editing?: Deal | null }>({ open: false });
   const [isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
@@ -52,32 +56,33 @@ export default function DealsTable({ initialDeals, contacts, isAdmin }: { initia
   const inputStyle: React.CSSProperties = { width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", borderRadius: 10, padding: "0.65rem 0.875rem", color: "#fcfcfe", fontSize: "0.875rem", outline: "none", fontFamily: "inherit", boxSizing: "border-box" };
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh" }}>
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
       {/* Add Drawer */}
-      {showAdd && (
+      {drawer.open && (
         <div style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex" }}>
-          <div style={{ flex: 1, background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} onClick={() => setShowAdd(false)} />
-          <div style={{ width: 440, background: "#0d0d12", borderLeft: "1px solid rgba(177,178,180,0.1)", height: "100%", overflowY: "auto", padding: "1.75rem" }}>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} onClick={() => setDrawer({ open: false })} />
+          <div style={{ width: isMobile ? "100%" : 460, background: "#0d0d12", borderLeft: "1px solid rgba(177,178,180,0.1)", height: "100%", overflowY: "auto", padding: "1.75rem", boxShadow: "-20px 0 60px rgba(0,0,0,0.5)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>New Deal</h2>
-              <button onClick={() => setShowAdd(false)} style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>{drawer.editing ? "Edit Deal" : "New Deal"}</h2>
+              <button onClick={() => setDrawer({ open: false })} style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
             </div>
-            <form onSubmit={e => { e.preventDefault(); const fd = new FormData(e.currentTarget); startTransition(async () => { const res = await createDeal(fd); if (res.data) { setDeals(p => [res.data!, ...p]); setShowAdd(false); showToast("Deal created!", "success"); } else showToast(res.error || "Failed", "error"); }); }}>
-              <div style={{ marginBottom: "1rem" }}><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Title *</label><input name="title" required style={inputStyle} /></div>
-              <div style={{ marginBottom: "1rem" }}><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Contact</label><select name="contact_id" style={{ ...inputStyle, cursor: "pointer" }}><option value="">— None —</option>{contacts.map(c => <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>)}</select></div>
+            <form onSubmit={e => { e.preventDefault(); const fd = new FormData(e.currentTarget); startTransition(async () => { const res = drawer.editing ? await updateDeal(drawer.editing.id, fd) : await createDeal(fd); if (res.data) { if(drawer.editing) setDeals(p => p.map(d => d.id === res.data!.id ? res.data! : d)); else setDeals(p => [res.data!, ...p]); setDrawer({ open: false }); showToast("Success!", "success"); } else showToast(res.error || "Failed", "error"); }); }}>
+              <input type="hidden" name="id" defaultValue={drawer.editing?.id} />
+              <div style={{ marginBottom: "1rem" }}><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Title *</label><input name="title" defaultValue={drawer.editing?.title} required style={inputStyle} /></div>
+              <div style={{ marginBottom: "1rem" }}><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Contact</label><select name="contact_id" defaultValue={drawer.editing?.contact_id || ""} style={{ ...inputStyle, cursor: "pointer" }}><option value="">— None —</option>{contacts.map(c => <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>)}</select></div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Value ($)</label><input name="value" type="number" min="0" step="0.01" defaultValue="0" style={inputStyle} /></div>
-                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Stage</label><select name="stage" style={{ ...inputStyle, cursor: "pointer" }}>{Object.entries(STAGE_CFG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select></div>
+                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Value ($)</label><input name="value" type="number" min="0" step="0.01" defaultValue={drawer.editing?.value || 0} style={inputStyle} /></div>
+                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Stage</label><select name="stage" defaultValue={drawer.editing?.stage || "new"} style={{ ...inputStyle, cursor: "pointer" }}>{Object.entries(STAGE_CFG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select></div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
-                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Probability (%)</label><input name="probability" type="number" min="0" max="100" defaultValue="10" style={inputStyle} /></div>
-                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Close Date</label><input name="expected_close_date" type="date" style={inputStyle} /></div>
+                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Probability (%)</label><input name="probability" type="number" min="0" max="100" defaultValue={drawer.editing?.probability || 10} style={inputStyle} /></div>
+                <div><label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Close Date</label><input name="expected_close_date" type="date" defaultValue={drawer.editing?.expected_close_date?.split('T')[0]} style={inputStyle} /></div>
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button type="button" onClick={() => setShowAdd(false)} style={{ flex: 1, padding: "0.7rem", borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>Cancel</button>
-                <button type="submit" disabled={isPending} style={{ flex: 2, padding: "0.7rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "none", color: "#fcfcfe", cursor: isPending ? "not-allowed" : "pointer", fontFamily: "inherit", fontWeight: 700 }}>{isPending ? "Creating…" : "Create Deal"}</button>
+                <button type="button" onClick={() => setDrawer({ open: false })} style={{ flex: 1, padding: "0.7rem", borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>Cancel</button>
+                <button type="submit" disabled={isPending} style={{ flex: 2, padding: "0.7rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "none", color: "#fcfcfe", cursor: isPending ? "not-allowed" : "pointer", fontFamily: "inherit", fontWeight: 700 }}>{isPending ? "Saving…" : "Save Deal"}</button>
               </div>
             </form>
           </div>
@@ -85,16 +90,14 @@ export default function DealsTable({ initialDeals, contacts, isAdmin }: { initia
       )}
 
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <div>
-          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Deals</h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>
-            {deals.length} deals · {isAdmin && <span style={{ color: "#10b981" }}>{formatCurrency(totalPipeline)} pipeline</span>}
-          </p>
+          <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Deals</h1>
+          <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>{deals.length} total deals {isAdmin && `· ${formatCurrency(totalPipeline)} pipeline`}</p>
         </div>
-        <button onClick={() => setShowAdd(true)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)" }}>
+        <button onClick={() => setDrawer({ open: true })} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-          New Deal
+          Add Deal
         </button>
       </div>
 
@@ -115,18 +118,33 @@ export default function DealsTable({ initialDeals, contacts, isAdmin }: { initia
 
       {/* Table */}
       <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 1fr 1fr 1fr auto", gap: "0.875rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-          {["Deal", "Contact", "Stage", "Value", "Probability", "Close Date", ""].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
-        </div>
+        {!isMobile && (
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 1fr 1fr 1fr auto", gap: "0.875rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+            {["Deal", "Contact", "Stage", "Value", "Probability", "Close Date", ""].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+          </div>
+        )}
         {filtered.length === 0 ? (
           <div style={{ padding: "3rem", textAlign: "center", color: "#3d3e40" }}><div style={{ fontSize: "2rem", marginBottom: 8 }}>💼</div>No deals found.</div>
         ) : filtered.map(deal => {
           const cfg = STAGE_CFG[deal.stage];
           const contactName = deal.contacts ? `${deal.contacts.first_name} ${deal.contacts.last_name}` : "—";
-          return (
-            <div key={deal.id} style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 1fr 1fr 1fr auto", gap: "0.875rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center", transition: "background 0.15s" }}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)"}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "transparent"}>
+          return isMobile ? (
+            <div key={deal.id} style={{ padding: "1rem", borderBottom: "1px solid rgba(177,178,180,0.04)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                <div style={{ fontWeight: 600, color: "#fcfcfe" }}>{deal.title}</div>
+                <div style={{ color: "#10b981", fontWeight: 700 }}>{isAdmin ? formatCurrency(deal.value || 0) : "—"}</div>
+              </div>
+              <div style={{ fontSize: "0.82rem", color: "#818286", marginBottom: 8 }}>{contactName}</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.68rem", fontWeight: 600, color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30` }}>{cfg.label}</span>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button onClick={() => setDrawer({ open: true, editing: deal })} style={{ padding: "4px 10px", borderRadius: 7, fontSize: "0.72rem", background: "rgba(255,255,255,0.04)", border: "none", color: "#fcfcfe", cursor: "pointer" }}>Edit</button>
+                  {isAdmin && <button onClick={() => handleDelete(deal.id)} style={{ padding: "4px 10px", borderRadius: 7, fontSize: "0.72rem", background: "rgba(239,68,68,0.1)", border: "none", color: "#ef4444", cursor: "pointer" }}>Del</button>}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div key={deal.id} style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 1fr 1fr 1fr auto", gap: "0.875rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
               <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe" }}>{deal.title}</div>
               <div style={{ fontSize: "0.82rem", color: "#818286" }}>{contactName}<br /><span style={{ fontSize: "0.72rem", color: "#5d5e60" }}>{deal.contacts?.company || ""}</span></div>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.68rem", fontWeight: 600, color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30`, width: "fit-content" }}>

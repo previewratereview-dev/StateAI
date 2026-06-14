@@ -1,5 +1,7 @@
 "use client";
 
+import { useIsMobile } from "@/lib/useIsMobile";
+
 const STAGE_CFG: Record<string, { label: string; color: string }> = {
   new: { label: "New", color: "#6366f1" },
   qualified: { label: "Qualified", color: "#3b82f6" },
@@ -43,6 +45,7 @@ export default function ReportsClient({
   stats: { contacts: any[]; deals: any[]; tasks: any[]; bookings: any[]; activities: any[] };
   isAdmin: boolean;
 }) {
+  const isMobile = useIsMobile();
   const { contacts, deals, tasks, bookings } = stats;
 
   // ── Pipeline by stage ──────────────────────────────────────────────────────
@@ -98,10 +101,10 @@ export default function ReportsClient({
   };
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh" }}>
       {/* Header */}
-      <div style={{ marginBottom: "1.75rem" }}>
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Reports & Analytics</h1>
+      <div style={{ marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.6rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Reports & Analytics</h1>
         <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>Pipeline performance and team metrics</p>
       </div>
 
@@ -121,8 +124,8 @@ export default function ReportsClient({
         ))}
       </div>
 
-      {/* Main 2-col grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem", marginBottom: "1.25rem" }}>
+      {/* 2-Column Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
         {/* Pipeline by stage */}
         <div style={card}>
           <h2 style={{ fontSize: "0.9rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.25rem", letterSpacing: "-0.01em" }}>Pipeline by Stage</h2>
@@ -182,8 +185,8 @@ export default function ReportsClient({
         </div>
       </div>
 
-      {/* Bottom 3-col grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1.25rem" }}>
+      {/* 3-Column Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.5rem" }}>
         {/* Contact breakdown */}
         <div style={card}>
           <h2 style={{ fontSize: "0.9rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.25rem", letterSpacing: "-0.01em" }}>Contact Status</h2>

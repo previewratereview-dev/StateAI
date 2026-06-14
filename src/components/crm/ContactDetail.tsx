@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { sendEmail } from "@/app/actions/emails";
 import type { UserProfile } from "@/lib/auth";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 export default function ContactDetailClient({
   contact,
@@ -19,6 +20,7 @@ export default function ContactDetailClient({
   emails: any[];
   profile: UserProfile;
 }) {
+  const isMobile = useIsMobile();
   const [isComposing, setIsComposing] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
@@ -66,7 +68,7 @@ export default function ContactDetailClient({
   const totalValue = deals.reduce((acc, d) => acc + (d.value || 0), 0);
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh", position: "relative" }}>
+    <div style={{ padding: isMobile ? "1rem" : "2rem", minHeight: "100vh", position: "relative" }}>
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 999, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
       <a href="/crm/contacts" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#5d5e60", fontSize: "0.82rem", textDecoration: "none", marginBottom: "1.5rem", fontWeight: 600 }}>
@@ -74,7 +76,7 @@ export default function ContactDetailClient({
         Back to Contacts
       </a>
 
-      <div style={{ display: "grid", gridTemplateColumns: "360px 1fr", gap: "1.5rem", alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "360px 1fr", gap: "1.5rem", alignItems: "start" }}>
         
         {/* Left Column — Hub */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
