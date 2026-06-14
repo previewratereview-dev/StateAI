@@ -157,7 +157,7 @@ export default function Industries() {
                   src={heroImage}
                   alt={selectedIndustry.name}
                   fill
-                  className="object-cover"
+                  className="object-contain object-center sm:object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
@@ -276,7 +276,7 @@ export default function Industries() {
                         src={industry.image}
                         alt={industry.name}
                         fill
-                        className="object-cover transition-opacity duration-500"
+                        className="object-contain object-center sm:object-cover transition-opacity duration-500"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 250px"
                       />
                     )}
