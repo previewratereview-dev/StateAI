@@ -1,45 +1,129 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { Resend, type GetReceivingEmailResponseSuccess } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+type ResendReceivedEmailWebhook = {
+  type?: string;
+  created_at?: string;
+  data?: {
+    email_id?: string;
+    created_at?: string;
+    from?: string;
+    to?: string[] | string;
+    bcc?: string[];
+    cc?: string[];
+    message_id?: string;
+    messageId?: string;
+    subject?: string;
+    html?: string;
+    text?: string;
+    attachments?: unknown[];
+  };
+};
+
+function toAddressList(value: string[] | string | undefined) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function parseEmailAddress(value: string) {
+  const match = value.match(/^(?:"?([^"<]*)"?\s*)?<([^>]+)>$/);
+
+  if (!match) {
+    return { address: value.trim(), name: null };
+  }
+
+  const name = match[1]?.trim() || null;
+  return { address: match[2].trim(), name };
+}
+
+async function getReceivedEmail(
+  emailId: string | undefined
+): Promise<GetReceivingEmailResponseSuccess | null> {
+  if (!emailId || !process.env.RESEND_API_KEY) return null;
+
+  const { data, error } = await resend.emails.receiving.get(emailId);
+  if (error) {
+    console.error("Failed to fetch received email body from Resend:", error);
+    return null;
+  }
+
+  return data;
+}
 
 export async function POST(req: Request) {
   try {
-    const payload = await req.json();
-
-    // Resend inbound webhook structure
-    // payload.type = "email.received"
-    // payload.data contains from, to, subject, html, text
+    const payload = (await req.json()) as ResendReceivedEmailWebhook;
 
     if (payload.type !== "email.received") {
       return NextResponse.json({ success: true, message: "Ignored non-inbound event" });
     }
 
-    const { from, to, subject, html, text, messageId } = payload.data;
+    const eventData = payload.data ?? {};
+    const receivedEmail: GetReceivingEmailResponseSuccess | null =
+      await getReceivedEmail(eventData.email_id);
 
-    // We can extract the actual email address if it comes as "Name <email@domain.com>"
-    const fromAddressMatch = from.match(/<(.+)>/);
-    const fromAddress = fromAddressMatch ? fromAddressMatch[1] : from;
-    const fromName = fromAddressMatch ? from.replace(/<.+>/, "").trim() : from;
+    const from = receivedEmail?.from || eventData.from;
+    const toAddresses = receivedEmail?.to?.length
+      ? receivedEmail.to
+      : toAddressList(eventData.to);
+
+    if (!from || toAddresses.length === 0) {
+      return NextResponse.json(
+        { error: "Missing sender or recipient in webhook payload" },
+        { status: 400 }
+      );
+    }
+
+    const subject = receivedEmail?.subject || eventData.subject || "No Subject";
+    const messageId =
+      receivedEmail?.message_id ||
+      eventData.message_id ||
+      eventData.messageId ||
+      eventData.email_id ||
+      null;
+    const receivedAt =
+      receivedEmail?.created_at ||
+      eventData.created_at ||
+      payload.created_at ||
+      null;
+
+    const { address: fromAddress, name: fromName } = parseEmailAddress(from);
 
     // Check if the sender matches an existing contact
     const { data: contact } = await supabaseAdmin
       .from("contacts")
       .select("id")
       .eq("email", fromAddress)
-      .single();
+      .maybeSingle();
 
-    // Insert into emails table
-    const { error } = await supabaseAdmin.from("emails").insert({
+    const emailRecord: Record<string, unknown> = {
       message_id: messageId,
       from_address: fromAddress,
       from_name: fromName,
-      to_addresses: Array.isArray(to) ? to : [to],
-      subject: subject || "No Subject",
-      body_html: html || "",
-      body_text: text || "",
+      to_addresses: toAddresses,
+      subject,
+      body_html: receivedEmail?.html || eventData.html || "",
+      body_text: receivedEmail?.text || eventData.text || "",
       status: "inbox",
+      thread_id: eventData.email_id || null,
       contact_id: contact?.id || null,
       read: false,
-    });
+      attachments_count: receivedEmail?.attachments?.length ?? eventData.attachments?.length ?? 0,
+    };
+
+    if (receivedAt) {
+      emailRecord.created_at = receivedAt;
+    }
+
+    // Resend can retry successful deliveries, so keep inbound storage idempotent.
+    const { error } = messageId
+      ? await supabaseAdmin
+          .from("emails")
+          .upsert(emailRecord, { onConflict: "message_id" })
+      : await supabaseAdmin.from("emails").insert(emailRecord);
 
     if (error) {
       console.error("Failed to insert email:", error);
@@ -50,14 +134,15 @@ export async function POST(req: Request) {
     if (contact) {
       await supabaseAdmin.from("activities").insert({
         type: "email",
-        content: `Received email: ${subject || "No Subject"}`,
+        content: `Received email: ${subject}`,
         contact_id: contact.id,
       });
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Webhook Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    const message = error instanceof Error ? error.message : "Invalid webhook payload";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

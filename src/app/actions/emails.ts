@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function getEmails(folder: "inbox" | "sent" | "archived" | "trash" = "inbox") {
-  const profile = await requireAuth();
+  await requireAuth();
   const supabase = await createSupabaseServerClient();
 
   // If the user doesn't have mailbox permissions, block them (assuming roles table setup allows this check later, 
@@ -17,11 +17,14 @@ export async function getEmails(folder: "inbox" | "sent" | "archived" | "trash" 
 
   const { data, error } = await supabase
     .from("emails")
-    .select("*, contacts(id, first_name, last_name, avatar_url)")
+    .select("*, contacts(id, first_name, last_name)")
     .eq("status", folder)
     .order("created_at", { ascending: false });
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.error("Failed to load emails:", error);
+    return { error: error.message };
+  }
   return { data };
 }
 
@@ -86,8 +89,9 @@ export async function sendEmail(formData: FormData) {
 
     revalidatePath("/crm/mailbox");
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message || "Failed to send email" };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to send email";
+    return { success: false, error: message };
   }
 }
 
