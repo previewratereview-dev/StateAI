@@ -48,10 +48,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Redirect /admin → /crm/bookings
+  // Redirect /admin → /crm/jobs
   if (pathname === "/admin" && user) {
     const url = request.nextUrl.clone();
-    url.pathname = "/crm/bookings";
+    url.pathname = "/crm/jobs";
     return NextResponse.redirect(url);
   }
 
