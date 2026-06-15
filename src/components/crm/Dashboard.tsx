@@ -16,11 +16,17 @@ const ACTIVITY_ICONS: Record<string, string> = {
   note: "📝",
   call: "📞",
   email: "✉️",
-  meeting: "📅",
+  meeting: "🤝",
   status_change: "🔄",
   task_done: "✅",
   deal_created: "💼",
   contact_created: "👤",
+  social_dm: "📱",
+  cold_call: "📞",
+  whatsapp: "💬",
+  linkedin_message: "🔗",
+  sms: "📨",
+  other_interaction: "📌",
 };
 
 function formatRelativeTime(iso: string) {
@@ -129,7 +135,7 @@ export default function DashboardClient({
           {
             label: "Total Contacts",
             value: totalContacts,
-            sub: `${contacts.filter((c: any) => c.status === "customer").length} customers`,
+            sub: `${contacts.filter((c: any) => c.status === "won").length} won contacts`,
             color: "#6366f1",
             icon: (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">

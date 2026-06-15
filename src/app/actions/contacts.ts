@@ -1,8 +1,9 @@
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import type { LeadStatus } from "@/lib/interaction-types";
 
-export type ContactStatus = "lead" | "customer" | "churned" | "prospect";
+export type ContactStatus = LeadStatus;
 export type LeadSource = "website" | "referral" | "social" | "email" | "cold_call" | "event" | "other";
 
 export interface Contact {
@@ -69,7 +70,7 @@ export async function createContact(
       company: (formData.get("company") as string) || null,
       job_title: (formData.get("job_title") as string) || null,
       website: (formData.get("website") as string) || null,
-      status: (formData.get("status") as ContactStatus) || "lead",
+      status: (formData.get("status") as ContactStatus) || "new",
       lead_source: (formData.get("lead_source") as LeadSource) || "other",
       notes: (formData.get("notes") as string) || null,
     };

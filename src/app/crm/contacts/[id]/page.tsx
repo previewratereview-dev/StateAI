@@ -2,6 +2,7 @@ import { getContact } from "@/app/actions/contacts";
 import { requireAuth } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import ContactDetailClient from "@/components/crm/ContactDetail";
+import { getContactStatusHistory } from "@/app/actions/interactions";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,10 @@ export default async function ContactDetailPage({ params }: { params: Promise<{ 
   const activities = (contact as any).activities || [];
   const emails = (contact as any).emails || [];
 
+  // Fetch status history
+  const statusHistoryResult = await getContactStatusHistory(id);
+  const statusHistory = statusHistoryResult.data || [];
+
   return (
     <ContactDetailClient 
       contact={contact} 
@@ -24,6 +29,7 @@ export default async function ContactDetailPage({ params }: { params: Promise<{ 
       notes={notes} 
       activities={activities} 
       emails={emails} 
+      statusHistory={statusHistory}
       profile={profile} 
     />
   );

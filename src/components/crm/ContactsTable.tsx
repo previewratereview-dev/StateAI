@@ -2,14 +2,21 @@
 
 import { useState, useTransition, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import type { Contact, ContactStatus } from "@/app/actions/contacts";
+import type { Contact } from "@/app/actions/contacts";
+import type { LeadStatus } from "@/lib/interaction-types";
+
+type ContactStatus = LeadStatus;
 import { createContact, updateContact, deleteContact } from "@/app/actions/contacts";
 import { useIsMobile } from "@/lib/useIsMobile";
 
 const STATUS_CFG: Record<ContactStatus, { label: string; color: string; bg: string }> = {
-  lead: { label: "Lead", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
-  prospect: { label: "Prospect", color: "#6366f1", bg: "rgba(99,102,241,0.1)" },
-  customer: { label: "Customer", color: "#10b981", bg: "rgba(16,185,129,0.1)" },
+  new: { label: "New", color: "#6b7280", bg: "rgba(107,114,128,0.08)" },
+  contacted: { label: "Contacted", color: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
+  qualified: { label: "Qualified", color: "#6366f1", bg: "rgba(99,102,241,0.1)" },
+  proposal: { label: "Proposal", color: "#8b5cf6", bg: "rgba(139,92,246,0.1)" },
+  negotiation: { label: "Negotiation", color: "#ec4899", bg: "rgba(236,72,153,0.1)" },
+  won: { label: "Won", color: "#10b981", bg: "rgba(16,185,129,0.1)" },
+  lost: { label: "Lost", color: "#ef4444", bg: "rgba(239,68,68,0.1)" },
   churned: { label: "Churned", color: "#6b7280", bg: "rgba(107,114,128,0.08)" },
 };
 
@@ -52,7 +59,7 @@ function ContactDrawer({
           phone: (fd.get("phone") as string) || null,
           company: (fd.get("company") as string) || null,
           job_title: (fd.get("job_title") as string) || null,
-          status: fd.get("status") as ContactStatus,
+          status: fd.get("status") as LeadStatus,
           lead_source: fd.get("lead_source") as any,
           notes: (fd.get("notes") as string) || null,
         };
@@ -122,7 +129,7 @@ function ContactDrawer({
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
             <div>
               <label style={labelStyle}>Status</label>
-              <select name="status" defaultValue={editing?.status || "lead"}
+              <select name="status" defaultValue={editing?.status || "new"}
                 style={{ ...inputStyle, cursor: "pointer" }}>
                 {Object.entries(STATUS_CFG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
@@ -238,7 +245,7 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
             style={{ width: "100%", background: "rgba(13,13,18,0.7)", border: "1px solid rgba(177,178,180,0.1)", borderRadius: 10, padding: "0.6rem 0.875rem 0.6rem 2.5rem", color: "#fcfcfe", fontSize: "0.875rem", outline: "none", fontFamily: "inherit", boxSizing: "border-box" }} />
         </div>
         <div style={{ display: "flex", gap: 6 }}>
-          {(["all", "lead", "prospect", "customer", "churned"] as const).map(s => {
+          {(["all", "new", "contacted", "qualified", "proposal", "negotiation", "won", "lost", "churned"] as const).map(s => {
             const isActive = statusFilter === s;
             const cfg = s !== "all" ? STATUS_CFG[s] : null;
             return (

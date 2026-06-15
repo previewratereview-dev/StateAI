@@ -1,6 +1,8 @@
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { requireAuth } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export type DealStage = "new" | "qualified" | "proposal" | "negotiation" | "won" | "lost";
 
@@ -96,6 +98,61 @@ export async function deleteDeal(id: string): Promise<{ success: boolean; error?
   try {
     const { error } = await supabaseAdmin.from("deals").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function undoAutoCreatedDeal(dealId: string, contactId: string): Promise<{ success: boolean; error?: string }> {
+  const profile = await requireAuth();
+  try {
+    // Fetch deal and verify contact
+    const { data: deal, error: dErr } = await supabaseAdmin
+      .from("deals")
+      .select("id, contact_id, created_by, title")
+      .eq("id", dealId)
+      .single();
+
+    if (dErr || !deal) return { success: false, error: dErr ? dErr.message : "Deal not found" };
+    if (deal.contact_id !== contactId) return { success: false, error: "Deal does not belong to this contact" };
+
+    // Only the creator or an admin can undo
+    if (profile.role !== "admin" && deal.created_by !== profile.id) {
+      return { success: false, error: "Not authorized" };
+    }
+
+    // Confirm this was an auto-created deal by looking for an activity with metadata.auto_created
+    const { data: acts } = await supabaseAdmin
+      .from("activities")
+      .select("*")
+      .eq("deal_id", dealId)
+      .order("created_at", { ascending: false });
+
+    const autoActivity = (acts || []).find((a: any) => a.metadata && a.metadata.auto_created);
+    if (!autoActivity) {
+      return { success: false, error: "Deal is not marked as auto-created" };
+    }
+
+    // Delete the deal
+    const { error: delErr } = await supabaseAdmin.from("deals").delete().eq("id", dealId);
+    if (delErr) return { success: false, error: delErr.message };
+
+    // Log undo activity
+    const { error: aErr } = await supabaseAdmin.from("activities").insert({
+      type: "deal_deleted",
+      content: `Auto-created deal "${deal.title}" removed`,
+      contact_id: contactId,
+      deal_id: dealId,
+      created_by: profile.id,
+      metadata: { undo_auto_created: true, original_activity: autoActivity.id },
+    });
+    if (aErr) console.error("Failed to log undo activity:", aErr);
+
+    revalidatePath("/crm/deals");
+    revalidatePath("/crm/leads");
+    revalidatePath(`/crm/contacts/${contactId}`);
+
     return { success: true };
   } catch (e: any) {
     return { success: false, error: e.message };
