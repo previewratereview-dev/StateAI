@@ -38,9 +38,10 @@ export async function getDeals(): Promise<{ data?: Deal[]; error?: string }> {
 }
 
 export async function createDeal(formData: FormData): Promise<{ data?: Deal; error?: string }> {
+  const profile = await requireAuth();
   try {
-    const payload = {
-      title: formData.get("title") as string,
+    const payload: any = {
+      title: (formData.get("title") as string) || "Opportunity",
       contact_id: (formData.get("contact_id") as string) || null,
       value: parseFloat((formData.get("value") as string) || "0"),
       stage: (formData.get("stage") as DealStage) || "new",
@@ -48,6 +49,11 @@ export async function createDeal(formData: FormData): Promise<{ data?: Deal; err
       expected_close_date: (formData.get("expected_close_date") as string) || null,
       description: (formData.get("description") as string) || null,
     };
+
+    // Ensure attribution
+    payload.created_by = profile.id;
+    payload.assigned_to = (formData.get("assigned_to") as string) || profile.id;
+
     const { data, error } = await supabaseAdmin
       .from("deals")
       .insert(payload)
@@ -80,7 +86,15 @@ export async function updateDeal(
   id: string,
   updates: Partial<Deal>
 ): Promise<{ data?: Deal; error?: string }> {
+  const profile = await requireAuth();
   try {
+    // Authorization: only admin or assigned_to can update core fields
+    const { data: existing } = await supabaseAdmin.from("deals").select("assigned_to, created_by").eq("id", id).single();
+    if (existing) {
+      const allowed = profile.role === "admin" || existing.assigned_to === profile.id || existing.created_by === profile.id;
+      if (!allowed) return { error: "Not authorized to update this deal" };
+    }
+
     const { data, error } = await supabaseAdmin
       .from("deals")
       .update(updates)
@@ -95,7 +109,15 @@ export async function updateDeal(
 }
 
 export async function deleteDeal(id: string): Promise<{ success: boolean; error?: string }> {
+  const profile = await requireAuth();
   try {
+    // Only admin or creator can delete
+    const { data: existing } = await supabaseAdmin.from("deals").select("created_by, assigned_to").eq("id", id).single();
+    if (existing) {
+      const allowed = profile.role === "admin" || existing.created_by === profile.id;
+      if (!allowed) return { success: false, error: "Not authorized" };
+    }
+
     const { error } = await supabaseAdmin.from("deals").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };

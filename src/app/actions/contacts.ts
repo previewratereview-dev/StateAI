@@ -2,6 +2,7 @@
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { LeadStatus } from "@/lib/interaction-types";
+import { requireAuth } from "@/lib/auth";
 
 export type ContactStatus = LeadStatus;
 export type LeadSource = "website" | "referral" | "social" | "email" | "cold_call" | "event" | "other";
@@ -107,6 +108,53 @@ export async function updateContact(
 export async function deleteContact(id: string): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabaseAdmin.from("contacts").delete().eq("id", id);
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function claimContact(contactId: string, ttlMinutes = 15): Promise<{ success: boolean; error?: string; data?: any }> {
+  const profile = await requireAuth();
+  try {
+    const { data: existing } = await supabaseAdmin.from("contacts").select("locked_by, locked_at").eq("id", contactId).single();
+
+    const now = Date.now();
+    let lockExpired = true;
+    if (existing?.locked_at) {
+      const lockedAt = new Date(existing.locked_at).getTime();
+      lockExpired = lockedAt + ttlMinutes * 60 * 1000 < now;
+    }
+
+    if (existing?.locked_by && existing.locked_by !== profile.id && !lockExpired && profile.role !== "admin") {
+      return { success: false, error: "Contact is locked by another user" };
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from("contacts")
+      .update({ locked_by: profile.id, locked_at: new Date().toISOString() })
+      .eq("id", contactId)
+      .select()
+      .single();
+
+    if (error) return { success: false, error: error.message };
+    return { success: true, data };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function releaseContact(contactId: string): Promise<{ success: boolean; error?: string }> {
+  const profile = await requireAuth();
+  try {
+    const { data: existing } = await supabaseAdmin.from("contacts").select("locked_by").eq("id", contactId).single();
+    if (existing) {
+      const allowed = profile.role === "admin" || existing.locked_by === profile.id;
+      if (!allowed) return { success: false, error: "Not authorized to release lock" };
+    }
+
+    const { error } = await supabaseAdmin.from("contacts").update({ locked_by: null, locked_at: null }).eq("id", contactId);
     if (error) return { success: false, error: error.message };
     return { success: true };
   } catch (e: any) {

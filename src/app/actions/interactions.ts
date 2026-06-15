@@ -27,6 +27,28 @@ export async function logInteraction(formData: FormData) {
     return { success: false, error: "Missing required fields" };
   }
 
+  // Check lock / claim status on the contact. If it's locked by another active user, deny.
+  const { data: contactLock } = await supabaseAdmin
+    .from("contacts")
+    .select("assigned_to, locked_by, locked_at")
+    .eq("id", contactId)
+    .single();
+
+  try {
+    const now = Date.now();
+    let lockExpired = true;
+    if (contactLock?.locked_at) {
+      const lockedAt = new Date(contactLock.locked_at).getTime();
+      lockExpired = lockedAt + 15 * 60 * 1000 < now; // 15 minute TTL
+    }
+
+    if (contactLock?.locked_by && contactLock.locked_by !== profile.id && !lockExpired && profile.role !== "admin") {
+      return { success: false, error: "Contact is locked by another user" };
+    }
+  } catch (e) {
+    // ignore lock-check errors and proceed
+  }
+
   try {
     const { error: activityError } = await supabaseAdmin.from("activities").insert({
       type: channel === "note" ? "note" : channel,
@@ -52,6 +74,16 @@ export async function logInteraction(formData: FormData) {
 
     if (count !== null && count <= 1) {
       await updateContactStatus(contactId, "contacted", "First interaction logged");
+    }
+
+    // Claim the contact for the current user (set lock)
+    try {
+      await supabaseAdmin
+        .from("contacts")
+        .update({ locked_by: profile.id, locked_at: new Date().toISOString() })
+        .eq("id", contactId);
+    } catch (e) {
+      // non-fatal
     }
 
     // Interaction-driven creation: if the interaction outcome indicates strong interest,
@@ -147,7 +179,7 @@ export async function updateContactStatus(
     // Get current status and useful contact fields for attribution/creation
     const { data: contact } = await supabaseAdmin
       .from("contacts")
-      .select("status, assigned_to, first_name, last_name, company")
+      .select("status, assigned_to, first_name, last_name, company, locked_by, locked_at")
       .eq("id", contactId)
       .single();
 
@@ -156,6 +188,25 @@ export async function updateContactStatus(
     }
 
     const oldStatus = contact.status;
+
+    // Enforce hybrid permission model: only admin, assigned_to, or lock owner can change core fields
+    try {
+      const now = Date.now();
+      let lockExpired = true;
+      if (contact?.locked_at) {
+        const lockedAt = new Date(contact.locked_at).getTime();
+        lockExpired = lockedAt + 15 * 60 * 1000 < now;
+      }
+      if (contact?.locked_by && contact.locked_by !== profile.id && !lockExpired && profile.role !== "admin") {
+        return { success: false, error: "Contact is locked by another user" };
+      }
+      if (profile.role !== "admin" && contact.assigned_to && contact.assigned_to !== profile.id && contact.locked_by !== profile.id) {
+        // Not assigned, not lock owner, not admin
+        return { success: false, error: "Not authorized to change contact status" };
+      }
+    } catch (e) {
+      // swallow permission check errors and proceed conservatively
+    }
 
     if (oldStatus === newStatus) {
       return { success: true };

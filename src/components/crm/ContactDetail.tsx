@@ -5,6 +5,7 @@ import { sendEmail } from "@/app/actions/emails";
 import { logInteraction, updateContactStatus } from "@/app/actions/interactions";
 import { undoAutoCreatedDeal } from "@/app/actions/deals";
 import { useRouter } from "next/navigation";
+import { claimContact, releaseContact } from "@/app/actions/contacts";
 import { CHANNEL_LABELS, CHANNEL_ICONS } from "@/lib/interaction-types";
 import type { UserProfile } from "@/lib/auth";
 import type { InteractionChannel, LeadStatus } from "@/lib/interaction-types";
@@ -55,6 +56,7 @@ export default function ContactDetailClient({
   profile: UserProfile;
 }) {
   const isMobile = useIsMobile();
+  const router = useRouter();
   const [isComposing, setIsComposing] = useState(false);
   const [isLoggingInteraction, setIsLoggingInteraction] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -87,6 +89,13 @@ export default function ContactDetailClient({
     fd.set("contactId", contact.id);
 
     startTransition(async () => {
+      // Attempt to claim contact before logging to prevent races
+      const claimRes = await claimContact(contact.id);
+      if (!claimRes.success) {
+        showToast(claimRes.error || "Failed to claim contact", "error");
+        return;
+      }
+
       const res = await logInteraction(fd);
       if (!res.success) {
         showToast(res.error || "Failed to log interaction", "error");
@@ -257,6 +266,54 @@ export default function ContactDetailClient({
                   {contact.company}
                 </p>
               )}
+
+              {/* Lock / Claim indicator */}
+              <div style={{ marginTop: 8, display: "flex", gap: 8, alignItems: "center" }}>
+                {contact.locked_by_profile ? (
+                  contact.locked_by_profile.id === profile.id ? (
+                    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                      <span style={{ fontSize: "0.85rem", color: "#10b981", fontWeight: 700 }}>You're working</span>
+                      <button
+                        onClick={() => {
+                          startTransition(async () => {
+                            const res = await releaseContact(contact.id);
+                            if (!res.success) {
+                              showToast(res.error || "Failed to release", "error");
+                            } else {
+                              showToast("Released", "success");
+                              router.refresh();
+                            }
+                          });
+                        }}
+                        style={{ padding: "6px 10px", borderRadius: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.06)", color: "#b1b2b4", cursor: "pointer" }}
+                      >
+                        Release
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: "0.85rem", color: "#f59e0b", fontWeight: 700 }}>
+                      Locked by {contact.locked_by_profile.full_name || "someone"}
+                    </div>
+                  )
+                ) : (
+                  <button
+                    onClick={() => {
+                      startTransition(async () => {
+                        const res = await claimContact(contact.id);
+                        if (!res.success) {
+                          showToast(res.error || "Failed to claim", "error");
+                        } else {
+                          showToast("Claimed", "success");
+                          router.refresh();
+                        }
+                      });
+                    }}
+                    style={{ padding: "6px 10px", borderRadius: 8, background: "#11121a", border: "1px solid rgba(255,255,255,0.04)", color: "#b1b2b4", cursor: "pointer" }}
+                  >
+                    Claim
+                  </button>
+                )}
+              </div>
 
               {/* Status Badge (clickable dropdown) */}
               <div style={{ position: "relative", marginTop: 16 }}>
