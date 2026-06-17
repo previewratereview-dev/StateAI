@@ -20,7 +20,7 @@ const founders = [
 const teamMembers = [
   {
     name: "Hikaru Saito",
-    role: "AI/ML Engineer",
+    role: "Senior Software Engineer",
     image: "/assets/Hikaru-Saito.jpeg",
   },
   {
