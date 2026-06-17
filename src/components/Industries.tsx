@@ -225,13 +225,13 @@ export default function Industries() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 sm:mb-12">
           <div className="relative rounded-2xl overflow-hidden glass-card border border-white/[0.06]">
-              <div className="aspect-[16/8] xs:aspect-[16/7] sm:aspect-[16/6] relative min-h-[240px] sm:min-h-0">
+              <div className="aspect-[16/10] sm:aspect-[16/8] md:aspect-[16/7] lg:aspect-[16/6] relative min-h-[180px] sm:min-h-[240px]">
               {/* hero image removed per request; keep subtle gradient and decorative blob */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/100 via-background/60 to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center p-6">
+              <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
                     {/* Decorative soft blob behind hero text (uses theme colors) */}
                     <svg
-                      className="industries-hero-blob pointer-events-none"
+                      className="industries-hero-blob pointer-events-none w-[90%] max-w-[700px] h-auto sm:w-[70%] md:w-[60%] opacity-90"
                       viewBox="0 0 600 600"
                       aria-hidden
                     >
@@ -248,7 +248,7 @@ export default function Industries() {
                   <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-card mb-4 sm:mb-6">
                     <span className="text-[11px] sm:text-sm text-silver font-medium">Industries We Serve</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6">
                     AI Solutions Across <span className="gradient-text">Every Industry</span>
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -260,7 +260,7 @@ export default function Industries() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
           {industries.map((industry, index) => {
             const Icon = industry.icon;
             return (
@@ -269,7 +269,7 @@ export default function Industries() {
                   className={`group industries-card relative rounded-xl sm:rounded-2xl glass-card silver-shine overflow-hidden animate-reveal border transition-all duration-400 ${industry.borderColor}`}
                   style={{ animationDelay: `${index * 60}ms`, opacity: 0, animationFillMode: "forwards" }}
                 >
-                  <div className={`h-40 sm:h-44 lg:h-48 bg-gradient-to-br ${industry.gradient} relative overflow-hidden flex items-end`}>
+                  <div className={`h-36 sm:h-44 lg:h-48 bg-gradient-to-br ${industry.gradient} relative overflow-hidden flex items-end`}>
                     {/* Background image if it exists */}
                     {industry.image && (
                       <Image
@@ -282,7 +282,7 @@ export default function Industries() {
                     )}
 
                     {/* subtle card decor (SVG) */}
-                    <svg className="industries-card-decor absolute -top-6 -right-6 pointer-events-none" viewBox="0 0 200 120" aria-hidden>
+                    <svg className="industries-card-decor absolute -top-6 -right-6 pointer-events-none hidden sm:block" viewBox="0 0 200 120" aria-hidden>
                       <defs>
                         <linearGradient id={`${industry.id}-grad`} x1="0" x2="1">
                           <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.12" />
@@ -292,7 +292,7 @@ export default function Industries() {
                       <path d="M0 60 C40 10, 160 10, 200 60 L200 120 L0 120 Z" fill={`url(#${industry.id}-grad)`} />
                     </svg>
 
-                    <IndustrySVG id={industry.id} className="industries-svg absolute bottom-3 right-3 w-20 h-20 opacity-20 transition-opacity duration-400 pointer-events-none" />
+                    <IndustrySVG id={industry.id} className="industries-svg absolute bottom-3 right-3 w-12 h-12 sm:w-20 sm:h-20 opacity-20 transition-opacity duration-400 pointer-events-none" />
 
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
                     <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
