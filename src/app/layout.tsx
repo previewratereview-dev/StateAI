@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "State AI - Transforming Ideas into AI-Powered Solutions",
   },
   description:
-    "State AI is a leading AI development company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
+    "State AI is a Emerging AI Development Company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
   keywords: [
     "AI development",
     "machine learning",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://stateai.in",
     title: "State AI - Transforming Ideas into AI-Powered Solutions",
-    description: "State AI is a leading AI development company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
+    description: "State AI is a Emerging AI Development Company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
     siteName: "State AI",
     images: [
       {
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "State AI - Transforming Ideas into AI-Powered Solutions",
-    description: "State AI is a leading AI development company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
+    description: "State AI is a Emerging AI Development Company delivering cutting-edge artificial intelligence, machine learning, and generative AI solutions for businesses worldwide.",
     images: ["/assets/og-image.png"],
   },
   robots: {
@@ -89,7 +89,7 @@ export default function RootLayout({
               name: "State AI",
               url: "https://stateai.in",
               logo: "https://stateai.in/icon.png",
-              description: "Leading AI development company delivering cutting-edge artificial intelligence solutions.",
+              description: "Emerging AI Development Company delivering cutting-edge artificial intelligence solutions.",
             }),
           }}
         />

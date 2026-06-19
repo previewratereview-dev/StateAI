@@ -96,7 +96,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-gray-400 leading-relaxed mb-4 sm:mb-6">
-              Leading AI development company delivering cutting-edge artificial
+              Emerging AI Development Company delivering cutting-edge artificial
               intelligence solutions for businesses worldwide.
             </p>
             <div className="space-y-2 sm:space-y-3">

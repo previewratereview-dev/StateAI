@@ -165,7 +165,7 @@ export default function Hero() {
               <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-card mb-6 sm:mb-8 animate-reveal">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-silver animate-pulse" />
                 <span className="text-[11px] sm:text-sm text-silver font-medium">
-                  Leading AI Development Company
+                  Emerging AI Development Company
                 </span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-3 sm:mb-4 animate-reveal stagger-1" style={{ opacity: 0, animationFillMode: "forwards" }}>
