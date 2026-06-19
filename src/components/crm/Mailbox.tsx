@@ -216,6 +216,10 @@ export default function MailboxClient({
             <div style={{ marginTop: "1rem", flex: 1 }}>
               <textarea name="body" defaultValue={selectedEmail ? `\n\n\n--- Original Message ---\nFrom: ${selectedEmail.from_address}\nDate: ${new Date(selectedEmail.created_at).toLocaleString()}\nSubject: ${selectedEmail.subject || "No Subject"}\n\n${selectedEmail.body_text || ""}` : ""} required rows={isMobile ? 10 : 16} placeholder="Write your message here..." style={{ width: "100%", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(177,178,180,0.1)", borderRadius: 12, padding: "1rem", color: "#fcfcfe", fontSize: "0.9rem", resize: "vertical", outline: "none", fontFamily: "inherit" }} />
             </div>
+            <div style={{ display: "flex", alignItems: "center", borderBottom: "1px solid rgba(177,178,180,0.1)", paddingBottom: "0.5rem" }}>
+              <label style={{ width: 80, fontSize: "0.8rem", color: "#818286", fontWeight: 600 }}>Attachments:</label>
+              <input type="file" name="attachments" multiple style={{ flex: 1, color: "#fcfcfe", fontSize: "0.85rem" }} />
+            </div>
             <div style={{ marginTop: "1rem", display: "flex", justifyContent: "flex-end", gap: 12 }}>
               <button type="button" onClick={() => { setComposing(false); if(isMobile) setMobilePane("list"); }} style={{ padding: "0.75rem 1.5rem", borderRadius: 10, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", cursor: "pointer", fontWeight: 600 }}>Discard</button>
               <button type="submit" disabled={isPending} style={{ padding: "0.75rem 2rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "none", color: "#fcfcfe", cursor: isPending ? "not-allowed" : "pointer", fontWeight: 700 }}>

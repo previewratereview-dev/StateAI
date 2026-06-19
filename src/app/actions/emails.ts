@@ -47,13 +47,39 @@ export async function sendEmail(formData: FormData) {
   }
 
   try {
-    // 1. Send via Resend
-    const { data: resendData, error: resendError } = await resend.emails.send({
+    const formDataFiles = formData.getAll("attachments") as File[];
+    const attachments = [];
+    const dbAttachments = [];
+    
+    for (const file of formDataFiles) {
+      if (file.size > 0) {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        attachments.push({
+          filename: file.name,
+          content: buffer,
+        });
+        dbAttachments.push({
+          filename: file.name,
+          size: file.size,
+          url: "#" // Stored without public URL initially for metadata purposes
+        });
+      }
+    }
+
+    const resendPayload: any = {
       from: `State AI <${fromBox}>`,
       to: [to],
       subject: subject,
       text: bodyText,
-    });
+    };
+    
+    if (attachments.length > 0) {
+      resendPayload.attachments = attachments;
+    }
+
+    // 1. Send via Resend
+    const { data: resendData, error: resendError } = await resend.emails.send(resendPayload);
 
     if (resendError) {
       return { success: false, error: resendError.message };
@@ -77,6 +103,7 @@ export async function sendEmail(formData: FormData) {
       status: "sent",
       contact_id: contact?.id || null,
       read: true,
+      attachments: dbAttachments.length > 0 ? dbAttachments : null,
     });
 
     if (dbError) {
