@@ -207,14 +207,14 @@ export default function MailboxClient({
             </div>
             <div style={{ display: "flex", alignItems: "center", borderBottom: "1px solid rgba(177,178,180,0.1)", paddingBottom: "0.5rem" }}>
               <label style={{ width: 60, fontSize: "0.8rem", color: "#818286", fontWeight: 600 }}>To:</label>
-              <input name="to" type="email" required placeholder="recipient@example.com" style={{ flex: 1, background: "transparent", border: "none", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+              <input name="to" type="email" defaultValue={selectedEmail ? (currentFolder === "sent" ? selectedEmail.to_addresses[0] : selectedEmail.from_address) : ""} required placeholder="recipient@example.com" style={{ flex: 1, background: "transparent", border: "none", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
             </div>
             <div style={{ display: "flex", alignItems: "center", borderBottom: "1px solid rgba(177,178,180,0.1)", paddingBottom: "0.5rem" }}>
               <label style={{ width: 60, fontSize: "0.8rem", color: "#818286", fontWeight: 600 }}>Subject:</label>
-              <input name="subject" required placeholder="Message subject" style={{ flex: 1, background: "transparent", border: "none", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+              <input name="subject" defaultValue={selectedEmail ? (selectedEmail.subject?.startsWith("Re:") ? selectedEmail.subject : `Re: ${selectedEmail.subject || ""}`) : ""} required placeholder="Message subject" style={{ flex: 1, background: "transparent", border: "none", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
             </div>
             <div style={{ marginTop: "1rem", flex: 1 }}>
-              <textarea name="body" required rows={isMobile ? 10 : 16} placeholder="Write your message here..." style={{ width: "100%", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(177,178,180,0.1)", borderRadius: 12, padding: "1rem", color: "#fcfcfe", fontSize: "0.9rem", resize: "vertical", outline: "none", fontFamily: "inherit" }} />
+              <textarea name="body" defaultValue={selectedEmail ? `\n\n\n--- Original Message ---\nFrom: ${selectedEmail.from_address}\nDate: ${new Date(selectedEmail.created_at).toLocaleString()}\nSubject: ${selectedEmail.subject || "No Subject"}\n\n${selectedEmail.body_text || ""}` : ""} required rows={isMobile ? 10 : 16} placeholder="Write your message here..." style={{ width: "100%", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(177,178,180,0.1)", borderRadius: 12, padding: "1rem", color: "#fcfcfe", fontSize: "0.9rem", resize: "vertical", outline: "none", fontFamily: "inherit" }} />
             </div>
             <div style={{ marginTop: "1rem", display: "flex", justifyContent: "flex-end", gap: 12 }}>
               <button type="button" onClick={() => { setComposing(false); if(isMobile) setMobilePane("list"); }} style={{ padding: "0.75rem 1.5rem", borderRadius: 10, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", cursor: "pointer", fontWeight: 600 }}>Discard</button>
