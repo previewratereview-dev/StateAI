@@ -24,6 +24,11 @@ export default function MailboxClient({
   const [filterBox, setFilterBox] = useState<string | "all">("all");
   const [mobilePane, setMobilePane] = useState<MobilePane>("list");
   
+  useEffect(() => {
+    setEmails(initialEmails);
+    setSelectedEmail(null);
+  }, [initialEmails, currentFolder]);
+  
   const [isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
@@ -61,6 +66,16 @@ export default function MailboxClient({
     startTransition(async () => {
       await updateEmailStatus(emailId, "archived");
       showToast("Conversation archived", "success");
+    });
+  }
+
+  function handleTrash(emailId: string) {
+    setEmails(prev => prev.filter(e => e.id !== emailId));
+    setSelectedEmail(null);
+    if (isMobile) setMobilePane("list");
+    startTransition(async () => {
+      await updateEmailStatus(emailId, "trash");
+      showToast("Conversation moved to trash", "success");
     });
   }
 
@@ -108,7 +123,8 @@ export default function MailboxClient({
         {[
           { id: "inbox", label: "Inbox", icon: "📥" },
           { id: "sent", label: "Sent", icon: "↗️" },
-          { id: "archived", label: "Archive", icon: "📦" }
+          { id: "archived", label: "Archive", icon: "📦" },
+          { id: "trash", label: "Trash", icon: "🗑️" }
         ].map(f => (
           <button key={f.id} onClick={() => changeFolder(f.id)}
             style={{ display: "flex", alignItems: "center", gap: 10, padding: "0.6rem 0.8rem", borderRadius: 8, background: currentFolder === f.id ? "rgba(99,102,241,0.1)" : "transparent", color: currentFolder === f.id ? "#818cf8" : "#818286", border: "none", cursor: "pointer", textAlign: "left", fontWeight: currentFolder === f.id ? 600 : 500, minHeight: 40 }}
@@ -155,7 +171,7 @@ export default function MailboxClient({
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
                 <div style={{ fontSize: "0.85rem", fontWeight: !e.read ? 700 : 500, color: !e.read ? "#fcfcfe" : "#818286", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {currentFolder === "sent" ? e.to_addresses[0] : e.from_name || e.from_address}
+                  {currentFolder === "sent" ? (e.to_addresses?.[0] || "Unknown") : (e.from_name || e.from_address || "Unknown")}
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "#5d5e60", flexShrink: 0 }}>
                   {new Date(e.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
@@ -222,11 +238,11 @@ export default function MailboxClient({
                 <h2 style={{ fontSize: isMobile ? "1.2rem" : "1.4rem", fontWeight: 700, margin: "0 0 1rem", color: "#fcfcfe", wordBreak: "break-word" }}>{selectedEmail.subject || "No Subject"}</h2>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1))", border: "1px solid rgba(99,102,241,0.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem", fontWeight: 700, color: "#818cf8", flexShrink: 0 }}>
-                    {(selectedEmail.from_name || selectedEmail.from_address)[0].toUpperCase()}
+                    {(selectedEmail.from_name || selectedEmail.from_address || "?")[0]?.toUpperCase() || "?"}
                   </div>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "#fcfcfe", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selectedEmail.from_name || selectedEmail.from_address}</div>
-                    <div style={{ fontSize: "0.75rem", color: "#5d5e60", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>to {selectedEmail.to_addresses.join(", ")}</div>
+                    <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "#fcfcfe", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selectedEmail.from_name || selectedEmail.from_address || "Unknown"}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#5d5e60", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>to {(selectedEmail.to_addresses || []).join(", ")}</div>
                   </div>
                 </div>
               </div>
@@ -234,9 +250,14 @@ export default function MailboxClient({
                 <span style={{ fontSize: "0.8rem", color: "#5d5e60" }}>
                   {new Date(selectedEmail.created_at).toLocaleString()}
                 </span>
-                {currentFolder !== "archived" && (
+                {currentFolder !== "archived" && currentFolder !== "trash" && (
                   <button onClick={() => handleArchive(selectedEmail.id)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", borderRadius: 8, padding: "6px 12px", color: "#fcfcfe", fontSize: "0.75rem", cursor: "pointer" }}>
                     Archive
+                  </button>
+                )}
+                {currentFolder !== "trash" && (
+                  <button onClick={() => handleTrash(selectedEmail.id)} style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 8, padding: "6px 12px", color: "#ef4444", fontSize: "0.75rem", cursor: "pointer" }}>
+                    Delete
                   </button>
                 )}
               </div>
