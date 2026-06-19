@@ -719,6 +719,7 @@ export default function CRMDashboard({
   }
 
   function handleStatusChange(id: string, status: BookingStatus) {
+    const previous = [...bookings];
     // Optimistic update
     setBookings((prev) =>
       prev.map((b) => (b.id === id ? { ...b, status } : b))
@@ -730,13 +731,14 @@ export default function CRMDashboard({
         router.refresh();
       } else {
         // Revert on error
-        setBookings(initialBookings);
+        setBookings(previous);
         showToast(res.error || "Failed to update status", "error");
       }
     });
   }
 
   function handleNotesChange(id: string, notes: string) {
+    const previous = [...bookings];
     setBookings((prev) =>
       prev.map((b) => (b.id === id ? { ...b, admin_notes: notes } : b))
     );
@@ -746,12 +748,14 @@ export default function CRMDashboard({
         showToast("Notes saved", "success");
         router.refresh();
       } else {
+        setBookings(previous);
         showToast(res.error || "Failed to save notes", "error");
       }
     });
   }
 
   function handleDelete(id: string) {
+    const previous = [...bookings];
     setBookings((prev) => prev.filter((b) => b.id !== id));
     startTransition(async () => {
       const res = await deleteBooking(id);
@@ -759,7 +763,7 @@ export default function CRMDashboard({
         showToast("Booking deleted", "success");
         router.refresh();
       } else {
-        setBookings(initialBookings);
+        setBookings(previous);
         showToast(res.error || "Failed to delete", "error");
       }
     });

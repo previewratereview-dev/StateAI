@@ -46,10 +46,11 @@ export default function DealsTable({ initialDeals, contacts, isAdmin }: { initia
 
   function handleDelete(id: string) {
     if (!confirm("Delete this deal?")) return;
+    const previous = [...deals];
     setDeals(prev => prev.filter(d => d.id !== id));
     startTransition(async () => {
       const res = await deleteDeal(id);
-      if (!res.success) { setDeals(initialDeals); showToast(res.error || "Failed", "error"); }
+      if (!res.success) { setDeals(previous); showToast(res.error || "Failed", "error"); }
     });
   }
 

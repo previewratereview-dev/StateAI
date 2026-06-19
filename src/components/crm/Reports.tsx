@@ -12,9 +12,13 @@ const STAGE_CFG: Record<string, { label: string; color: string }> = {
 };
 
 const STATUS_CFG: Record<string, { label: string; color: string }> = {
-  lead: { label: "Lead", color: "#f59e0b" },
-  prospect: { label: "Prospect", color: "#6366f1" },
-  customer: { label: "Customer", color: "#10b981" },
+  new: { label: "New", color: "#6b7280" },
+  contacted: { label: "Contacted", color: "#f59e0b" },
+  qualified: { label: "Qualified", color: "#6366f1" },
+  proposal: { label: "Proposal", color: "#8b5cf6" },
+  negotiation: { label: "Negotiation", color: "#ec4899" },
+  won: { label: "Won", color: "#10b981" },
+  lost: { label: "Lost", color: "#ef4444" },
   churned: { label: "Churned", color: "#6b7280" },
 };
 
@@ -64,10 +68,9 @@ export default function ReportsClient({
   const maxContactCount = Math.max(...contactStatusData.map(s => s.count), 1);
 
   // ── Booking status ─────────────────────────────────────────────────────────
-  const allBookingsResult: any[] = [];
   const bookingStatusData = Object.keys(BOOKING_STATUS_CFG).map(status => ({
     status,
-    count: (allBookingsResult as any[]).filter((b: any) => b.status === status).length,
+    count: bookings.filter((b: any) => b.status === status).length,
   }));
 
   // ── Task overview ──────────────────────────────────────────────────────────

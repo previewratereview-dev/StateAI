@@ -196,10 +196,11 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
 
   function handleDelete(id: string) {
     if (!confirm("Delete this contact? This cannot be undone.")) return;
+    const previous = [...contacts];
     setContacts(prev => prev.filter(c => c.id !== id));
     startTransition(async () => {
       const res = await deleteContact(id);
-      if (!res.success) { setContacts(initialContacts); showToast(res.error || "Delete failed", "error"); }
+      if (!res.success) { setContacts(previous); showToast(res.error || "Delete failed", "error"); }
       else showToast("Contact deleted", "success");
     });
   }

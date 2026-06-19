@@ -159,20 +159,22 @@ export default function LeadsPipeline({ initialDeals, contacts, isAdmin }: { ini
   }
 
   function handleMove(id: string, stage: DealStage) {
+    const previous = [...deals];
     setDeals(prev => prev.map(d => d.id === id ? { ...d, stage } : d));
     startTransition(async () => {
       const res = await updateDealStage(id, stage);
-      if (!res.success) { setDeals(initialDeals); showToast(res.error || "Failed to move", "error"); }
+      if (!res.success) { setDeals(previous); showToast(res.error || "Failed to move", "error"); }
       else showToast(`Moved to ${stage}`, "success");
     });
   }
 
   function handleDelete(id: string) {
     if (!confirm("Delete this deal?")) return;
+    const previous = [...deals];
     setDeals(prev => prev.filter(d => d.id !== id));
     startTransition(async () => {
       const res = await deleteDeal(id);
-      if (!res.success) { setDeals(initialDeals); showToast(res.error || "Failed", "error"); }
+      if (!res.success) { setDeals(previous); showToast(res.error || "Failed", "error"); }
     });
   }
 

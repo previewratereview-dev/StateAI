@@ -239,19 +239,21 @@ export default function TasksBoard({ initialTasks, contacts, deals, isAdmin }: {
   const done = tasks.filter(t => t.status === "done").length;
 
   function handleStatusChange(id: string, status: TaskStatus) {
+    const previous = [...tasks];
     setTasks(prev => prev.map(t => t.id === id ? { ...t, status } : t));
     startTransition(async () => {
       const res = await updateTask(id, { status });
-      if (!res.success) { setTasks(initialTasks); showToast("Failed", "error"); }
+      if (!res.success) { setTasks(previous); showToast("Failed", "error"); }
     });
   }
 
   function handleDelete(id: string) {
     if (!confirm("Delete task?")) return;
+    const previous = [...tasks];
     setTasks(prev => prev.filter(t => t.id !== id));
     startTransition(async () => {
       const res = await deleteTask(id);
-      if (!res.success) { setTasks(initialTasks); showToast("Failed", "error"); }
+      if (!res.success) { setTasks(previous); showToast("Failed", "error"); }
     });
   }
 
