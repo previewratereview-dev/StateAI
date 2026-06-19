@@ -32,7 +32,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://x.com/_stateai",
     label: "X",
     svg: (
       <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://www.youtube.com/channel/UCtkBvvvjhMa74mhhAPE0bag",
     label: "YouTube",
     svg: (
       <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
