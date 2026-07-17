@@ -194,7 +194,7 @@ export default function Footer() {
             © {new Date().getFullYear()} State AI. All rights reserved.
           </p>
           <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
-            <a href="#" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
+            <a href="/privacy-policy" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
               Privacy Policy
             </a>
             <a href="#" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
