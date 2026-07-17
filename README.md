@@ -40,7 +40,7 @@ Required files: `logo.png`, hero backgrounds, team photos, service images, and `
 
 ## Project structure
 
-```
+````
 src/
   app/           # Layout, page, global styles
   components/    # Landing page sections
