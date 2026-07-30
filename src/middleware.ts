@@ -2,6 +2,16 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  const requiresAuth = pathname.startsWith("/crm") || pathname === "/login" || pathname === "/admin";
+  const isPrefetch = request.headers.has("x-middleware-prefetch") || request.headers.get("purpose") === "prefetch";
+
+  // Performance optimization: skip Supabase getUser query on prefetch links and public routes
+  if (!requiresAuth || isPrefetch) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -25,13 +35,9 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: do not add code between createServerClient and
-  // supabase.auth.getUser(). Any code in between could cause auth issues.
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const { pathname } = request.nextUrl;
 
   // Protect /crm/* routes
   if (pathname.startsWith("/crm") && !user) {

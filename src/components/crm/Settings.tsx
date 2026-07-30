@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { updateUserRole, createRole, updateRole, deleteRole, createUser } from "@/app/actions/settings";
+import { updateUserRole, createRole, updateRole, deleteRole, createUser, adminResetPassword, adminSuspendUser, adminDeleteUser, adminReassignLeads } from "@/app/actions/settings";
 import { useIsMobile } from "@/lib/useIsMobile";
 import type { UserProfile } from "@/lib/auth";
 
@@ -38,6 +38,12 @@ export default function SettingsClient({
   const [newMemberPassword, setNewMemberPassword] = useState("");
   const [newMemberMailbox, setNewMemberMailbox] = useState("");
   const [mailboxTouched, setMailboxTouched] = useState(false);
+
+  // User Management states
+  const [resettingPasswordUserId, setResettingPasswordUserId] = useState<string | null>(null);
+  const [newPasswordVal, setNewPasswordVal] = useState("");
+  const [reassigningFromUserId, setReassigningFromUserId] = useState<string | null>(null);
+  const [reassigningToUserId, setReassigningToUserId] = useState("");
 
   function handleNameChange(name: string) {
     setNewMemberName(name);
@@ -135,12 +141,74 @@ export default function SettingsClient({
     });
   }
 
+  async function handleResetPassword(userId: string) {
+    if (!newPasswordVal || newPasswordVal.length < 6) {
+      showToast("Password must be at least 6 characters", "error");
+      return;
+    }
+    startTransition(async () => {
+      const res = await adminResetPassword(userId, newPasswordVal);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Password reset successfully!", "success");
+        setResettingPasswordUserId(null);
+        setNewPasswordVal("");
+      }
+    });
+  }
+
+  async function handleToggleSuspend(userId: string, currentStatus: string | null) {
+    const shouldSuspend = currentStatus !== "suspended";
+    const msg = shouldSuspend ? "Suspend this user? They will not be able to log in." : "Reactivate this user?";
+    if (!confirm(msg)) return;
+
+    startTransition(async () => {
+      const res = await adminSuspendUser(userId, shouldSuspend);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast(shouldSuspend ? "User suspended!" : "User reactivated!", "success");
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleDeleteUser(userId: string) {
+    if (!confirm("Are you sure you want to permanently delete this user? This cannot be undone.")) return;
+
+    startTransition(async () => {
+      const res = await adminDeleteUser(userId);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("User deleted successfully!", "success");
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleReassignLeads() {
+    if (!reassigningFromUserId || !reassigningToUserId) return;
+    startTransition(async () => {
+      const res = await adminReassignLeads(reassigningFromUserId, reassigningToUserId);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Leads reassigned successfully!", "success");
+        setReassigningFromUserId(null);
+        setReassigningToUserId("");
+        router.refresh();
+      }
+    });
+  }
+
   const tabStyle = (active: boolean): React.CSSProperties => ({
     padding: "0.6rem 1.25rem", borderRadius: 10, fontSize: "0.85rem", fontWeight: 600,
     cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s",
     background: active ? "rgba(99,102,241,0.12)" : "transparent",
     border: active ? "1px solid rgba(99,102,241,0.25)" : "1px solid transparent",
-    color: active ? "#818cf8" : "#5d5e60",
+    color: active ? "#818cf8" : "#94A3B8",
   });
 
   return (
@@ -148,8 +216,8 @@ export default function SettingsClient({
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
       <div style={{ marginBottom: "1.75rem" }}>
-        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
-        <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
+        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#1E293B", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
+        <p style={{ color: "#94A3B8", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: "1.5rem" }}>
@@ -159,15 +227,15 @@ export default function SettingsClient({
       </div>
 
       {tab === "general" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, padding: isMobile ? "1.25rem" : "1.75rem" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.5rem" }}>Your Profile</h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(177,178,180,0.08)", marginBottom: "1.5rem" }}>
+        <div style={{ background: "#FFFFFF", backdropFilter: "blur(20px)", border: "1px solid #E2E8F0", borderRadius: 16, padding: isMobile ? "1.25rem" : "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1.5rem" }}>Your Profile</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "#FAFBFD", borderRadius: 12, border: "1px solid #E2E8F0", marginBottom: "1.5rem" }}>
             <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", fontSize: "1.1rem", fontWeight: 800, color: "#818cf8", flexShrink: 0 }}>
               {getInitials(currentUser.full_name)}
             </div>
             <div>
-              <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe" }}>{currentUser.full_name || "—"}</div>
-              <div style={{ fontSize: "0.82rem", color: "#818286", marginTop: 2 }}>{currentUser.email}</div>
+              <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B" }}>{currentUser.full_name || "—"}</div>
+              <div style={{ fontSize: "0.82rem", color: "#64748B", marginTop: 2 }}>{currentUser.email}</div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: currentUser.role === "admin" ? "#f59e0b" : "#10b981", background: currentUser.role === "admin" ? "rgba(245,158,11,0.1)" : "rgba(16,185,129,0.1)", padding: "2px 8px", borderRadius: 999, marginTop: 6, border: `1px solid ${currentUser.role === "admin" ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)"}` }}>
                 {currentUser.role}
               </div>
@@ -177,11 +245,11 @@ export default function SettingsClient({
       )}
 
       {tab === "team" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ background: "#FFFFFF", backdropFilter: "blur(20px)", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden" }}>
+          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid #E2E8F0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Team Members</h2>
-              <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>{profileList.length} members · Manage roles below</p>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: 0 }}>Team Members</h2>
+              <p style={{ fontSize: "0.78rem", color: "#94A3B8", margin: "4px 0 0" }}>{profileList.length} members · Manage roles below</p>
             </div>
             <button onClick={() => setAddingMember(true)} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(16,185,129,0.15)", color: "#10b981", fontWeight: 600, border: "1px solid rgba(16,185,129,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
               + Add Team Member
@@ -190,35 +258,35 @@ export default function SettingsClient({
 
           {/* Add Team Member Modal */}
           {addingMember && (
-            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(16,185,129,0.03)" }}>
-              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>Add New Sales Team Member</h3>
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid #E2E8F0", background: "rgba(16,185,129,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#1E293B" }}>Add New Sales Team Member</h3>
               <form onSubmit={handleCreateMember} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Full Name *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4 }}>Full Name *</label>
                     <input
                       value={newMemberName}
                       onChange={(e) => handleNameChange(e.target.value)}
                       required
                       placeholder="e.g. Muzamil Khan"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "#FFFFFF", border: "1px solid #E2E8F0", color: "#1E293B", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Login Email *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4 }}>Login Email *</label>
                     <input
                       type="email"
                       value={newMemberEmail}
                       onChange={(e) => setNewMemberEmail(e.target.value)}
                       required
                       placeholder="muzamil@company.com"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "#FFFFFF", border: "1px solid #E2E8F0", color: "#1E293B", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Initial Password *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4 }}>Initial Password *</label>
                     <input
                       type="password"
                       value={newMemberPassword}
@@ -226,11 +294,11 @@ export default function SettingsClient({
                       required
                       minLength={6}
                       placeholder="Min 6 characters"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "#FFFFFF", border: "1px solid #E2E8F0", color: "#1E293B", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Assigned Mailbox *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4 }}>Assigned Mailbox *</label>
                     <input
                       value={newMemberMailbox}
                       onChange={(e) => { setNewMemberMailbox(e.target.value); setMailboxTouched(true); }}
@@ -244,33 +312,45 @@ export default function SettingsClient({
                   <button type="submit" disabled={isPending || !newMemberName.trim() || !newMemberMailbox.trim()} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#10b981", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer", opacity: isPending ? 0.6 : 1 }}>
                     {isPending ? "Creating..." : "Create User"}
                   </button>
-                  <button type="button" onClick={() => { setAddingMember(false); setNewMemberName(""); setNewMemberEmail(""); setNewMemberPassword(""); setNewMemberMailbox(""); setMailboxTouched(false); }} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                  <button type="button" onClick={() => { setAddingMember(false); setNewMemberName(""); setNewMemberEmail(""); setNewMemberPassword(""); setNewMemberMailbox(""); setMailboxTouched(false); }} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid #E2E8F0", color: "#64748B", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
                 </div>
               </form>
             </div>
           )}
 
           {!isMobile && (
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-              {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            <div style={{ display: "grid", gridTemplateColumns: "2.5fr 1fr 1fr 1fr 2.5fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid #E2E8F0", background: "#F8FAFC" }}>
+              {["Member", "Current Role", "Status", "Change Role", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#94A3B8", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
             </div>
           )}
 
           {profileList.map(p => {
             const isCurrentUser = p.id === currentUser.id;
+            const isSuspended = p.status === "suspended";
             return isMobile ? (
-              <div key={p.id} style={{ padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)" }}>
-                <div style={{ fontWeight: 600, color: "#fcfcfe" }}>{p.full_name}</div>
-                <div style={{ fontSize: "0.75rem", color: "#818286" }}>{p.role}</div>
+              <div key={p.id} style={{ padding: "1rem 1.5rem", borderBottom: "1px solid #E2E8F0" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ fontWeight: 600, color: "#1E293B" }}>{p.full_name}</div>
+                  <span style={{ fontSize: "0.68rem", fontWeight: 700, color: isSuspended ? "#EF4444" : "#10B981" }}>
+                    {isSuspended ? "Suspended" : "Active"}
+                  </span>
+                </div>
+                <div style={{ fontSize: "0.75rem", color: "#64748B", marginTop: 2 }}>Role: {p.role}</div>
+                <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                  <button onClick={() => setResettingPasswordUserId(p.id)} style={{ flex: 1, padding: "6px", background: "#F1F5F9", border: "1px solid #E2E8F0", color: "#475569", borderRadius: 6, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>Reset PW</button>
+                  <button onClick={() => handleToggleSuspend(p.id, p.status)} style={{ flex: 1, padding: "6px", background: isSuspended ? "rgba(16,185,129,0.1)" : "rgba(239,68,68,0.1)", border: `1px solid ${isSuspended ? "rgba(16,185,129,0.2)" : "rgba(239,68,68,0.2)"}`, color: isSuspended ? "#10B981" : "#EF4444", borderRadius: 6, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>
+                    {isSuspended ? "Reactivate" : "Suspend"}
+                  </button>
+                </div>
               </div>
             ) : (
-              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
+              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2.5fr 1fr 1fr 1fr 2.5fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid #E2E8F0", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.15))", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: "#818cf8" }}>
                     {getInitials(p.full_name)}
                   </div>
                   <div>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe" }}>
+                    <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "#1E293B" }}>
                       {p.full_name || "Unnamed User"}
                       {isCurrentUser && <span style={{ fontSize: "0.65rem", background: "rgba(99,102,241,0.15)", color: "#818cf8", padding: "1px 7px", borderRadius: 999, marginLeft: 8, fontWeight: 700 }}>You</span>}
                     </div>
@@ -287,14 +367,31 @@ export default function SettingsClient({
                 </div>
 
                 <div>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 8px", borderRadius: 999, fontSize: "0.7rem", fontWeight: 600, color: isSuspended ? "#EF4444" : "#10B981", background: isSuspended ? "#FEF2F2" : "#D1FAE5", border: `1px solid ${isSuspended ? "rgba(239,68,68,0.2)" : "rgba(16,185,129,0.2)"}` }}>
+                    {isSuspended ? "Suspended" : "Active"}
+                  </span>
+                </div>
+
+                <div>
                   <select 
                     value={p.role} 
                     onChange={(e) => handleRoleChange(p.id, e.target.value)}
-                    disabled={isPending}
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", padding: "4px 8px", borderRadius: 6, fontSize: "0.8rem", outline: "none", cursor: "pointer" }}
+                    disabled={isPending || isCurrentUser}
+                    style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", color: "#1E293B", padding: "4px 8px", borderRadius: 6, fontSize: "0.8rem", outline: "none", cursor: "pointer" }}
                   >
-                    {roleList.map(r => <option key={r.id} value={r.name} style={{ background: "#0d0d12" }}>{r.name}</option>)}
+                    {roleList.map(r => <option key={r.id} value={r.name} style={{ background: "#FFFFFF" }}>{r.name}</option>)}
                   </select>
+                </div>
+
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  <button onClick={() => setResettingPasswordUserId(p.id)} style={{ padding: "4px 8px", borderRadius: 6, background: "#F1F5F9", border: "1px solid #E2E8F0", color: "#475569", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>Reset PW</button>
+                  <button onClick={() => setReassigningFromUserId(p.id)} style={{ padding: "4px 8px", borderRadius: 6, background: "#F1F5F9", border: "1px solid #E2E8F0", color: "#475569", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>Move Leads</button>
+                  <button onClick={() => handleToggleSuspend(p.id, p.status)} style={{ padding: "4px 8px", borderRadius: 6, background: isSuspended ? "rgba(16,185,129,0.1)" : "rgba(239,68,68,0.1)", border: `1px solid ${isSuspended ? "rgba(16,185,129,0.2)" : "rgba(239,68,68,0.2)"}`, color: isSuspended ? "#10B981" : "#EF4444", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>
+                    {isSuspended ? "Activate" : "Suspend"}
+                  </button>
+                  {!isCurrentUser && (
+                    <button onClick={() => handleDeleteUser(p.id)} style={{ padding: "4px 8px", borderRadius: 6, background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.25)", color: "#EF4444", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}>Delete</button>
+                  )}
                 </div>
               </div>
             );
@@ -303,11 +400,11 @@ export default function SettingsClient({
       )}
 
       {tab === "roles" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ background: "#FFFFFF", backdropFilter: "blur(20px)", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden" }}>
+          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid #E2E8F0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Roles & Permissions</h2>
-              <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>Create and manage custom roles</p>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: 0 }}>Roles & Permissions</h2>
+              <p style={{ fontSize: "0.78rem", color: "#94A3B8", margin: "4px 0 0" }}>Create and manage custom roles</p>
             </div>
             <button onClick={() => setEditingRole({ id: "new", name: "", permissions: {} })} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(99,102,241,0.15)", color: "#818cf8", fontWeight: 600, border: "1px solid rgba(99,102,241,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
               + New Role
@@ -315,16 +412,16 @@ export default function SettingsClient({
           </div>
 
           {editingRole && (
-            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(99,102,241,0.03)" }}>
-              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>{editingRole.id === "new" ? "Create New Role" : "Edit Role"}</h3>
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid #E2E8F0", background: "rgba(99,102,241,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#1E293B" }}>{editingRole.id === "new" ? "Create New Role" : "Edit Role"}</h3>
               <form onSubmit={handleSaveRole} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Role Name</label>
-                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: "100%", maxWidth: 250, padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4 }}>Role Name</label>
+                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: "100%", maxWidth: 250, padding: "0.5rem", borderRadius: 6, background: "#FFFFFF", border: "1px solid #E2E8F0", color: "#1E293B", fontSize: "0.85rem", outline: "none" }} />
                   {editingRole.name === 'admin' && <span style={{ marginLeft: 10, fontSize: "0.7rem", color: "#ef4444" }}>Admin name cannot be changed</span>}
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 8 }}>Permissions</label>
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 8 }}>Permissions</label>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {["can_manage_roles", "can_manage_deals", "can_manage_contacts", "can_access_mailbox"].map(perm => (
                       <label key={perm} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.85rem", color: "#d1d5db" }}>
@@ -336,21 +433,21 @@ export default function SettingsClient({
                 </div>
                 <div style={{ display: "flex", gap: 10, marginTop: "0.5rem" }}>
                   <button type="submit" disabled={isPending} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#6366f1", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer" }}>Save</button>
-                  <button type="button" onClick={() => setEditingRole(null)} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                  <button type="button" onClick={() => setEditingRole(null)} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid #E2E8F0", color: "#64748B", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
                 </div>
               </form>
             </div>
           )}
 
           {!isMobile && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-              {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid #E2E8F0", background: "#F8FAFC" }}>
+              {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#94A3B8", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
             </div>
           )}
 
           {roleList.map(r => (
-            <div key={r.id} style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe", marginBottom: isMobile ? "0.5rem" : 0 }}>{r.name}</div>
+            <div key={r.id} style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid #E2E8F0", alignItems: "center" }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: isMobile ? "0.5rem" : 0 }}>{r.name}</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {Object.entries(r.permissions).map(([k, v]) => v ? (
                   <span key={k} style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(99,102,241,0.1)", color: "#818cf8", borderRadius: 4, border: "1px solid rgba(99,102,241,0.2)" }}>
@@ -359,13 +456,68 @@ export default function SettingsClient({
                 ) : null)}
               </div>
               <div style={{ display: "flex", gap: 8, marginTop: isMobile ? "0.75rem" : 0 }}>
-                <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#d1d5db", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
+                <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "#F1F5F9", border: "1px solid #E2E8F0", color: "#d1d5db", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
                 {r.name !== "admin" && r.name !== "sales" && (
                   <button onClick={() => handleDeleteRole(r.id)} disabled={isPending} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444", fontSize: "0.75rem", cursor: "pointer" }}>Delete</button>
                 )}
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {/* Password Reset Modal Overlay */}
+      {resettingPasswordUserId && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 900, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} onClick={() => setResettingPasswordUserId(null)} />
+          <div style={{ position: "relative", width: "100%", maxWidth: 400, background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "1.5rem", boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)", zIndex: 901 }}>
+            <h3 style={{ margin: "0 0 1rem", fontSize: "1rem", fontWeight: 700, color: "#1E293B" }}>Reset User Password</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4, fontWeight: 600 }}>New Password</label>
+                <input
+                  type="password"
+                  value={newPasswordVal}
+                  onChange={(e) => setNewPasswordVal(e.target.value)}
+                  placeholder="Min 6 characters"
+                  style={{ width: "100%", padding: "0.55rem", borderRadius: 8, border: "1px solid #E2E8F0", outline: "none", fontSize: "0.85rem" }}
+                />
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+                <button onClick={() => { setResettingPasswordUserId(null); setNewPasswordVal(""); }} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "transparent", border: "1px solid #E2E8F0", color: "#64748B", fontWeight: 600, cursor: "pointer", fontSize: "0.8rem" }}>Cancel</button>
+                <button onClick={() => handleResetPassword(resettingPasswordUserId)} style={{ padding: "0.5rem 1.25rem", borderRadius: 8, background: "#3B82F6", border: "none", color: "#FFFFFF", fontWeight: 700, cursor: "pointer", fontSize: "0.8rem" }}>Reset Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reassign Leads Modal Overlay */}
+      {reassigningFromUserId && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 900, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} onClick={() => setReassigningFromUserId(null)} />
+          <div style={{ position: "relative", width: "100%", maxWidth: 400, background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "1.5rem", boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)", zIndex: 901 }}>
+            <h3 style={{ margin: "0 0 1rem", fontSize: "1rem", fontWeight: 700, color: "#1E293B" }}>Reassign Leads</h3>
+            <p style={{ fontSize: "0.8rem", color: "#64748B", margin: "0 0 1rem", lineHeight: 1.4 }}>Transfer all assigned leads from this user to another team member.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "#64748B", marginBottom: 4, fontWeight: 600 }}>Assign To</label>
+                <select
+                  value={reassigningToUserId}
+                  onChange={(e) => setReassigningToUserId(e.target.value)}
+                  style={{ width: "100%", padding: "0.55rem", borderRadius: 8, border: "1px solid #E2E8F0", outline: "none", fontSize: "0.85rem", background: "#FFFFFF" }}
+                >
+                  <option value="">— Select member —</option>
+                  {profileList.filter(u => u.id !== reassigningFromUserId).map(u => (
+                    <option key={u.id} value={u.id}>{u.full_name} ({u.role})</option>
+                  ))}
+                </select>
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+                <button onClick={() => { setReassigningFromUserId(null); setReassigningToUserId(""); }} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "transparent", border: "1px solid #E2E8F0", color: "#64748B", fontWeight: 600, cursor: "pointer", fontSize: "0.8rem" }}>Cancel</button>
+                <button onClick={handleReassignLeads} disabled={!reassigningToUserId} style={{ padding: "0.5rem 1.25rem", borderRadius: 8, background: "#10B981", border: "none", color: "#FFFFFF", fontWeight: 700, cursor: !reassigningToUserId ? "not-allowed" : "pointer", fontSize: "0.8rem", opacity: !reassigningToUserId ? 0.6 : 1 }}>Transfer Leads</button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

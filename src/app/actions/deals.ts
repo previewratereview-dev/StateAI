@@ -3,6 +3,7 @@
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { requireAuth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { logAuditAction } from "@/lib/audit-logger";
 
 export type DealStage = "new" | "qualified" | "proposal" | "negotiation" | "won" | "lost";
 
@@ -26,10 +27,16 @@ export interface Deal {
 
 export async function getDeals(): Promise<{ data?: Deal[]; error?: string }> {
   try {
-    const { data, error } = await supabaseAdmin
+    const profile = await requireAuth();
+    let query = supabaseAdmin
       .from("deals")
-      .select("*, contacts(first_name, last_name, company), profiles!deals_assigned_to_fkey(full_name)")
-      .order("created_at", { ascending: false });
+      .select("*, contacts(first_name, last_name, company), profiles!deals_assigned_to_fkey(full_name)");
+
+    if (profile.role !== "admin") {
+      query = query.eq("assigned_to", profile.id);
+    }
+
+    const { data, error } = await query.order("created_at", { ascending: false });
     if (error) return { error: error.message };
     return { data: data as Deal[] };
   } catch (e: any) {
@@ -60,6 +67,9 @@ export async function createDeal(formData: FormData): Promise<{ data?: Deal; err
       .select()
       .single();
     if (error) return { error: error.message };
+
+    await logAuditAction("Deal Creation", { deal_id: data.id, title: payload.title, value: payload.value });
+
     return { data: data as Deal };
   } catch (e: any) {
     return { error: e.message };
@@ -71,11 +81,22 @@ export async function updateDealStage(
   stage: DealStage
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    const profile = await requireAuth();
+    const { data: existing } = await supabaseAdmin.from("deals").select("assigned_to, created_by, title").eq("id", id).single();
+    
+    if (existing) {
+      const allowed = profile.role === "admin" || existing.assigned_to === profile.id || existing.created_by === profile.id;
+      if (!allowed) return { success: false, error: "Not authorized" };
+    }
+
     const { error } = await supabaseAdmin
       .from("deals")
-      .update({ stage })
+      .update({ stage, updated_at: new Date().toISOString() })
       .eq("id", id);
     if (error) return { success: false, error: error.message };
+
+    await logAuditAction(`Deal Stage Updated: ${stage}`, { deal_id: id, stage });
+
     return { success: true };
   } catch (e: any) {
     return { success: false, error: e.message };
@@ -97,11 +118,14 @@ export async function updateDeal(
 
     const { data, error } = await supabaseAdmin
       .from("deals")
-      .update(updates)
+      .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", id)
       .select()
       .single();
     if (error) return { error: error.message };
+
+    await logAuditAction("Deal Update", { deal_id: id, updates });
+
     return { data: data as Deal };
   } catch (e: any) {
     return { error: e.message };
@@ -111,15 +135,16 @@ export async function updateDeal(
 export async function deleteDeal(id: string): Promise<{ success: boolean; error?: string }> {
   const profile = await requireAuth();
   try {
-    // Only admin or creator can delete
-    const { data: existing } = await supabaseAdmin.from("deals").select("created_by, assigned_to").eq("id", id).single();
-    if (existing) {
-      const allowed = profile.role === "admin" || existing.created_by === profile.id;
-      if (!allowed) return { success: false, error: "Not authorized" };
+    // Only admin can delete deals
+    if (profile.role !== "admin") {
+      return { success: false, error: "Unauthorized. Only admins can delete deals" };
     }
 
     const { error } = await supabaseAdmin.from("deals").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
+
+    await logAuditAction("Deal Delete", { deal_id: id });
+
     return { success: true };
   } catch (e: any) {
     return { success: false, error: e.message };

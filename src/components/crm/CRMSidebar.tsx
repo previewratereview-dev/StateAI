@@ -126,6 +126,17 @@ const NAV_ITEMS = [
     ),
   },
   {
+    href: "/crm/audit-logs",
+    label: "Audit Logs",
+    roles: ["admin"],
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+  },
+  {
     href: "/crm/settings",
     label: "Settings",
     roles: ["admin"],
@@ -172,6 +183,9 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
   const showLabels = isMobile ? true : !collapsed;
   const sidebarWidth = isMobile ? 260 : collapsed ? 64 : 220;
 
+  const mainMenuNav = visibleNav.filter((item) => item.href !== "/crm/settings");
+  const helpSupportNav = visibleNav.filter((item) => item.href === "/crm/settings");
+
   const sidebarContent = (
     <aside
       style={{
@@ -181,9 +195,8 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
         position: isMobile ? "fixed" : "sticky",
         top: 0,
         left: 0,
-        background: "rgb(9 9 14 / 95%)",
-        backdropFilter: "blur(24px)",
-        borderRight: "1px solid rgb(177 178 180 / 8%)",
+        background: "#0F172A",
+        borderRight: "1px solid #1E293B",
         display: "flex",
         flexDirection: "column",
         transition: isMobile ? "none" : "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
@@ -196,7 +209,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
       <div
         style={{
           padding: showLabels ? "1.25rem 1rem" : "1.25rem 0",
-          borderBottom: "1px solid rgb(177 178 180 / 6%)",
+          borderBottom: "1px solid #1E293B",
           display: "flex",
           alignItems: "center",
           justifyContent: showLabels ? "space-between" : "center",
@@ -207,25 +220,26 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div
               style={{
-                width: 30,
-                height: 30,
+                width: 32,
+                height: 32,
                 borderRadius: 8,
-                background: "linear-gradient(135deg, rgba(99,102,241,0.4), rgba(139,92,246,0.3))",
-                border: "1px solid rgba(99,102,241,0.3)",
+                background: "#000000",
+                border: "1px solid #334155",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
+                color: "#FFFFFF",
+                padding: 4,
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
-                <path d="M2 17l10 5 10-5" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
-                <path d="M2 12l10 5 10-5" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
+              <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28 75 L53 25 L61 38 L43 75 H28 Z" fill="currentColor" />
+                <path d="M54 50 L64 38 L80 75 H69 L61 57 Z" fill="currentColor" />
               </svg>
             </div>
-            <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe", letterSpacing: "-0.01em" }}>
-              State AI CRM
+            <span style={{ fontSize: "0.95rem", fontWeight: 800, color: "#F8FAFC", letterSpacing: "-0.02em" }}>
+              StateAI CRM
             </span>
           </div>
         )}
@@ -236,9 +250,9 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               width: 28,
               height: 28,
               borderRadius: 7,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(177,178,180,0.1)",
-              color: "#5d5e60",
+              background: "#1E293B",
+              border: "1px solid #334155",
+              color: "#94A3B8",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -258,9 +272,9 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               width: 28,
               height: 28,
               borderRadius: 7,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(177,178,180,0.1)",
-              color: "#5d5e60",
+              background: "#1E293B",
+              border: "1px solid #334155",
+              color: "#94A3B8",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -280,7 +294,20 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
 
       {/* Nav */}
       <nav style={{ flex: 1, padding: "0.75rem 0.5rem", overflowY: "auto", overflowX: "hidden" }}>
-        {visibleNav.map((item) => {
+        {/* MAIN MENU SECTION */}
+        {showLabels && (
+          <div style={{
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            color: "#94A3B8",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            margin: "0.5rem 0.75rem 0.5rem",
+          }}>
+            Main Menu
+          </div>
+        )}
+        {mainMenuNav.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           return (
             <Link
@@ -294,31 +321,119 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                 padding: showLabels ? "0.6rem 0.75rem" : "0.6rem",
                 borderRadius: 10,
                 marginBottom: 2,
-                color: isActive ? "#818cf8" : "#818286",
-                background: isActive ? "rgba(99,102,241,0.12)" : "transparent",
-                border: isActive ? "1px solid rgba(99,102,241,0.2)" : "1px solid transparent",
+                color: isActive ? "#F8FAFC" : "#94A3B8",
+                background: isActive ? "#3B82F6" : "transparent",
                 textDecoration: "none",
                 fontSize: "0.85rem",
                 fontWeight: isActive ? 600 : 500,
-                transition: "all 0.2s",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 justifyContent: showLabels ? "flex-start" : "center",
-                minHeight: 44, // Touch-friendly
+                minHeight: 40,
+                transition: "all 0.15s ease-in-out"
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.background = "#1E293B";
+                  e.currentTarget.style.color = "#F8FAFC";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.color = "#94A3B8";
+                }
               }}
             >
-              <span style={{ flexShrink: 0 }}>{item.icon}</span>
+              <span style={{ flexShrink: 0, color: isActive ? "#F8FAFC" : "#94A3B8" }}>{item.icon}</span>
               {showLabels && <span>{item.label}</span>}
+              {showLabels && item.label === "Mailbox" && (
+                <span
+                  style={{
+                    marginLeft: "auto",
+                    background: "#F43F5E",
+                    color: "#FFFFFF",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    padding: "2px 6px",
+                    borderRadius: 999,
+                    lineHeight: 1,
+                  }}
+                >
+                  12
+                </span>
+              )}
             </Link>
           );
         })}
+
+        {/* HELP & SUPPORT SECTION */}
+        {helpSupportNav.length > 0 && (
+          <>
+            {showLabels && (
+              <div style={{
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                color: "#94A3B8",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                margin: "1.25rem 0.75rem 0.5rem",
+              }}>
+                Help & Support
+              </div>
+            )}
+            {helpSupportNav.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  title={!showLabels ? item.label : undefined}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: showLabels ? 10 : 0,
+                    padding: showLabels ? "0.6rem 0.75rem" : "0.6rem",
+                    borderRadius: 10,
+                    marginBottom: 2,
+                    color: isActive ? "#F8FAFC" : "#94A3B8",
+                    background: isActive ? "#3B82F6" : "transparent",
+                    textDecoration: "none",
+                    fontSize: "0.85rem",
+                    fontWeight: isActive ? 600 : 500,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    justifyContent: showLabels ? "flex-start" : "center",
+                    minHeight: 40,
+                    transition: "all 0.15s ease-in-out"
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "#1E293B";
+                      e.currentTarget.style.color = "#F8FAFC";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#94A3B8";
+                    }
+                  }}
+                >
+                  <span style={{ flexShrink: 0, color: isActive ? "#F8FAFC" : "#94A3B8" }}>{item.icon}</span>
+                  {showLabels && <span>{item.label}</span>}
+                </Link>
+              );
+            })}
+          </>
+        )}
       </nav>
 
       {/* User footer */}
       <div
         style={{
           padding: "0.75rem 0.5rem",
-          borderTop: "1px solid rgb(177 178 180 / 6%)",
+          borderTop: "1px solid #1E293B",
         }}
       >
         {showLabels && (
@@ -329,8 +444,8 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               gap: 10,
               padding: "0.6rem 0.75rem",
               borderRadius: 10,
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(177,178,180,0.08)",
+              background: "#1E293B",
+              border: "1px solid #334155",
               marginBottom: 6,
             }}
           >
@@ -339,21 +454,20 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                 width: 30,
                 height: 30,
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))",
-                border: "1px solid rgba(99,102,241,0.25)",
+                background: "linear-gradient(135deg, #3B82F6, #6366F1)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "0.7rem",
                 fontWeight: 700,
-                color: "#818cf8",
+                color: "#FFFFFF",
                 flexShrink: 0,
               }}
             >
               {getInitials(profile.full_name || profile.email)}
             </div>
             <div style={{ minWidth: 0, flex: 1 }}>
-              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#fcfcfe", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#F8FAFC", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {profile.full_name || profile.email?.split("@")[0]}
               </div>
               <div
@@ -365,8 +479,8 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                   fontWeight: 600,
                   textTransform: "uppercase",
                   letterSpacing: "0.06em",
-                  color: profile.role === "admin" ? "#f59e0b" : "#10b981",
-                  background: profile.role === "admin" ? "rgba(245,158,11,0.1)" : "rgba(16,185,129,0.1)",
+                  color: profile.role === "admin" ? "#FBBF24" : "#34D399",
+                  background: "rgba(30, 41, 59, 0.5)",
                   padding: "1px 6px",
                   borderRadius: 999,
                   marginTop: 2,
@@ -386,8 +500,8 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               padding: showLabels ? "0.55rem 0.75rem" : "0.6rem",
               borderRadius: 10,
               background: "transparent",
-              border: "1px solid rgba(239,68,68,0.15)",
-              color: "rgba(239,68,68,0.5)",
+              border: "1px solid #334155",
+              color: "#EF4444",
               cursor: "pointer",
               fontSize: "0.82rem",
               fontWeight: 600,
@@ -397,15 +511,15 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               gap: 8,
               transition: "all 0.2s",
               fontFamily: "inherit",
-              minHeight: 44,
+              minHeight: 40,
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "rgba(239,68,68,0.08)";
-              (e.currentTarget as HTMLButtonElement).style.color = "rgba(239,68,68,0.8)";
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(239, 68, 68, 0.1)";
+              (e.currentTarget as HTMLButtonElement).style.borderColor = "#EF4444";
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-              (e.currentTarget as HTMLButtonElement).style.color = "rgba(239,68,68,0.5)";
+              (e.currentTarget as HTMLButtonElement).style.borderColor = "#334155";
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
