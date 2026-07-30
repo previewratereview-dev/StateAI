@@ -6,6 +6,9 @@ import { logInteraction, updateContactStatus } from "@/app/actions/interactions"
 import { undoAutoCreatedDeal } from "@/app/actions/deals";
 import { useRouter } from "next/navigation";
 import { claimContact, releaseContact } from "@/app/actions/contacts";
+import { createTask, updateTaskStatus } from "@/app/actions/tasks";
+import { createQuote, createInvoice, updateQuoteStatus, updateInvoiceStatus } from "@/app/actions/quotes";
+import { uploadContactFile } from "@/app/actions/upload";
 import { CHANNEL_LABELS, CHANNEL_ICONS } from "@/lib/interaction-types";
 import type { UserProfile } from "@/lib/auth";
 import type { InteractionChannel, LeadStatus } from "@/lib/interaction-types";
@@ -44,6 +47,9 @@ export default function ContactDetailClient({
   notes,
   activities,
   emails,
+  quotes = [],
+  invoices = [],
+  tasks = [],
   statusHistory,
   profile,
 }: {
@@ -52,11 +58,15 @@ export default function ContactDetailClient({
   notes: any[];
   activities: any[];
   emails: any[];
+  quotes?: any[];
+  invoices?: any[];
+  tasks?: any[];
   statusHistory?: any[];
   profile: UserProfile;
 }) {
   const isMobile = useIsMobile();
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<"timeline" | "tasks" | "billing" | "files">("timeline");
   const [isComposing, setIsComposing] = useState(false);
   const [isLoggingInteraction, setIsLoggingInteraction] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -116,6 +126,111 @@ export default function ContactDetailClient({
       }
     });
   }, [contact.id]);
+
+  async function handleCreateTask(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("contact_id", contact.id);
+    startTransition(async () => {
+      const res = await createTask(fd);
+      if (res.error) {
+        showToast(res.error, "error");
+      } else {
+        showToast("Task created!", "success");
+        e.currentTarget.reset();
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleToggleTask(taskId: string, currentStatus: string) {
+    const nextStatus = currentStatus === "done" ? "open" : "done";
+    startTransition(async () => {
+      const res = await updateTaskStatus(taskId, nextStatus);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Task status updated!", "success");
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleCreateQuote(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("contact_id", contact.id);
+    if (deals.length > 0) fd.set("deal_id", deals[0].id);
+    startTransition(async () => {
+      const res = await createQuote(fd);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Quote created!", "success");
+        e.currentTarget.reset();
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleCreateInvoice(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("contact_id", contact.id);
+    if (deals.length > 0) fd.set("deal_id", deals[0].id);
+    startTransition(async () => {
+      const res = await createInvoice(fd);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Invoice created!", "success");
+        e.currentTarget.reset();
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleUpdateQuote(quoteId: string, status: any) {
+    startTransition(async () => {
+      const res = await updateQuoteStatus(quoteId, status);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Quote status updated!", "success");
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleUpdateInvoice(invoiceId: string, status: any) {
+    startTransition(async () => {
+      const res = await updateInvoiceStatus(invoiceId, status);
+      if (!res.success) {
+        showToast(res.error || "Failed", "error");
+      } else {
+        showToast("Invoice status updated!", "success");
+        router.refresh();
+      }
+    });
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("contactId", contact.id);
+
+    startTransition(async () => {
+      const res = await uploadContactFile(fd);
+      if (!res.success) {
+        showToast(res.error || "Failed to upload file", "error");
+      } else {
+        showToast("File uploaded successfully!", "success");
+        router.refresh();
+      }
+    });
+  }
 
   // Build unified timeline combining notes, emails, activities, and status changes
   const unifiedTimeline = [
@@ -669,44 +784,63 @@ export default function ContactDetailClient({
             minHeight: 600,
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: 700,
-                color: "#fcfcfe",
-                margin: 0,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Timeline
-            </h2>
-            <button
-              onClick={() => setIsLoggingInteraction(true)}
-              style={{
-                padding: "0.5rem 1rem",
-                borderRadius: 10,
-                background: "rgba(99,102,241,0.15)",
-                color: "#818cf8",
-                border: "1px solid rgba(99,102,241,0.2)",
-                cursor: "pointer",
-                fontWeight: 600,
-                fontSize: "0.8rem",
-                transition: "background 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(99,102,241,0.25)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(99,102,241,0.15)")}
-            >
-              + Log Activity
-            </button>
+          {/* Tab buttons */}
+          <div style={{ display: "flex", borderBottom: "1px solid #E2E8F0", gap: "1.5rem", paddingBottom: "0.25rem", marginBottom: "1.5rem" }}>
+            {(["timeline", "tasks", "billing", "files"] as const).map((t) => {
+              const isActive = activeTab === t;
+              const labels = {
+                timeline: "Timeline Logs",
+                tasks: "Tasks Checklist",
+                billing: "Quotes & Invoices",
+                files: "Documents"
+              };
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setActiveTab(t)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: "0.5rem 0",
+                    borderBottom: isActive ? "2px solid #3B82F6" : "2px solid transparent",
+                    color: isActive ? "#3B82F6" : "#64748B",
+                    fontSize: "0.85rem",
+                    fontWeight: isActive ? 700 : 600,
+                    cursor: "pointer",
+                    transition: "all 0.15s"
+                  }}
+                >
+                  {labels[t]}
+                </button>
+              );
+            })}
           </div>
+
+          {/* TAB 1: TIMELINE */}
+          {activeTab === "timeline" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: 0 }}>Timeline Feed</h3>
+                <button
+                  onClick={() => setIsLoggingInteraction(true)}
+                  style={{
+                    padding: "0.5rem 1rem",
+                    borderRadius: 10,
+                    background: "rgba(59,130,246,0.1)",
+                    color: "#3B82F6",
+                    border: "1px solid rgba(59,130,246,0.2)",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    fontSize: "0.8rem",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(59,130,246,0.15)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(59,130,246,0.1)")}
+                >
+                  + Log Activity
+                </button>
+              </div>
 
           {unifiedTimeline.length === 0 ? (
             <div
@@ -996,6 +1130,227 @@ export default function ContactDetailClient({
                   </div>
                 );
               })}
+            </div>
+          )}
+          </div>
+          )}
+
+          {/* TAB 2: TASKS CHECKLIST */}
+          {activeTab === "tasks" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div>
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1rem" }}>Tasks Checklist</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {tasks.map((t) => (
+                    <div key={t.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F8FAFC", padding: "0.75rem 1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                        <input
+                          type="checkbox"
+                          checked={t.status === "done"}
+                          onChange={() => handleToggleTask(t.id, t.status)}
+                          style={{ width: 16, height: 16, cursor: "pointer" }}
+                        />
+                        <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.status === "done" ? "#94A3B8" : "#1E293B", textDecoration: t.status === "done" ? "line-through" : "none" }}>
+                          {t.title}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <span style={{ fontSize: "0.72rem", color: "#64748B" }}>
+                          Due: {t.due_date ? new Date(t.due_date).toLocaleDateString() : "None"}
+                        </span>
+                        <span style={{
+                          fontSize: "0.65rem",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          padding: "2px 8px",
+                          borderRadius: 99,
+                          color: t.priority === "urgent" ? "#EF4444" : t.priority === "high" ? "#F97316" : "#64748B",
+                          background: t.priority === "urgent" ? "#FEF2F2" : t.priority === "high" ? "#FFF7ED" : "#F1F5F9"
+                        }}>
+                          {t.priority}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  {tasks.length === 0 && (
+                    <p style={{ color: "#94A3B8", fontSize: "0.85rem", textAlign: "center", padding: "1.5rem" }}>No tasks set for this lead</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Create Task Form */}
+              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: "1.25rem" }}>
+                <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1rem" }}>Add Checklist Task</h4>
+                <form onSubmit={handleCreateTask} style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.72rem", color: "#64748B", marginBottom: 4, fontWeight: 600 }}>Task Title</label>
+                    <input type="text" name="title" required placeholder="e.g. Send updated presentation deck" style={{ width: "100%", padding: "0.55rem 0.75rem", borderRadius: 8, border: "1px solid #E2E8F0", outline: "none", fontSize: "0.82rem" }} />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "0.72rem", color: "#64748B", marginBottom: 4, fontWeight: 600 }}>Due Date</label>
+                      <input type="date" name="dueDate" required style={{ width: "100%", padding: "0.55rem 0.75rem", borderRadius: 8, border: "1px solid #E2E8F0", outline: "none", fontSize: "0.82rem" }} />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "0.72rem", color: "#64748B", marginBottom: 4, fontWeight: 600 }}>Priority</label>
+                      <select name="priority" defaultValue="normal" style={{ width: "100%", padding: "0.55rem 0.75rem", borderRadius: 8, border: "1px solid #E2E8F0", outline: "none", fontSize: "0.82rem", background: "#FFFFFF" }}>
+                        <option value="low">Low</option>
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" disabled={isPending} style={{ width: "100%", padding: "0.6rem", background: "linear-gradient(135deg, #3B82F6, #6366F1)", border: "none", color: "#FFFFFF", borderRadius: 10, fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", transition: "all 0.15s" }}>
+                    {isPending ? "Creating..." : "Add Task"}
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: QUOTES & INVOICES */}
+          {activeTab === "billing" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {/* Quotes Section */}
+              <div>
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1rem" }}>Quotations</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1rem" }}>
+                  {quotes.map((q) => (
+                    <div key={q.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F8FAFC", padding: "0.75rem 1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                      <div>
+                        <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B" }}>{q.title || "Sales Quote"}</div>
+                        <div style={{ fontSize: "0.72rem", color: "#64748B" }}>Value: ${(q.amount || 0).toLocaleString()} • Sent: {new Date(q.created_at).toLocaleDateString()}</div>
+                      </div>
+                      <select
+                        value={q.status}
+                        onChange={(e) => handleUpdateQuote(q.id, e.target.value)}
+                        style={{ padding: "4px 8px", borderRadius: 6, border: "1px solid #E2E8F0", fontSize: "0.75rem", fontWeight: 600, background: "#FFFFFF" }}
+                      >
+                        <option value="draft">Draft</option>
+                        <option value="sent">Sent</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="declined">Declined</option>
+                      </select>
+                    </div>
+                  ))}
+                  {quotes.length === 0 && (
+                    <p style={{ color: "#94A3B8", fontSize: "0.85rem", textAlign: "center", padding: "1rem" }}>No quotes sent yet</p>
+                  )}
+                </div>
+
+                {/* Create Quote Inline Form */}
+                <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: "1rem", marginBottom: "1.5rem" }}>
+                  <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#1E293B", margin: "0 0 0.85rem" }}>New Quotation Proposal</h4>
+                  <form onSubmit={handleCreateQuote} style={{ display: "flex", gap: "0.75rem" }}>
+                    <input type="text" name="title" required placeholder="Quote Title" style={{ flex: 2, padding: "0.5rem", borderRadius: 8, border: "1px solid #E2E8F0", fontSize: "0.8rem", outline: "none" }} />
+                    <input type="number" name="amount" required placeholder="Amount ($)" style={{ flex: 1, padding: "0.5rem", borderRadius: 8, border: "1px solid #E2E8F0", fontSize: "0.8rem", outline: "none" }} />
+                    <button type="submit" disabled={isPending} style={{ padding: "0.5rem 1rem", background: "#3B82F6", border: "none", color: "#FFFFFF", borderRadius: 8, fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}>
+                      Create
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              {/* Invoices Section */}
+              <div>
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1rem" }}>Invoices</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1rem" }}>
+                  {invoices.map((inv) => (
+                    <div key={inv.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F8FAFC", padding: "0.75rem 1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                      <div>
+                        <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B" }}>Invoice #{inv.id.substring(0, 8)}</div>
+                        <div style={{ fontSize: "0.72rem", color: "#64748B" }}>Amount: ${(inv.amount || 0).toLocaleString()} • Issued: {new Date(inv.created_at).toLocaleDateString()}</div>
+                      </div>
+                      <select
+                        value={inv.status}
+                        onChange={(e) => handleUpdateInvoice(inv.id, e.target.value)}
+                        style={{ padding: "4px 8px", borderRadius: 6, border: "1px solid #E2E8F0", fontSize: "0.75rem", fontWeight: 600, background: "#FFFFFF" }}
+                      >
+                        <option value="draft">Draft</option>
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                        <option value="overdue">Overdue</option>
+                      </select>
+                    </div>
+                  ))}
+                  {invoices.length === 0 && (
+                    <p style={{ color: "#94A3B8", fontSize: "0.85rem", textAlign: "center", padding: "1rem" }}>No invoices generated yet</p>
+                  )}
+                </div>
+
+                {/* Create Invoice Inline Form */}
+                <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: "1rem" }}>
+                  <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#1E293B", margin: "0 0 0.85rem" }}>Issue New Invoice</h4>
+                  <form onSubmit={handleCreateInvoice} style={{ display: "flex", gap: "0.75rem" }}>
+                    <input type="number" name="amount" required placeholder="Invoice Amount ($)" style={{ flex: 2, padding: "0.5rem", borderRadius: 8, border: "1px solid #E2E8F0", fontSize: "0.8rem", outline: "none" }} />
+                    <button type="submit" disabled={isPending} style={{ flex: 1, padding: "0.5rem 1rem", background: "#10B981", border: "none", color: "#FFFFFF", borderRadius: 8, fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}>
+                      Issue Invoice
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: DOCUMENTS */}
+          {activeTab === "files" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div>
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#1E293B", margin: "0 0 1rem" }}>Attached Documents</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1rem" }}>
+                  {activities.filter(a => a.type === "file").map((act) => (
+                    <div key={act.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F8FAFC", padding: "0.75rem 1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                      <div>
+                        <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1E293B" }}>📁 {act.metadata?.filename || "Attached File"}</div>
+                        <div style={{ fontSize: "0.72rem", color: "#64748B" }}>Size: {act.metadata?.size ? `${Math.round(act.metadata.size / 1024)} KB` : "unknown"} • Uploaded: {new Date(act.created_at).toLocaleDateString()}</div>
+                      </div>
+                      {act.metadata?.url && (
+                        <a href={act.metadata.url} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", background: "#3B82F6", color: "#FFFFFF", textDecoration: "none", fontSize: "0.75rem", padding: "6px 12px", borderRadius: 8, fontWeight: 600 }}>
+                          Download
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                  {activities.filter(a => a.type === "file").length === 0 && (
+                    <p style={{ color: "#94A3B8", fontSize: "0.85rem", textAlign: "center", padding: "1.5rem" }}>No uploaded documents</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Upload Document Box */}
+              <div style={{ border: "2px dashed #E2E8F0", borderRadius: 12, padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: 12, background: "#F8FAFC" }}>
+                <span style={{ fontSize: "2rem" }}>📤</span>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B" }}>Upload Lead Documents</div>
+                  <div style={{ fontSize: "0.72rem", color: "#94A3B8", marginTop: 4 }}>PDF, DOCX, TXT up to 10MB</div>
+                </div>
+                <input
+                  type="file"
+                  id="lead-file-upload"
+                  onChange={handleFileUpload}
+                  style={{ display: "none" }}
+                />
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("lead-file-upload")?.click()}
+                  style={{
+                    padding: "0.55rem 1.25rem",
+                    borderRadius: 8,
+                    background: "#0F172A",
+                    color: "#FFFFFF",
+                    border: "none",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    transition: "background 0.15s"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = "#1E293B"}
+                  onMouseLeave={(e) => e.currentTarget.style.background = "#0F172A"}
+                >
+                  Select File
+                </button>
+              </div>
             </div>
           )}
         </div>

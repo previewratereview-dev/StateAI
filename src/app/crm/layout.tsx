@@ -1,5 +1,6 @@
 import { requireAuth } from "@/lib/auth";
 import CRMSidebar from "@/components/crm/CRMSidebar";
+import CRMHeader from "@/components/crm/CRMHeader";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,7 +20,8 @@ export default async function CRMLayout({
       style={{
         display: "flex",
         minHeight: "100vh",
-        background: "#08080c",
+        background: "#F8FAFC",
+        color: "#1E293B",
         fontFamily: "var(--font-geist-sans), system-ui, sans-serif",
       }}
     >
@@ -28,26 +30,21 @@ export default async function CRMLayout({
       <main
         style={{
           flex: 1,
+          display: "flex",
+          flexDirection: "column",
           overflowX: "hidden",
           overflowY: "auto",
           minWidth: 0,
           position: "relative",
+          height: "100vh",
         }}
       >
-        {/* Global subtle background */}
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            pointerEvents: "none",
-            zIndex: 0,
-            background: `
-              radial-gradient(ellipse 60% 40% at 80% 10%, rgba(99,102,241,0.04), transparent 55%),
-              radial-gradient(ellipse 50% 35% at 20% 90%, rgba(139,92,246,0.03), transparent 55%)
-            `,
-          }}
-        />
-        <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+        <CRMHeader profile={profile} />
+
+        {/* Children content area */}
+        <div style={{ flex: 1, position: "relative", zIndex: 1, padding: 0 }}>
+          {children}
+        </div>
       </main>
     </div>
   );

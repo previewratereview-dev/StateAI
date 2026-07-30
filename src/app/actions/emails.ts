@@ -5,8 +5,10 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { requireAuth } from "@/lib/auth";
 import { Resend } from "resend";
 import { revalidatePath } from "next/cache";
+import { logAuditAction } from "@/lib/audit-logger";
+import { logTargetProgress } from "./targets";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key_for_build");
 
 export async function getEmails(folder: "inbox" | "sent" | "archived" | "trash" = "inbox") {
   const profile = await requireAuth();
@@ -84,6 +86,10 @@ export async function sendEmail(formData: FormData) {
     if (resendError) {
       return { success: false, error: resendError.message };
     }
+
+    // Audit and progress targets
+    await logAuditAction("Email Sent", { to, subject });
+    await logTargetProgress(profile.id, "followups", 1);
 
     // 2. Try to find if recipient is a contact
     const { data: contact } = await supabaseAdmin

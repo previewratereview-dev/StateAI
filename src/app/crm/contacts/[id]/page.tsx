@@ -17,6 +17,9 @@ export default async function ContactDetailPage({ params }: { params: Promise<{ 
   const notes = (contact as any).crm_notes || [];
   const activities = (contact as any).activities || [];
   const emails = (contact as any).emails || [];
+  const quotes = (contact as any).quotes || [];
+  const invoices = (contact as any).invoices || [];
+  const tasks = (contact as any).tasks || [];
 
   // Fetch status history
   const statusHistoryResult = await getContactStatusHistory(id);
@@ -29,6 +32,9 @@ export default async function ContactDetailPage({ params }: { params: Promise<{ 
       notes={notes} 
       activities={activities} 
       emails={emails} 
+      quotes={quotes}
+      invoices={invoices}
+      tasks={tasks}
       statusHistory={statusHistory}
       profile={profile} 
     />
