@@ -34,9 +34,13 @@ export default function CRMHeader({ profile }: { profile: UserProfile }) {
 
   // Load notifications
   const loadNotifications = async () => {
-    const res = await getNotifications();
-    if (res.success && res.data) {
-      setNotifications(res.data);
+    try {
+      const res = await getNotifications();
+      if (res && res.success && res.data) {
+        setNotifications(res.data);
+      }
+    } catch (err) {
+      console.warn("Failed to fetch notifications:", err);
     }
   };
 
@@ -52,10 +56,15 @@ export default function CRMHeader({ profile }: { profile: UserProfile }) {
     const delayDebounceFn = setTimeout(async () => {
       if (searchQuery.trim().length > 1) {
         setIsSearching(true);
-        const res = await globalSearch(searchQuery);
-        setSearchResults(res);
-        setIsSearching(false);
-        setSearchOpen(true);
+        try {
+          const res = await globalSearch(searchQuery);
+          setSearchResults(res);
+        } catch (err) {
+          console.warn("Search query failed:", err);
+        } finally {
+          setIsSearching(false);
+          setSearchOpen(true);
+        }
       } else {
         setSearchResults({ contacts: [], deals: [], tasks: [] });
         setSearchOpen(false);
@@ -80,16 +89,24 @@ export default function CRMHeader({ profile }: { profile: UserProfile }) {
   }, []);
 
   const handleMarkAllRead = async () => {
-    const res = await markAllNotificationsRead();
-    if (res.success) {
-      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    try {
+      const res = await markAllNotificationsRead();
+      if (res.success) {
+        setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+      }
+    } catch (err) {
+      console.error("Failed to mark notifications read:", err);
     }
   };
 
   const handleNotifClick = async (id: string, read: boolean) => {
-    if (!read) {
-      await markNotificationRead(id);
-      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    try {
+      if (!read) {
+        await markNotificationRead(id);
+        setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+      }
+    } catch (err) {
+      console.error("Failed to update notification status:", err);
     }
     setNotifOpen(false);
   };
