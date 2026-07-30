@@ -220,21 +220,22 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div
               style={{
-                width: 30,
-                height: 30,
+                width: 32,
+                height: 32,
                 borderRadius: 8,
-                background: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.15))",
-                border: "1px solid rgba(59,130,246,0.3)",
+                background: "#000000",
+                border: "1px solid #334155",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
+                color: "#FFFFFF",
+                padding: 4,
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#3B82F6" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M2 17l10 5 10-5" stroke="#3B82F6" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M2 12l10 5 10-5" stroke="#3B82F6" strokeWidth="2" strokeLinejoin="round" />
+              <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28 75 L53 25 L61 38 L43 75 H28 Z" fill="currentColor" />
+                <path d="M54 50 L64 38 L80 75 H69 L61 57 Z" fill="currentColor" />
               </svg>
             </div>
             <span style={{ fontSize: "0.95rem", fontWeight: 800, color: "#F8FAFC", letterSpacing: "-0.02em" }}>

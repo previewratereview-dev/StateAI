@@ -76,22 +76,23 @@ export default function LoginPage({
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <div
             style={{
-              width: 52,
-              height: 52,
+              width: 56,
+              height: 56,
               borderRadius: 14,
-              background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))",
-              border: "1px solid rgba(99,102,241,0.3)",
+              background: "#000000",
+              border: "1px solid #334155",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               margin: "0 auto 1.25rem",
               boxShadow: "0 0 40px rgba(99,102,241,0.15)",
+              color: "#FFFFFF",
+              padding: 6,
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
-              <path d="M2 17l10 5 10-5" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
-              <path d="M2 12l10 5 10-5" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M28 75 L53 25 L61 38 L43 75 H28 Z" fill="currentColor" />
+              <path d="M54 50 L64 38 L80 75 H69 L61 57 Z" fill="currentColor" />
             </svg>
           </div>
           <h1
