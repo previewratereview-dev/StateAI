@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -44,8 +45,9 @@ export async function getContacts(): Promise<{ data?: Contact[]; error?: string 
     const { data, error } = await query;
     if (error) return { error: error.message };
     return { data: data as Contact[] };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    const error = e as Error;
+    return { error: error.message };
   }
 }
 
@@ -73,8 +75,8 @@ export async function getContact(id: string) {
     const { data, error } = await query.single();
     if (error) return { error: error.message };
     return { data };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -105,8 +107,8 @@ export async function createContact(
       .single();
     if (error) return { error: error.message };
     return { data: data as Contact };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -131,8 +133,8 @@ export async function updateContact(
       .single();
     if (error) return { error: error.message };
     return { data: data as Contact };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -149,8 +151,8 @@ export async function deleteContact(id: string): Promise<{ success: boolean; err
     const { error } = await supabaseAdmin.from("contacts").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -179,8 +181,8 @@ export async function claimContact(contactId: string, ttlMinutes = 15): Promise<
 
     if (error) return { success: false, error: error.message };
     return { success: true, data };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -196,7 +198,7 @@ export async function releaseContact(contactId: string): Promise<{ success: bool
     const { error } = await supabaseAdmin.from("contacts").update({ locked_by: null, locked_at: null }).eq("id", contactId);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }

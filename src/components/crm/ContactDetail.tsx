@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { useState, useTransition, useCallback } from "react";
 import { sendEmail } from "@/app/actions/emails";
@@ -177,8 +178,7 @@ export default function ContactDetailClient({
         </div>
       )}
 
-      <a
-        href="/crm/contacts"
+      <Link href="/crm/contacts"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -194,7 +194,7 @@ export default function ContactDetailClient({
           <polyline points="15 18 9 12 15 6" />
         </svg>
         Back to Contacts
-      </a>
+      </Link>
 
       <div
         style={{
@@ -272,7 +272,7 @@ export default function ContactDetailClient({
                 {contact.locked_by_profile ? (
                   contact.locked_by_profile.id === profile.id ? (
                     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                      <span style={{ fontSize: "0.85rem", color: "#10b981", fontWeight: 700 }}>You're working</span>
+                      <span style={{ fontSize: "0.85rem", color: "#10b981", fontWeight: 700 }}>You&apos;re working</span>
                       <button
                         onClick={() => {
                           startTransition(async () => {
@@ -987,7 +987,7 @@ export default function ContactDetailClient({
                                 fontStyle: "italic",
                               }}
                             >
-                              "{item.reason}"
+                              &quot;{item.reason}&quot;
                             </div>
                           )}
                         </div>

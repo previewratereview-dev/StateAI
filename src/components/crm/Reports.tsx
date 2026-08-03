@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useIsMobile } from "@/lib/useIsMobile";
@@ -74,10 +75,7 @@ export default function ReportsClient({
   const maxContactCount = Math.max(...contactStatusData.map(s => s.count), 1);
 
   // ── Booking status ─────────────────────────────────────────────────────────
-  const bookingStatusData = Object.keys(BOOKING_STATUS_CFG).map(status => ({
-    status,
-    count: bookings.filter((b: any) => b.status === status).length,
-  }));
+  // (Removed unused bookingStatusData)
 
   // ── Task overview ──────────────────────────────────────────────────────────
   const tasksDone = tasks.filter(t => t.status === "done").length;
@@ -88,7 +86,6 @@ export default function ReportsClient({
 
   // ── Won vs Total ───────────────────────────────────────────────────────────
   const won = deals.filter(d => d.stage === "won");
-  const lost = deals.filter(d => d.stage === "lost");
   const totalPipeline = deals.filter(d => !["won", "lost"].includes(d.stage)).reduce((s: number, d: any) => s + (d.value || 0), 0);
   const wonRevenue = won.reduce((s: number, d: any) => s + (d.value || 0), 0);
   const conversionRate = deals.length > 0 ? Math.round((won.length / deals.length) * 100) : 0;

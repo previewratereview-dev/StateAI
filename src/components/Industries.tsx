@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Building2, HeartPulse, GraduationCap, Factory, LandPlot, Shield, Coins, Truck, Zap, Monitor, FlaskConical, Sprout, Users } from "lucide-react";
+import { ArrowRight, Building2, HeartPulse, GraduationCap, Factory, LandPlot, Truck, Zap, Monitor, Sprout, Users } from "lucide-react";
 
 const industries = [
   { id: "agriculture", name: "Agriculture", icon: Sprout, description: "AI-driven precision farming, crop health monitoring, and yield prediction.", image: "/assets/industries/agriculture.jpeg", useCases: ["Precision Agriculture", "Crop Health Analysis"], stats: { accuracy: "93%", savings: "15% water" }, gradient: "from-green-500/20 to-emerald-500/10", borderColor: "border-green-500/30" },
@@ -122,7 +122,7 @@ export default function Industries() {
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "detail">("grid");
 
-  const handleIndustryClick = (industryId: string) => {
+  const _handleIndustryClick = (industryId: string) => {
     setActiveIndustry(industryId);
     setViewMode("detail");
   };
@@ -252,7 +252,7 @@ export default function Industries() {
                     AI Solutions Across <span className="gradient-text">Every Industry</span>
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto">
-                    Deep domain expertise combined with cutting-edge AI to solve your industry's unique challenges.
+                    Deep domain expertise combined with cutting-edge AI to solve your industry&apos;s unique challenges.
                   </p>
                 </div>
               </div>

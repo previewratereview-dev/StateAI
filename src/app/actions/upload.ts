@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -129,7 +130,7 @@ export async function uploadResume(
     }
 
     return { success: true, url: signedUrlResult.data.signedUrl };
-  } catch (err: any) {
-    return { success: false, error: err.message || "Upload failed" };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message || "Upload failed" };
   }
 }

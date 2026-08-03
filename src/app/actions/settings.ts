@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -58,8 +59,8 @@ export async function getTeamPerformance(): Promise<{
     rows.sort((a, b) => b.won_value - a.won_value || b.deals_owned - a.deals_owned);
 
     return { data: rows };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -71,8 +72,8 @@ export async function getProfiles() {
       .order("created_at", { ascending: true });
     if (error) return { error: error.message };
     return { data };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -84,8 +85,8 @@ export async function getRoles() {
       .order("created_at", { ascending: true });
     if (error) return { error: error.message };
     return { data };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -98,8 +99,8 @@ export async function createRole(name: string, permissions: any) {
       .single();
     if (error) return { success: false, error: error.message };
     return { success: true, data };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -111,8 +112,8 @@ export async function updateRole(id: string, permissions: any) {
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -124,8 +125,8 @@ export async function deleteRole(id: string) {
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -140,8 +141,8 @@ export async function updateUserRole(
       .eq("id", userId);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -174,7 +175,7 @@ export async function getDashboardStats() {
       bookings: bookingsRes.data || [],
       activities: activitiesRes.data || [],
     };
-  } catch (e: any) {
+  } catch (_e) {
     return { contacts: [], deals: [], tasks: [], bookings: [], activities: [] };
   }
 }
@@ -212,8 +213,8 @@ export async function createUser(
         email,
       },
     };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 

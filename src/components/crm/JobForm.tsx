@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useCallback } from "react";
@@ -64,8 +65,8 @@ export default function JobForm({ job }: { job?: Job | null }) {
       } else {
         setError(result.error || "Failed to save job");
       }
-    } catch (err: any) {
-      setError(err.message || "Unexpected error");
+    } catch (err: unknown) {
+      setError((err as Error).message || "Unexpected error");
     } finally {
       setSaving(false);
     }

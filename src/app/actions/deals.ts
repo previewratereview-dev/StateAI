@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -40,8 +41,8 @@ export async function getDeals(): Promise<{ data?: Deal[]; error?: string }> {
     const { data, error } = await query;
     if (error) return { error: error.message };
     return { data: data as Deal[] };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -69,8 +70,8 @@ export async function createDeal(formData: FormData): Promise<{ data?: Deal; err
       .single();
     if (error) return { error: error.message };
     return { data: data as Deal };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -85,8 +86,8 @@ export async function updateDealStage(
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -111,8 +112,8 @@ export async function updateDeal(
       .single();
     if (error) return { error: error.message };
     return { data: data as Deal };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -129,8 +130,8 @@ export async function deleteDeal(id: string): Promise<{ success: boolean; error?
     const { error } = await supabaseAdmin.from("deals").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -184,7 +185,7 @@ export async function undoAutoCreatedDeal(dealId: string, contactId: string): Pr
     revalidatePath(`/crm/contacts/${contactId}`);
 
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }

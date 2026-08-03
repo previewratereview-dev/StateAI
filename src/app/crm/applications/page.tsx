@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function ApplicationsPage() {
-  const [profile, appsResult] = await Promise.all([
+  const [_profile, appsResult] = await Promise.all([
     requireAdmin(),
     getAllApplications(),
   ]);

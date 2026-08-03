@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useTransition } from "react";
@@ -20,7 +21,7 @@ export default function SettingsClient({
   profiles: any[];
   roles: any[];
 }) {
-  const router = useRouter();
+  const _router = useRouter();
   const isMobile = useIsMobile();
   const [tab, setTab] = useState<"general" | "team" | "roles">("team");
   const [profileList, setProfileList] = useState(profiles);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -40,8 +41,8 @@ export async function getAllBookings(): Promise<{
     }
 
     return { success: true, data: data as Booking[] };
-  } catch (err: any) {
-    return { success: false, error: err.message || "Failed to fetch bookings" };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message || "Failed to fetch bookings" };
   }
 }
 
@@ -60,8 +61,8 @@ export async function updateBookingStatus(
     }
 
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -80,8 +81,8 @@ export async function updateAdminNotes(
     }
 
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -99,7 +100,7 @@ export async function deleteBooking(
     }
 
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }

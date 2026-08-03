@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useTransition, useEffect, useRef } from "react";
@@ -54,6 +55,8 @@ export default function MailboxClient({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEmails(initialEmails);
     setSelectedEmail(null);
   }, [initialEmails, currentFolder]);

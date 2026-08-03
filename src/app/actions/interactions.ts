@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
@@ -45,7 +46,7 @@ export async function logInteraction(formData: FormData) {
     if (contactLock?.locked_by && contactLock.locked_by !== profile.id && !lockExpired && profile.role !== "admin") {
       return { success: false, error: "Contact is locked by another user" };
     }
-  } catch (e) {
+  } catch (_e) {
     // ignore lock-check errors and proceed
   }
 
@@ -82,7 +83,7 @@ export async function logInteraction(formData: FormData) {
         .from("contacts")
         .update({ locked_by: profile.id, locked_at: new Date().toISOString() })
         .eq("id", contactId);
-    } catch (e) {
+    } catch (_e) {
       // non-fatal
     }
 
@@ -204,7 +205,7 @@ export async function updateContactStatus(
         // Not assigned, not lock owner, not admin
         return { success: false, error: "Not authorized to change contact status" };
       }
-    } catch (e) {
+    } catch (_e) {
       // swallow permission check errors and proceed conservatively
     }
 
@@ -388,8 +389,8 @@ export async function getContactStatusHistory(contactId: string) {
 
     if (error) return { error: error.message };
     return { data };
-  } catch (err: any) {
-    return { error: err.message };
+  } catch (err: unknown) {
+    return { error: (err as Error).message };
   }
 }
 
@@ -415,7 +416,7 @@ export async function getContactInteractions(contactId: string) {
       activities: activities || [],
       statusHistory: statusHistory || [],
     };
-  } catch (err: any) {
-    return { error: err.message };
+  } catch (err: unknown) {
+    return { error: (err as Error).message };
   }
 }

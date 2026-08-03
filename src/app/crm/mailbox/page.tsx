@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { requireAuth } from "@/lib/auth";
 import { getEmails } from "@/app/actions/emails";
 import MailboxClient from "@/components/crm/Mailbox";

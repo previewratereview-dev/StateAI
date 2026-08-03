@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useTransition, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { Booking, BookingStatus } from "@/app/actions/crm";
 import {
   updateBookingStatus,
@@ -822,7 +824,7 @@ export default function CRMDashboard({
                 marginBottom: 8,
               }}
             >
-              <a
+              <Link
                 href="/"
                 style={{
                   display: "flex",
@@ -844,7 +846,7 @@ export default function CRMDashboard({
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                 Back to site
-              </a>
+              </Link>
             </div>
             <h1
               style={{

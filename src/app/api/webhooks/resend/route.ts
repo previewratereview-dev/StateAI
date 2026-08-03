@@ -105,7 +105,6 @@ export async function POST(req: Request) {
 
     for (const attachment of rawAttachments) {
       try {
-        // @ts-ignore - The Resend SDK types might be outdated, but this API exists
         const { data: attachmentData, error: attachmentError } = await resend.emails.receiving.attachments.get({
           emailId: eventData.email_id!,
           id: attachment.id,

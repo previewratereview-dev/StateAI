@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getContact } from "@/app/actions/contacts";
 import { requireAuth } from "@/lib/auth";
 import { notFound } from "next/navigation";

@@ -231,7 +231,7 @@ export default async function JobDetailPage({ params }: Props) {
             Apply for this Position
           </h3>
           <p style={{ color: "#818286", fontSize: "0.85rem", margin: "0 0 24px" }}>
-            Fill out the form below and we'll get back to you.
+            Fill out the form below and we&apos;ll get back to you.
           </p>
           <JobApplicationForm jobId={job.id} jobTitle={job.title} />
         </div>

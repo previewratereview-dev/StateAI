@@ -82,7 +82,7 @@ export default function JobApplicationForm({ jobId, jobTitle }: { jobId: string;
           Application Submitted!
         </h3>
         <p style={{ color: "#818286", fontSize: "0.9rem", maxWidth: 400, margin: "0 auto" }}>
-          Thank you for applying to <strong>{jobTitle}</strong>. We'll review your application and get back to you soon.
+          Thank you for applying to <strong>{jobTitle}</strong>. We&apos;ll review your application and get back to you soon.
         </p>
       </div>
     );

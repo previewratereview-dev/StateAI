@@ -65,8 +65,8 @@ export async function getActiveJobs(): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job[] };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -86,8 +86,8 @@ export async function getJobBySlug(slug: string): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -104,8 +104,8 @@ export async function getAllJobs(): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job[] };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -123,8 +123,8 @@ export async function getJobById(id: string): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -158,8 +158,8 @@ export async function createJob(
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -187,8 +187,8 @@ export async function updateJob(
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as Job };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -199,8 +199,8 @@ export async function deleteJob(
     const { error } = await supabaseAdmin.from("jobs").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -215,8 +215,8 @@ export async function toggleJobStatus(
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -231,7 +231,7 @@ export async function toggleJobFeatured(
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }

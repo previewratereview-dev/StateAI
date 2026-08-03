@@ -147,7 +147,7 @@ export default async function CareersPage() {
             Team
           </h1>
           <p style={{ fontSize: "1.1rem", color: "#818286", lineHeight: 1.7, maxWidth: 560, margin: "0 auto" }}>
-            We're building the future of AI-powered solutions. If you're passionate about innovation and
+            We&apos;re building the future of AI-powered solutions. If you&apos;re passionate about innovation and
             cutting-edge technology, we want to hear from you.
           </p>
         </div>
@@ -173,7 +173,7 @@ export default async function CareersPage() {
             </svg>
             <h3 style={{ color: "#fcfcfe", fontSize: "1.2rem", fontWeight: 600, marginBottom: 8 }}>No open positions right now</h3>
             <p style={{ color: "#5d5e60", fontSize: "0.9rem" }}>
-              We don't have any active job listings at the moment. Check back soon or follow us on social media for updates.
+              We don&apos;t have any active job listings at the moment. Check back soon or follow us on social media for updates.
             </p>
           </div>
         ) : (
@@ -290,7 +290,7 @@ export default async function CareersPage() {
             Why Join State AI?
           </h2>
           <p style={{ color: "#818286", fontSize: "0.95rem", maxWidth: 600, margin: "0 auto 32px" }}>
-            We offer a dynamic environment where innovation meets impact. Here's what you can expect.
+            We offer a dynamic environment where innovation meets impact. Here&apos;s what you can expect.
           </p>
           <div
             style={{

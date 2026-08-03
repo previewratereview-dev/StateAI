@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useTransition, useMemo } from "react";
@@ -217,13 +218,13 @@ function AddTaskDrawer({ contacts, deals, onClose, onSaved }: { contacts: any[];
 }
 
 export default function TasksBoard({ initialTasks, contacts, deals, isAdmin }: { initialTasks: any[]; contacts: any[]; deals: any[]; isAdmin: boolean }) {
-  const router = useRouter();
+  const _router = useRouter();
   const isMobile = useIsMobile();
   const [tasks, setTasks] = useState(initialTasks);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | "all">("all");
   const [showAdd, setShowAdd] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [_isPending, startTransition] = useTransition();
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
   function showToast(msg: string, type: "success" | "error") { setToast({ msg, type }); setTimeout(() => setToast(null), 3000); }

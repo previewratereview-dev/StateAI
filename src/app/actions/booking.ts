@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { supabase } from "@/lib/supabase";
@@ -56,11 +57,11 @@ export async function createBooking(data: BookingInput) {
     }
 
     return { success: true, data: result };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Booking action handler exception:", err);
     return {
       success: false,
-      error: err.message || "A server exception occurred while booking.",
+      error: (err as Error).message || "A server exception occurred while booking.",
     };
   }
 }

@@ -28,11 +28,13 @@ export async function getProfile(): Promise<UserProfile | null> {
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  let { data: profile, error } = await supabase
+  const res = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .single();
+  let profile = res.data;
+  const error = res.error;
 
   if (!profile && !error?.message.includes("does not exist")) {
     // Attempt to auto-create if table exists but row is missing

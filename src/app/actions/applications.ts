@@ -1,7 +1,6 @@
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
 
 export interface JobApplication {
   id: string;
@@ -78,8 +77,8 @@ export async function submitApplication(
 
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -96,8 +95,8 @@ export async function getAllApplications(): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as ApplicationWithJob[] };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -115,8 +114,8 @@ export async function getApplicationsByJobId(jobId: string): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as JobApplication[] };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -134,8 +133,8 @@ export async function getApplicationById(id: string): Promise<{
 
     if (error) return { success: false, error: error.message };
     return { success: true, data: data as ApplicationWithJob };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -151,8 +150,8 @@ export async function updateApplicationStatus(
 
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -168,8 +167,8 @@ export async function updateApplicationNotes(
 
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }
 
@@ -184,7 +183,7 @@ export async function deleteApplication(
 
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    return { success: false, error: (err as Error).message };
   }
 }

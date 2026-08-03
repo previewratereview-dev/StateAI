@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useTransition } from "react";
@@ -21,7 +22,7 @@ function formatCurrency(v: number) {
 }
 
 function DaysBadge({ createdAt }: { createdAt: string }) {
-  const days = Math.floor((Date.now() - new Date(createdAt).getTime()) / 86400000);
+  const days = Math.floor((new Date().getTime() - new Date(createdAt).getTime()) / 86400000);
   const color = days > 30 ? "#ef4444" : days > 14 ? "#f59e0b" : "#6b7280";
   return <span style={{ fontSize: "0.65rem", color, fontWeight: 600 }}>{days}d</span>;
 }

@@ -31,8 +31,8 @@ export async function getTasks(): Promise<{ data?: Task[]; error?: string }> {
       .order("due_date", { ascending: true, nullsFirst: false });
     if (error) return { error: error.message };
     return { data: data as Task[] };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -54,8 +54,8 @@ export async function createTask(formData: FormData): Promise<{ data?: Task; err
       .single();
     if (error) return { error: error.message };
     return { data: data as Task };
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 }
 
@@ -70,8 +70,8 @@ export async function updateTaskStatus(
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -86,8 +86,8 @@ export async function updateTask(
       .eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
 
@@ -96,7 +96,7 @@ export async function deleteTask(id: string): Promise<{ success: boolean; error?
     const { error } = await supabaseAdmin.from("tasks").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error).message };
   }
 }
