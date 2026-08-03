@@ -5,7 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
-const navLinks = [
+type NavLink = {
+  label: string;
+  href: string;
+  dropdown?: string[];
+};
+
+const navLinks: NavLink[] = [
   {
     label: "Services",
     href: "#services",
@@ -81,7 +87,7 @@ export default function Navbar() {
                 {/* Dropdown */}
                 {link.dropdown && activeDropdown === link.label && (
                   <div className="absolute top-full left-0 mt-1 w-64 glass-strong rounded-xl shadow-2xl py-2 animate-fade-in">
-                    {link.dropdown.map((item) => (
+                    {link.dropdown.map((item: string) => (
                       <a
                         key={item}
                         href={link.href}
