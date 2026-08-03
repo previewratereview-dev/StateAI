@@ -24,14 +24,24 @@ export interface Contact {
   notes: string | null;
   assigned_to: string | null;
   created_by: string | null;
+  created_by_profile?: { full_name: string | null } | null;
+  assigned_profile?: { full_name: string | null } | null;
 }
 
 export async function getContacts(): Promise<{ data?: Contact[]; error?: string }> {
+  const profile = await requireAuth();
   try {
-    const { data, error } = await supabaseAdmin
+    let query = supabaseAdmin
       .from("contacts")
-      .select("*")
+      .select("*, created_by_profile:profiles!contacts_created_by_fkey(full_name), assigned_profile:profiles!contacts_assigned_to_fkey(full_name)")
       .order("created_at", { ascending: false });
+
+    // Sales users only see contacts they own or created
+    if (profile.role !== "admin") {
+      query = query.or(`assigned_to.eq.${profile.id},created_by.eq.${profile.id}`);
+    }
+
+    const { data, error } = await query;
     if (error) return { error: error.message };
     return { data: data as Contact[] };
   } catch (e: any) {
@@ -40,18 +50,27 @@ export async function getContacts(): Promise<{ data?: Contact[]; error?: string 
 }
 
 export async function getContact(id: string) {
+  const profile = await requireAuth();
   try {
-    const { data, error } = await supabaseAdmin
+    let query = supabaseAdmin
       .from("contacts")
       .select(`
         *,
+        created_by_profile:profiles!contacts_created_by_fkey(full_name),
+        assigned_profile:profiles!contacts_assigned_to_fkey(full_name),
         deals(*),
         crm_notes(*),
         activities(*),
         emails(*)
       `)
-      .eq("id", id)
-      .single();
+      .eq("id", id);
+
+    // Sales users cannot open other people's contacts directly by URL
+    if (profile.role !== "admin") {
+      query = query.or(`assigned_to.eq.${profile.id},created_by.eq.${profile.id}`);
+    }
+
+    const { data, error } = await query.single();
     if (error) return { error: error.message };
     return { data };
   } catch (e: any) {
@@ -62,6 +81,7 @@ export async function getContact(id: string) {
 export async function createContact(
   formData: FormData
 ): Promise<{ data?: Contact; error?: string }> {
+  const profile = await requireAuth();
   try {
     const payload = {
       first_name: formData.get("first_name") as string,
@@ -74,11 +94,14 @@ export async function createContact(
       status: (formData.get("status") as ContactStatus) || "new",
       lead_source: (formData.get("lead_source") as LeadSource) || "other",
       notes: (formData.get("notes") as string) || null,
+      // Attribution: record who created the contact; default owner to the creator
+      created_by: profile.id,
+      assigned_to: (formData.get("assigned_to") as string) || profile.id,
     };
     const { data, error } = await supabaseAdmin
       .from("contacts")
       .insert(payload)
-      .select()
+      .select("*, created_by_profile:profiles!contacts_created_by_fkey(full_name), assigned_profile:profiles!contacts_assigned_to_fkey(full_name)")
       .single();
     if (error) return { error: error.message };
     return { data: data as Contact };
@@ -91,12 +114,20 @@ export async function updateContact(
   id: string,
   updates: Partial<Contact>
 ): Promise<{ data?: Contact; error?: string }> {
+  const profile = await requireAuth();
   try {
+    // Only admin, the owner (assigned_to), or the creator can update a contact
+    if (profile.role !== "admin") {
+      const { data: existing } = await supabaseAdmin.from("contacts").select("assigned_to, created_by").eq("id", id).single();
+      if (!existing || (existing.assigned_to !== profile.id && existing.created_by !== profile.id)) {
+        return { error: "Not authorized to update this contact" };
+      }
+    }
     const { data, error } = await supabaseAdmin
       .from("contacts")
       .update(updates)
       .eq("id", id)
-      .select()
+      .select("*, created_by_profile:profiles!contacts_created_by_fkey(full_name), assigned_profile:profiles!contacts_assigned_to_fkey(full_name)")
       .single();
     if (error) return { error: error.message };
     return { data: data as Contact };
@@ -106,7 +137,15 @@ export async function updateContact(
 }
 
 export async function deleteContact(id: string): Promise<{ success: boolean; error?: string }> {
+  const profile = await requireAuth();
   try {
+    // Only admin or the creator can delete (UI already restricts this; enforce here too)
+    if (profile.role !== "admin") {
+      const { data: existing } = await supabaseAdmin.from("contacts").select("created_by").eq("id", id).single();
+      if (!existing || existing.created_by !== profile.id) {
+        return { success: false, error: "Not authorized to delete this contact" };
+      }
+    }
     const { error } = await supabaseAdmin.from("contacts").delete().eq("id", id);
     if (error) return { success: false, error: error.message };
     return { success: true };

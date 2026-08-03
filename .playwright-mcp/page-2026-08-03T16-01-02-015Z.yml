@@ -1,0 +1,136 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - complementary [ref=f3e3]:
+      - generic [ref=f3e4]:
+        - generic [ref=f3e5]: State AI CRM
+        - generic [ref=f3e12]:
+          - button "Toggle theme" [ref=f3e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f3e16] [cursor=pointer]
+      - navigation [ref=f3e19]:
+        - link "Dashboard" [ref=f3e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f3e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f3e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f3e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f3e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f3e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f3e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f3e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f3e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f3e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f3e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f3e85]:
+        - generic [ref=f3e86]:
+          - generic [ref=f3e87]: R
+          - generic [ref=f3e88]:
+            - generic [ref=f3e89]: rayees
+            - generic [ref=f3e90]: admin
+        - button "Sign Out" [ref=f3e93] [cursor=pointer]
+    - main [ref=f3e97]:
+      - generic [ref=f3e99]:
+        - generic [ref=f3e100]:
+          - generic [ref=f3e101]:
+            - heading "Pipeline" [level=1] [ref=f3e102]
+            - paragraph [ref=f3e103]:
+              - text: 4 deals ·
+              - generic [ref=f3e104]: $20,000 total
+          - button "Add Deal" [ref=f3e105] [cursor=pointer]
+        - generic [ref=f3e107]:
+          - generic [ref=f3e108]:
+            - generic [ref=f3e110]:
+              - generic [ref=f3e111]:
+                - generic [ref=f3e113]: New
+                - generic [ref=f3e114]: "0"
+              - generic [ref=f3e115]: $0
+            - generic [ref=f3e116]: No deals
+          - generic [ref=f3e118]:
+            - generic [ref=f3e120]:
+              - generic [ref=f3e121]:
+                - generic [ref=f3e123]: Qualified
+                - generic [ref=f3e124]: "2"
+              - generic [ref=f3e125]: $0
+            - generic [ref=f3e126]:
+              - generic [ref=f3e127]:
+                - generic [ref=f3e128]:
+                  - generic [ref=f3e129]: Sudhanshu Shridhar — Opportunity
+                  - button "⋯" [ref=f3e131] [cursor=pointer]
+                - generic [ref=f3e132]: 👤 Sudhanshu Shridhar
+                - generic [ref=f3e133]: 🏢 SFM Tour & Travels
+                - generic [ref=f3e134]: 🧑‍💼 rayees
+                - generic [ref=f3e135]:
+                  - generic [ref=f3e136]: $0
+                  - generic [ref=f3e137]:
+                    - generic [ref=f3e138]: 25%
+                    - generic [ref=f3e139]: 0d
+              - generic [ref=f3e140]:
+                - generic [ref=f3e141]:
+                  - generic [ref=f3e142]: Ashok Chawla — Opportunity
+                  - button "⋯" [ref=f3e144] [cursor=pointer]
+                - generic [ref=f3e145]: 👤 Ashok Chawla
+                - generic [ref=f3e146]: 🏢 Travel Max Holiday Pvt. Ltd.
+                - generic [ref=f3e147]: 🧑‍💼 Saleesh samuel
+                - generic [ref=f3e148]:
+                  - generic [ref=f3e149]: $0
+                  - generic [ref=f3e150]:
+                    - generic [ref=f3e151]: 25%
+                    - generic [ref=f3e152]: 14d
+          - generic [ref=f3e153]:
+            - generic [ref=f3e155]:
+              - generic [ref=f3e156]:
+                - generic [ref=f3e158]: Proposal
+                - generic [ref=f3e159]: "1"
+              - generic [ref=f3e160]: $0
+            - generic [ref=f3e162]:
+              - generic [ref=f3e163]:
+                - generic [ref=f3e164]: Pragya Chandra — Opportunity
+                - button "⋯" [ref=f3e166] [cursor=pointer]
+              - generic [ref=f3e167]: 👤 Pragya Chandra
+              - generic [ref=f3e168]: 🏢 Crocus Travel Pvt Ltd
+              - generic [ref=f3e169]: 🧑‍💼 Saleesh samuel
+              - generic [ref=f3e170]:
+                - generic [ref=f3e171]: $0
+                - generic [ref=f3e172]:
+                  - generic [ref=f3e173]: 50%
+                  - generic [ref=f3e174]: 19d
+          - generic [ref=f3e175]:
+            - generic [ref=f3e177]:
+              - generic [ref=f3e178]:
+                - generic [ref=f3e180]: Negotiation
+                - generic [ref=f3e181]: "1"
+              - generic [ref=f3e182]: $20.0k
+            - generic [ref=f3e184]:
+              - generic [ref=f3e185]:
+                - generic [ref=f3e186]: huma mega mart
+                - button "⋯" [ref=f3e188] [cursor=pointer]
+              - generic [ref=f3e189]: 🧑‍💼 Muzamil Rashid
+              - generic [ref=f3e190]:
+                - generic [ref=f3e191]: $20.0k
+                - generic [ref=f3e192]:
+                  - generic [ref=f3e193]: 100%
+                  - generic [ref=f3e194]: 47d
+          - generic [ref=f3e195]:
+            - generic [ref=f3e197]:
+              - generic [ref=f3e198]:
+                - generic [ref=f3e200]: Won
+                - generic [ref=f3e201]: "0"
+              - generic [ref=f3e202]: $0
+            - generic [ref=f3e203]: No deals
+          - generic [ref=f3e205]:
+            - generic [ref=f3e207]:
+              - generic [ref=f3e208]:
+                - generic [ref=f3e210]: Lost
+                - generic [ref=f3e211]: "0"
+              - generic [ref=f3e212]: $0
+            - generic [ref=f3e213]: No deals
+  - button "Open Next.js Dev Tools" [ref=f3e220] [cursor=pointer]
+  - alert [ref=f3e224]

@@ -44,9 +44,15 @@ function MiniBar({ value, max, color }: { value: number; max: number; color: str
 
 export default function ReportsClient({
   stats,
+  teamPerformance,
   isAdmin,
 }: {
   stats: { contacts: any[]; deals: any[]; tasks: any[]; bookings: any[]; activities: any[] };
+  teamPerformance: {
+    id: string; full_name: string;
+    contacts_added: number; contacts_owned: number; deals_owned: number;
+    won_count: number; won_value: number; pipeline_value: number; activities: number;
+  }[];
   isAdmin: boolean;
 }) {
   const isMobile = useIsMobile();
@@ -264,6 +270,58 @@ export default function ReportsClient({
           )}
         </div>
       </div>
+
+      {/* Team performance (admin only) */}
+      {isAdmin && (
+        <div style={{ marginTop: "1.5rem" }}>
+          <div style={card}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.5rem" }}>
+              <h2 style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--crm-text)", margin: 0, letterSpacing: "-0.01em" }}>Team Performance</h2>
+              <span style={{ fontSize: "0.75rem", color: "var(--crm-faint)" }}>Per salesperson · revenue and pipeline owned</span>
+            </div>
+            {teamPerformance.length === 0 ? (
+              <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem" }}>No team members found.</p>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 720 }}>
+                  <thead>
+                    <tr style={{ borderBottom: "1px solid rgb(var(--crm-line) / 0.1)" }}>
+                      {["Salesperson", "Contacts Added", "Owned", "Deals Owned", "Won", "Revenue Won", "Pipeline Value", "Activities"].map(h => (
+                        <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.875rem", fontSize: "0.68rem", fontWeight: 700, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {teamPerformance.map(p => (
+                      <tr key={p.id} style={{ borderBottom: "1px solid rgb(var(--crm-line) / 0.05)", transition: "background 0.15s" }}
+                        onMouseEnter={e => (e.currentTarget as HTMLTableRowElement).style.background = "rgb(var(--crm-overlay) / 0.02)"}
+                        onMouseLeave={e => (e.currentTarget as HTMLTableRowElement).style.background = "transparent"}>
+                        <td style={{ padding: "0.7rem 0.875rem" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", fontWeight: 700, color: "#818cf8", flexShrink: 0 }}>
+                              {p.full_name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()}
+                            </div>
+                            <div>
+                              <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--crm-text)", whiteSpace: "nowrap" }}>{p.full_name}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "var(--crm-text-2)" }}>{p.contacts_added}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "var(--crm-text-2)" }}>{p.contacts_owned}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "var(--crm-text-2)" }}>{p.deals_owned}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "#10b981", fontWeight: 700 }}>{p.won_count}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "#10b981", fontWeight: 700, whiteSpace: "nowrap" }}>{formatCurrency(p.won_value)}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "#f59e0b", fontWeight: 600, whiteSpace: "nowrap" }}>{formatCurrency(p.pipeline_value)}</td>
+                        <td style={{ padding: "0.7rem 0.875rem", fontSize: "0.82rem", color: "var(--crm-muted)" }}>{p.activities}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -49,7 +49,7 @@ export async function getEmails(folder: "inbox" | "sent" | "archived" | "trash" 
 }
 
 export async function getEmail(emailId: string) {
-  const profile = await requireAuth();
+  await requireAuth();
   const supabase = await createSupabaseServerClient();
 
   const { data, error } = await supabase

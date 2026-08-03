@@ -1,0 +1,6 @@
+- generic [active] [ref=f10e1]:
+  - button "Open Next.js Dev Tools" [ref=f10e7] [cursor=pointer]
+  - generic [ref=f10e12]:
+    - heading "404" [level=1] [ref=f10e13]
+    - heading "This page could not be found." [level=2] [ref=f10e15]
+  - alert [ref=f10e16]

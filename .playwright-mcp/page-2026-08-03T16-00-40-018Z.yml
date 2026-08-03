@@ -1,0 +1,273 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - complementary [ref=f2e3]:
+      - generic [ref=f2e4]:
+        - generic [ref=f2e5]: State AI CRM
+        - generic [ref=f2e12]:
+          - button "Toggle theme" [ref=f2e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f2e16] [cursor=pointer]
+      - navigation [ref=f2e19]:
+        - link "Dashboard" [ref=f2e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f2e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f2e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f2e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f2e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f2e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f2e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f2e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f2e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f2e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f2e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f2e85]:
+        - generic [ref=f2e86]:
+          - generic [ref=f2e87]: R
+          - generic [ref=f2e88]:
+            - generic [ref=f2e89]: rayees
+            - generic [ref=f2e90]: admin
+        - button "Sign Out" [ref=f2e93] [cursor=pointer]
+    - main [ref=f2e97]:
+      - generic [ref=f2e99]:
+        - generic [ref=f2e100]:
+          - heading "Reports & Analytics" [level=1] [ref=f2e101]
+          - paragraph [ref=f2e102]: Pipeline performance and team metrics
+        - generic [ref=f2e103]:
+          - generic [ref=f2e104]:
+            - generic [ref=f2e105]: "21"
+            - generic [ref=f2e106]: Total Contacts
+          - generic [ref=f2e107]:
+            - generic [ref=f2e108]: "4"
+            - generic [ref=f2e109]: Total Deals
+          - generic [ref=f2e110]:
+            - generic [ref=f2e111]: 0%
+            - generic [ref=f2e112]: Conversion Rate
+          - generic [ref=f2e113]:
+            - generic [ref=f2e114]: $20,000
+            - generic [ref=f2e115]: Pipeline Value
+          - generic [ref=f2e116]:
+            - generic [ref=f2e117]: $0
+            - generic [ref=f2e118]: Revenue Won
+          - generic [ref=f2e119]:
+            - generic [ref=f2e120]: 67%
+            - generic [ref=f2e121]: Tasks Done
+        - generic [ref=f2e122]:
+          - generic [ref=f2e123]:
+            - heading "Pipeline by Stage" [level=2] [ref=f2e124]
+            - generic [ref=f2e125]:
+              - generic [ref=f2e127]:
+                - generic [ref=f2e128]: New
+                - generic [ref=f2e131]: 0 deals
+              - generic [ref=f2e134]:
+                - generic [ref=f2e135]: Qualified
+                - generic [ref=f2e138]: 2 deals
+              - generic [ref=f2e142]:
+                - generic [ref=f2e143]: Proposal
+                - generic [ref=f2e146]: 1 deal
+              - generic [ref=f2e150]:
+                - generic [ref=f2e151]: Negotiation
+                - generic [ref=f2e154]: 1 deal$20,000
+              - generic [ref=f2e158]:
+                - generic [ref=f2e159]: Won
+                - generic [ref=f2e162]: 0 deals
+              - generic [ref=f2e165]:
+                - generic [ref=f2e166]: Lost
+                - generic [ref=f2e169]: 0 deals
+          - generic [ref=f2e171]:
+            - heading "Conversion Funnel" [level=2] [ref=f2e172]
+            - generic [ref=f2e173]:
+              - generic [ref=f2e176]:
+                - generic [ref=f2e177]: Total Deals
+                - generic [ref=f2e178]: "4"
+              - generic [ref=f2e183]:
+                - generic [ref=f2e184]: Active (non-lost)
+                - generic [ref=f2e185]: "4"
+              - generic [ref=f2e190]:
+                - generic [ref=f2e191]: In Proposal/Negotiation
+                - generic [ref=f2e192]: "2"
+              - generic [ref=f2e197]:
+                - generic [ref=f2e198]: Won
+                - generic [ref=f2e199]: "0"
+              - generic [ref=f2e201]:
+                - generic [ref=f2e202]: Win Rate
+                - generic [ref=f2e203]: 0%
+        - generic [ref=f2e204]:
+          - generic [ref=f2e205]:
+            - heading "Contact Status" [level=2] [ref=f2e206]
+            - generic [ref=f2e207]:
+              - generic [ref=f2e209]:
+                - generic [ref=f2e210]: New
+                - generic [ref=f2e211]: "1"
+              - generic [ref=f2e215]:
+                - generic [ref=f2e216]: Contacted
+                - generic [ref=f2e217]: "16"
+              - generic [ref=f2e221]:
+                - generic [ref=f2e222]: Qualified
+                - generic [ref=f2e223]: "3"
+              - generic [ref=f2e227]:
+                - generic [ref=f2e228]: Proposal
+                - generic [ref=f2e229]: "1"
+              - generic [ref=f2e233]:
+                - generic [ref=f2e234]: Negotiation
+                - generic [ref=f2e235]: "0"
+              - generic [ref=f2e238]:
+                - generic [ref=f2e239]: Won
+                - generic [ref=f2e240]: "0"
+              - generic [ref=f2e243]:
+                - generic [ref=f2e244]: Lost
+                - generic [ref=f2e245]: "0"
+              - generic [ref=f2e248]:
+                - generic [ref=f2e249]: Churned
+                - generic [ref=f2e250]: "0"
+          - generic [ref=f2e252]:
+            - heading "Task Overview" [level=2] [ref=f2e253]
+            - generic [ref=f2e259]:
+              - generic [ref=f2e260]: 67%
+              - generic [ref=f2e261]: done
+            - generic [ref=f2e262]:
+              - generic [ref=f2e263]:
+                - generic [ref=f2e264]: Open
+                - generic [ref=f2e266]: "0"
+              - generic [ref=f2e267]:
+                - generic [ref=f2e268]: In Progress
+                - generic [ref=f2e270]: "1"
+              - generic [ref=f2e271]:
+                - generic [ref=f2e272]: Done
+                - generic [ref=f2e274]: "2"
+          - generic [ref=f2e275]:
+            - heading "Bookings (7 days)" [level=2] [ref=f2e276]
+            - paragraph [ref=f2e277]: No bookings in the last 7 days.
+        - generic [ref=f2e279]:
+          - generic [ref=f2e280]:
+            - heading "Team Performance" [level=2] [ref=f2e281]
+            - generic [ref=f2e282]: Per salesperson · revenue and pipeline owned
+          - table [ref=f2e284]:
+            - rowgroup [ref=f2e285]:
+              - row [ref=f2e286]:
+                - columnheader "Salesperson" [ref=f2e287]
+                - columnheader "Contacts Added" [ref=f2e288]
+                - columnheader "Owned" [ref=f2e289]
+                - columnheader "Deals Owned" [ref=f2e290]
+                - columnheader "Won" [ref=f2e291]
+                - columnheader "Revenue Won" [ref=f2e292]
+                - columnheader "Pipeline Value" [ref=f2e293]
+                - columnheader "Activities" [ref=f2e294]
+            - rowgroup [ref=f2e295]:
+              - row [ref=f2e296]:
+                - cell "SS Saleesh samuel" [ref=f2e297]:
+                  - generic [ref=f2e298]:
+                    - generic [ref=f2e299]: SS
+                    - generic [ref=f2e300]: Saleesh samuel
+                - cell "0" [ref=f2e302]
+                - cell "0" [ref=f2e303]
+                - cell "2" [ref=f2e304]
+                - cell "0" [ref=f2e305]
+                - cell "$0" [ref=f2e306]
+                - cell "$0" [ref=f2e307]
+                - cell "6" [ref=f2e308]
+              - row [ref=f2e309]:
+                - cell "R rayees" [ref=f2e310]:
+                  - generic [ref=f2e311]:
+                    - generic [ref=f2e312]: R
+                    - generic [ref=f2e313]: rayees
+                - cell "0" [ref=f2e315]
+                - cell "0" [ref=f2e316]
+                - cell "1" [ref=f2e317]
+                - cell "0" [ref=f2e318]
+                - cell "$0" [ref=f2e319]
+                - cell "$0" [ref=f2e320]
+                - cell "5" [ref=f2e321]
+              - row [ref=f2e322]:
+                - cell "MR Muzamil Rashid" [ref=f2e323]:
+                  - generic [ref=f2e324]:
+                    - generic [ref=f2e325]: MR
+                    - generic [ref=f2e326]: Muzamil Rashid
+                - cell "0" [ref=f2e328]
+                - cell "0" [ref=f2e329]
+                - cell "1" [ref=f2e330]
+                - cell "0" [ref=f2e331]
+                - cell "$0" [ref=f2e332]
+                - cell "$20,000" [ref=f2e333]
+                - cell "5" [ref=f2e334]
+              - row [ref=f2e335]:
+                - cell "S sartaj" [ref=f2e336]:
+                  - generic [ref=f2e337]:
+                    - generic [ref=f2e338]: S
+                    - generic [ref=f2e339]: sartaj
+                - cell "0" [ref=f2e341]
+                - cell "0" [ref=f2e342]
+                - cell "0" [ref=f2e343]
+                - cell "0" [ref=f2e344]
+                - cell "$0" [ref=f2e345]
+                - cell "$0" [ref=f2e346]
+                - cell "0" [ref=f2e347]
+              - row [ref=f2e348]:
+                - cell "SS Saleesh Samuel" [ref=f2e349]:
+                  - generic [ref=f2e350]:
+                    - generic [ref=f2e351]: SS
+                    - generic [ref=f2e352]: Saleesh Samuel
+                - cell "0" [ref=f2e354]
+                - cell "0" [ref=f2e355]
+                - cell "0" [ref=f2e356]
+                - cell "0" [ref=f2e357]
+                - cell "$0" [ref=f2e358]
+                - cell "$0" [ref=f2e359]
+                - cell "0" [ref=f2e360]
+              - row [ref=f2e361]:
+                - cell "ZF Zaratiana Fify NELY" [ref=f2e362]:
+                  - generic [ref=f2e363]:
+                    - generic [ref=f2e364]: ZF
+                    - generic [ref=f2e365]: Zaratiana Fify NELY
+                - cell "0" [ref=f2e367]
+                - cell "0" [ref=f2e368]
+                - cell "0" [ref=f2e369]
+                - cell "0" [ref=f2e370]
+                - cell "$0" [ref=f2e371]
+                - cell "$0" [ref=f2e372]
+                - cell "0" [ref=f2e373]
+              - row [ref=f2e374]:
+                - cell "AK Adeeba Khan" [ref=f2e375]:
+                  - generic [ref=f2e376]:
+                    - generic [ref=f2e377]: AK
+                    - generic [ref=f2e378]: Adeeba Khan
+                - cell "0" [ref=f2e380]
+                - cell "0" [ref=f2e381]
+                - cell "0" [ref=f2e382]
+                - cell "0" [ref=f2e383]
+                - cell "$0" [ref=f2e384]
+                - cell "$0" [ref=f2e385]
+                - cell "0" [ref=f2e386]
+              - row [ref=f2e387]:
+                - cell "RA Raja Athar" [ref=f2e388]:
+                  - generic [ref=f2e389]:
+                    - generic [ref=f2e390]: RA
+                    - generic [ref=f2e391]: Raja Athar
+                - cell "0" [ref=f2e393]
+                - cell "0" [ref=f2e394]
+                - cell "0" [ref=f2e395]
+                - cell "0" [ref=f2e396]
+                - cell "$0" [ref=f2e397]
+                - cell "$0" [ref=f2e398]
+                - cell "0" [ref=f2e399]
+              - row [ref=f2e400]:
+                - cell "A Aiman" [ref=f2e401]:
+                  - generic [ref=f2e402]:
+                    - generic [ref=f2e403]: A
+                    - generic [ref=f2e404]: Aiman
+                - cell "0" [ref=f2e406]
+                - cell "0" [ref=f2e407]
+                - cell "0" [ref=f2e408]
+                - cell "0" [ref=f2e409]
+                - cell "$0" [ref=f2e410]
+                - cell "$0" [ref=f2e411]
+                - cell "0" [ref=f2e412]
+  - button "Open Next.js Dev Tools" [ref=f2e418] [cursor=pointer]

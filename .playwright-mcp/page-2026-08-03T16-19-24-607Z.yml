@@ -1,0 +1,94 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - complementary [ref=f9e3]:
+      - generic [ref=f9e4]:
+        - generic [ref=f9e5]: State AI CRM
+        - generic [ref=f9e12]:
+          - button "Toggle theme" [ref=f9e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f9e16] [cursor=pointer]
+      - navigation [ref=f9e19]:
+        - link "Dashboard" [ref=f9e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f9e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f9e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f9e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f9e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f9e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f9e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f9e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+      - generic [ref=f9e67]:
+        - generic [ref=f9e68]:
+          - generic [ref=f9e69]: MR
+          - generic [ref=f9e70]:
+            - generic [ref=f9e71]: Muzamil Rashid
+            - generic [ref=f9e72]: sales
+        - button "Sign Out" [ref=f9e75] [cursor=pointer]
+    - main [ref=f9e79]:
+      - generic [ref=f9e81]:
+        - generic [ref=f9e82]:
+          - generic [ref=f9e83]:
+            - heading "Pipeline" [level=1] [ref=f9e84]
+            - paragraph [ref=f9e85]:
+              - text: 1 deals ·
+              - generic [ref=f9e86]: $20,000 total
+          - button "Add Deal" [ref=f9e87] [cursor=pointer]
+        - generic [ref=f9e89]:
+          - generic [ref=f9e90]:
+            - generic [ref=f9e92]:
+              - generic [ref=f9e93]:
+                - generic [ref=f9e95]: New
+                - generic [ref=f9e96]: "0"
+              - generic [ref=f9e97]: $0
+            - generic [ref=f9e98]: No deals
+          - generic [ref=f9e100]:
+            - generic [ref=f9e102]:
+              - generic [ref=f9e103]:
+                - generic [ref=f9e105]: Qualified
+                - generic [ref=f9e106]: "0"
+              - generic [ref=f9e107]: $0
+            - generic [ref=f9e108]: No deals
+          - generic [ref=f9e110]:
+            - generic [ref=f9e112]:
+              - generic [ref=f9e113]:
+                - generic [ref=f9e115]: Proposal
+                - generic [ref=f9e116]: "0"
+              - generic [ref=f9e117]: $0
+            - generic [ref=f9e118]: No deals
+          - generic [ref=f9e120]:
+            - generic [ref=f9e122]:
+              - generic [ref=f9e123]:
+                - generic [ref=f9e125]: Negotiation
+                - generic [ref=f9e126]: "1"
+              - generic [ref=f9e127]: $20.0k
+            - generic [ref=f9e129]:
+              - generic [ref=f9e130]:
+                - generic [ref=f9e131]: huma mega mart
+                - button "⋯" [ref=f9e133] [cursor=pointer]
+              - generic [ref=f9e134]: 🧑‍💼 Muzamil Rashid
+              - generic [ref=f9e135]:
+                - generic [ref=f9e136]: $20.0k
+                - generic [ref=f9e137]:
+                  - generic [ref=f9e138]: 100%
+                  - generic [ref=f9e139]: 47d
+          - generic [ref=f9e140]:
+            - generic [ref=f9e142]:
+              - generic [ref=f9e143]:
+                - generic [ref=f9e145]: Won
+                - generic [ref=f9e146]: "0"
+              - generic [ref=f9e147]: $0
+            - generic [ref=f9e148]: No deals
+          - generic [ref=f9e150]:
+            - generic [ref=f9e152]:
+              - generic [ref=f9e153]:
+                - generic [ref=f9e155]: Lost
+                - generic [ref=f9e156]: "0"
+              - generic [ref=f9e157]: $0
+            - generic [ref=f9e158]: No deals
+  - button "Open Next.js Dev Tools" [ref=f9e165] [cursor=pointer]

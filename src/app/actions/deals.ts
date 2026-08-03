@@ -25,11 +25,19 @@ export interface Deal {
 }
 
 export async function getDeals(): Promise<{ data?: Deal[]; error?: string }> {
+  const profile = await requireAuth();
   try {
-    const { data, error } = await supabaseAdmin
+    let query = supabaseAdmin
       .from("deals")
       .select("*, contacts(first_name, last_name, company), profiles!deals_assigned_to_fkey(full_name)")
       .order("created_at", { ascending: false });
+
+    // Sales users only see deals they own or created
+    if (profile.role !== "admin") {
+      query = query.or(`assigned_to.eq.${profile.id},created_by.eq.${profile.id}`);
+    }
+
+    const { data, error } = await query;
     if (error) return { error: error.message };
     return { data: data as Deal[] };
   } catch (e: any) {

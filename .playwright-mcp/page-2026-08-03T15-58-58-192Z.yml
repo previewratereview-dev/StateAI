@@ -1,0 +1,155 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - complementary [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - generic [ref=f1e5]: State AI CRM
+        - generic [ref=f1e12]:
+          - button "Toggle theme" [ref=f1e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f1e16] [cursor=pointer]
+      - navigation [ref=f1e19]:
+        - link "Dashboard" [ref=f1e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f1e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f1e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f1e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f1e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f1e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f1e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f1e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f1e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f1e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f1e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f1e85]:
+        - generic [ref=f1e86]:
+          - generic [ref=f1e87]: R
+          - generic [ref=f1e88]:
+            - generic [ref=f1e89]: rayees
+            - generic [ref=f1e90]: admin
+        - button "Sign Out" [ref=f1e93] [cursor=pointer]
+    - main [ref=f1e97]:
+      - generic [ref=f1e99]:
+        - generic [ref=f1e100]:
+          - heading "Reports & Analytics" [level=1] [ref=f1e101]
+          - paragraph [ref=f1e102]: Pipeline performance and team metrics
+        - generic [ref=f1e103]:
+          - generic [ref=f1e104]:
+            - generic [ref=f1e105]: "21"
+            - generic [ref=f1e106]: Total Contacts
+          - generic [ref=f1e107]:
+            - generic [ref=f1e108]: "4"
+            - generic [ref=f1e109]: Total Deals
+          - generic [ref=f1e110]:
+            - generic [ref=f1e111]: 0%
+            - generic [ref=f1e112]: Conversion Rate
+          - generic [ref=f1e113]:
+            - generic [ref=f1e114]: $20,000
+            - generic [ref=f1e115]: Pipeline Value
+          - generic [ref=f1e116]:
+            - generic [ref=f1e117]: $0
+            - generic [ref=f1e118]: Revenue Won
+          - generic [ref=f1e119]:
+            - generic [ref=f1e120]: 67%
+            - generic [ref=f1e121]: Tasks Done
+        - generic [ref=f1e122]:
+          - generic [ref=f1e123]:
+            - heading "Pipeline by Stage" [level=2] [ref=f1e124]
+            - generic [ref=f1e125]:
+              - generic [ref=f1e127]:
+                - generic [ref=f1e128]: New
+                - generic [ref=f1e131]: 0 deals
+              - generic [ref=f1e134]:
+                - generic [ref=f1e135]: Qualified
+                - generic [ref=f1e138]: 2 deals
+              - generic [ref=f1e142]:
+                - generic [ref=f1e143]: Proposal
+                - generic [ref=f1e146]: 1 deal
+              - generic [ref=f1e150]:
+                - generic [ref=f1e151]: Negotiation
+                - generic [ref=f1e154]: 1 deal$20,000
+              - generic [ref=f1e158]:
+                - generic [ref=f1e159]: Won
+                - generic [ref=f1e162]: 0 deals
+              - generic [ref=f1e165]:
+                - generic [ref=f1e166]: Lost
+                - generic [ref=f1e169]: 0 deals
+          - generic [ref=f1e171]:
+            - heading "Conversion Funnel" [level=2] [ref=f1e172]
+            - generic [ref=f1e173]:
+              - generic [ref=f1e176]:
+                - generic [ref=f1e177]: Total Deals
+                - generic [ref=f1e178]: "4"
+              - generic [ref=f1e183]:
+                - generic [ref=f1e184]: Active (non-lost)
+                - generic [ref=f1e185]: "4"
+              - generic [ref=f1e190]:
+                - generic [ref=f1e191]: In Proposal/Negotiation
+                - generic [ref=f1e192]: "2"
+              - generic [ref=f1e197]:
+                - generic [ref=f1e198]: Won
+                - generic [ref=f1e199]: "0"
+              - generic [ref=f1e201]:
+                - generic [ref=f1e202]: Win Rate
+                - generic [ref=f1e203]: 0%
+        - generic [ref=f1e204]:
+          - generic [ref=f1e205]:
+            - heading "Contact Status" [level=2] [ref=f1e206]
+            - generic [ref=f1e207]:
+              - generic [ref=f1e209]:
+                - generic [ref=f1e210]: New
+                - generic [ref=f1e211]: "1"
+              - generic [ref=f1e215]:
+                - generic [ref=f1e216]: Contacted
+                - generic [ref=f1e217]: "16"
+              - generic [ref=f1e221]:
+                - generic [ref=f1e222]: Qualified
+                - generic [ref=f1e223]: "3"
+              - generic [ref=f1e227]:
+                - generic [ref=f1e228]: Proposal
+                - generic [ref=f1e229]: "1"
+              - generic [ref=f1e233]:
+                - generic [ref=f1e234]: Negotiation
+                - generic [ref=f1e235]: "0"
+              - generic [ref=f1e238]:
+                - generic [ref=f1e239]: Won
+                - generic [ref=f1e240]: "0"
+              - generic [ref=f1e243]:
+                - generic [ref=f1e244]: Lost
+                - generic [ref=f1e245]: "0"
+              - generic [ref=f1e248]:
+                - generic [ref=f1e249]: Churned
+                - generic [ref=f1e250]: "0"
+          - generic [ref=f1e252]:
+            - heading "Task Overview" [level=2] [ref=f1e253]
+            - generic [ref=f1e259]:
+              - generic [ref=f1e260]: 67%
+              - generic [ref=f1e261]: done
+            - generic [ref=f1e262]:
+              - generic [ref=f1e263]:
+                - generic [ref=f1e264]: Open
+                - generic [ref=f1e266]: "0"
+              - generic [ref=f1e267]:
+                - generic [ref=f1e268]: In Progress
+                - generic [ref=f1e270]: "1"
+              - generic [ref=f1e271]:
+                - generic [ref=f1e272]: Done
+                - generic [ref=f1e274]: "2"
+          - generic [ref=f1e275]:
+            - heading "Bookings (7 days)" [level=2] [ref=f1e276]
+            - paragraph [ref=f1e277]: No bookings in the last 7 days.
+        - generic [ref=f1e279]:
+          - generic [ref=f1e280]:
+            - heading "Team Performance" [level=2] [ref=f1e281]
+            - generic [ref=f1e282]: Per salesperson · revenue and pipeline owned
+          - paragraph [ref=f1e283]: No team members found.
+  - button "Open Next.js Dev Tools" [ref=f1e289] [cursor=pointer]
+  - alert [ref=f1e293]

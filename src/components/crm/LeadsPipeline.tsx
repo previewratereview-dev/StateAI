@@ -54,6 +54,7 @@ function DealCard({ deal, isAdmin, onMove, onDelete }: { deal: Deal; isAdmin: bo
       </div>
       {contactName && <div style={{ fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6 }}>👤 {contactName}</div>}
       {deal.contacts?.company && <div style={{ fontSize: "0.72rem", color: "var(--crm-faint)", marginBottom: 8 }}>🏢 {deal.contacts.company}</div>}
+      {deal.profiles?.full_name && <div style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "2px 8px", borderRadius: 999, fontSize: "0.65rem", fontWeight: 600, color: "#818cf8", background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)", marginBottom: 8 }}>🧑‍💼 {deal.profiles.full_name}</div>}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontSize: "0.88rem", fontWeight: 700, color: stage.color }}>{formatCurrency(deal.value || 0)}</span>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

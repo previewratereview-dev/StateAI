@@ -33,15 +33,29 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+function ownerName(c: Contact) {
+  return c.assigned_profile?.full_name || c.created_by_profile?.full_name || "Unassigned";
+}
+
+function ownerInitials(c: Contact) {
+  const name = ownerName(c);
+  if (name === "Unassigned") return "?";
+  return name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase();
+}
+
 // ─── Contact Form Drawer ───────────────────────────────────────────────────────
 function ContactDrawer({
   editing,
   onClose,
   onSaved,
+  profiles,
+  currentUserId,
 }: {
   editing?: Contact;
   onClose: () => void;
   onSaved: (c: Contact) => void;
+  profiles: { id: string; full_name: string | null }[];
+  currentUserId: string;
 }) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -62,6 +76,7 @@ function ContactDrawer({
           status: fd.get("status") as LeadStatus,
           lead_source: fd.get("lead_source") as any,
           notes: (fd.get("notes") as string) || null,
+          assigned_to: (fd.get("assigned_to") as string) || null,
         };
         const res = await updateContact(editing.id, updates);
         if (res.error) { setError(res.error); return; }
@@ -142,6 +157,16 @@ function ContactDrawer({
               </select>
             </div>
           </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <label style={labelStyle}>Assigned To</label>
+            <select name="assigned_to" defaultValue={editing?.assigned_to || currentUserId}
+              style={{ ...inputStyle, cursor: "pointer" }}>
+              <option value="">Unassigned</option>
+              {profiles.map(p => (
+                <option key={p.id} value={p.id}>{p.full_name || p.id.slice(0, 8)}</option>
+              ))}
+            </select>
+          </div>
           <div style={{ marginBottom: "1.5rem" }}>
             <label style={labelStyle}>Notes</label>
             <textarea name="notes" rows={3} defaultValue={editing?.notes || ""}
@@ -163,7 +188,17 @@ function ContactDrawer({
 }
 
 // ─── Main Component ────────────────────────────────────────────────────────────
-export default function ContactsTable({ initialContacts, isAdmin }: { initialContacts: Contact[]; isAdmin: boolean }) {
+export default function ContactsTable({
+  initialContacts,
+  isAdmin,
+  profiles,
+  currentUserId,
+}: {
+  initialContacts: Contact[];
+  isAdmin: boolean;
+  profiles: { id: string; full_name: string | null }[];
+  currentUserId: string;
+}) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const [contacts, setContacts] = useState(initialContacts);
@@ -221,7 +256,7 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       )}
 
       {drawer.open && (
-        <ContactDrawer editing={drawer.editing} onClose={() => setDrawer({ open: false })} onSaved={handleSaved} />
+        <ContactDrawer editing={drawer.editing} onClose={() => setDrawer({ open: false })} onSaved={handleSaved} profiles={profiles} currentUserId={currentUserId} />
       )}
 
       {/* Header */}
@@ -263,8 +298,8 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       <div style={{ background: "rgb(var(--crm-card-rgb) / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgb(var(--crm-line) / 0.08)", borderRadius: 16, overflow: "hidden" }}>
         {/* Table header - hidden on mobile */}
         {!isMobile && (
-          <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgb(var(--crm-overlay) / 0.02)" }}>
-            {["Contact", "Company", "Status", "Source", "Created", ""].map(h => (
+          <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.25fr 1fr 1fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgb(var(--crm-overlay) / 0.02)" }}>
+            {["Contact", "Company", "Status", "Source", "Owner", "Created", ""].map(h => (
               <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
             ))}
           </div>
@@ -299,7 +334,10 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
                   </div>
                   {contact.company && <div style={{ fontSize: "0.78rem", color: "var(--crm-muted)", marginBottom: 4 }}>{contact.company}{contact.job_title ? ` · ${contact.job_title}` : ""}</div>}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ fontSize: "0.72rem", color: "var(--crm-faint)" }}>{formatDate(contact.created_at)}</div>
+                    <div style={{ fontSize: "0.72rem", color: "var(--crm-faint)", display: "flex", alignItems: "center", gap: 6 }}>
+                      <span>👤 {ownerName(contact)}</span>
+                      <span>· {formatDate(contact.created_at)}</span>
+                    </div>
                     <div style={{ display: "flex", gap: 6 }}>
                       <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.1)", color: "var(--crm-muted)", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Edit</button>
                       {isAdmin && <button onClick={() => handleDelete(contact.id)} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "transparent", border: "1px solid rgba(239,68,68,0.2)", color: "rgba(239,68,68,0.6)", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Del</button>}
@@ -314,7 +352,7 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
           filtered.map(contact => {
             const cfg = STATUS_CFG[contact.status];
             return (
-              <div key={contact.id} style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)", alignItems: "center", transition: "background 0.15s" }}
+              <div key={contact.id} style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.25fr 1fr 1fr 1fr auto", gap: "1rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)", alignItems: "center", transition: "background 0.15s" }}
                 onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "rgb(var(--crm-overlay) / 0.02)"}
                 onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "transparent"}>
                 {/* Contact */}
@@ -340,6 +378,13 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
                 </span>
                 {/* Source */}
                 <div style={{ fontSize: "0.8rem", color: "var(--crm-faint)" }}>{SOURCE_LABELS[contact.lead_source] || contact.lead_source}</div>
+                {/* Owner */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.62rem", fontWeight: 700, color: "#818cf8", flexShrink: 0 }}>
+                    {ownerInitials(contact)}
+                  </div>
+                  <span style={{ fontSize: "0.78rem", color: ownerName(contact) === "Unassigned" ? "var(--crm-faint)" : "var(--crm-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ownerName(contact)}</span>
+                </div>
                 {/* Created */}
                 <div style={{ fontSize: "0.78rem", color: "var(--crm-faint)" }}>{formatDate(contact.created_at)}</div>
                 {/* Actions */}
