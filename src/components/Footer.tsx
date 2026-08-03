@@ -22,6 +22,12 @@ const companyLinks = [
   { label: "Blog", href: "#" },
 ];
 
+const productLinks = [
+  { label: "Rihla", href: "https://state-aicrm.vercel.app/" },
+  { label: "Ru'a", href: "https://rua-crm.vercel.app/" },
+  { label: "TMS", href: "https://state-ai-ticket-management.vercel.app/" },
+];
+
 const socialLinks = [
   {
     href: "https://www.linkedin.com/company/stateintelligencetechnologies/",
@@ -77,7 +83,7 @@ export default function Footer() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-10 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
+        <div className="py-10 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
           {/* Company Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-4 sm:mb-6">
@@ -144,6 +150,27 @@ export default function Footer() {
               {companyLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="text-xs sm:text-sm text-gray-400 hover:text-silver transition-colors duration-200">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Products */}
+          <div>
+            <h3 className="text-[11px] sm:text-sm font-bold text-foreground uppercase tracking-wider mb-4 sm:mb-6">
+              PRODUCTS
+            </h3>
+            <ul className="space-y-2 sm:space-y-3">
+              {productLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs sm:text-sm text-gray-400 hover:text-silver transition-colors duration-200"
+                  >
                     {link.label}
                   </a>
                 </li>

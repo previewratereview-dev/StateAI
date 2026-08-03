@@ -3,20 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   {
     label: "Services",
     href: "#services",
-    dropdown: [
-      "AI & Machine Learning",
-      "Natural Language Processing",
-      "Computer Vision",
-      "Generative AI",
-      "AI Strategy & Consulting",
-      "AI Integration",
-    ],
   },
   { label: "About", href: "#about" },
   { label: "Process", href: "#process" },
@@ -84,13 +76,6 @@ export default function Navbar() {
                 className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-400 hover:text-silver-bright transition-colors duration-200 rounded-lg hover:bg-white/[0.05]"
                 >
                   {link.label}
-                  {link.dropdown && (
-                    <ChevronDown
-                      className={`w-3 h-3 transition-transform duration-200 ${
-                        activeDropdown === link.label ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
                 </a>
 
                 {/* Dropdown */}
