@@ -17,7 +17,7 @@ const companyLinks = [
   { label: "Our Process", href: "#process" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Careers", href: "#" },
+  { label: "Careers", href: "/careers" },
   { label: "Blog", href: "#" },
 ];
 
@@ -197,10 +197,10 @@ export default function Footer() {
             <a href="/privacy-policy" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
+            <a href="/terms" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
               Terms of Service
             </a>
-            <a href="#" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
+            <a href="/cookie-policy" className="text-xs sm:text-sm text-muted hover:text-silver transition-colors duration-200">
               Cookie Policy
             </a>
           </div>

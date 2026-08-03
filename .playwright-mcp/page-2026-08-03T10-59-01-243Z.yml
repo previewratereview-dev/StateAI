@@ -1,0 +1,291 @@
+- generic [active] [ref=f11e1]:
+  - main [ref=f11e2]:
+    - navigation [ref=f11e3]:
+      - generic [ref=f11e5]:
+        - link "State AI Logo State AI" [ref=f11e6] [cursor=pointer]:
+          - /url: /
+          - img "State AI Logo" [ref=f11e8]
+          - generic [ref=f11e9]: State AI
+        - generic [ref=f11e10]:
+          - link "Services" [ref=f11e12] [cursor=pointer]:
+            - /url: "#services"
+          - link "About" [ref=f11e16] [cursor=pointer]:
+            - /url: "#about"
+          - link "Process" [ref=f11e18] [cursor=pointer]:
+            - /url: "#process"
+          - link "Industries" [ref=f11e20] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Team" [ref=f11e22] [cursor=pointer]:
+            - /url: "#team"
+          - link "Testimonials" [ref=f11e24] [cursor=pointer]:
+            - /url: "#testimonials"
+          - link "Careers" [ref=f11e26] [cursor=pointer]:
+            - /url: /careers
+          - link "Contact" [ref=f11e28] [cursor=pointer]:
+            - /url: "#contact"
+        - link "Book a Strategy Call" [ref=f11e30] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=f11e32]:
+      - generic [ref=f11e33]: Legal & Privacy
+      - heading "Privacy Policy" [level=1] [ref=f11e35]
+      - paragraph [ref=f11e36]: "Effective Date: July 16, 2026 · Last Reviewed: July 16, 2026"
+    - generic [ref=f11e38]:
+      - generic [ref=f11e39]:
+        - heading "1 Who We Are" [level=2] [ref=f11e40]:
+          - generic [ref=f11e41]: "1"
+          - text: Who We Are
+        - paragraph [ref=f11e42]: "STATE AI (\"we,\" \"our,\" or \"us\") is the data controller responsible for your personal data under this policy. If you have any questions or concerns, you can contact us at:"
+        - generic [ref=f11e43]:
+          - paragraph [ref=f11e44]: STATE AI
+          - paragraph [ref=f11e45]:
+            - text: "Email:"
+            - link "info@stateai.in" [ref=f11e46] [cursor=pointer]:
+              - /url: mailto:info@stateai.in
+      - generic [ref=f11e47]:
+        - heading "2 What Personal Data We Collect" [level=2] [ref=f11e48]:
+          - generic [ref=f11e49]: "2"
+          - text: What Personal Data We Collect
+        - paragraph [ref=f11e50]: "We may collect and process the following types of personal data:"
+        - list [ref=f11e51]:
+          - listitem [ref=f11e52]:
+            - generic [ref=f11e54]:
+              - strong [ref=f11e55]: "Identification data:"
+              - text: Name, address, email, phone number
+          - listitem [ref=f11e56]:
+            - generic [ref=f11e58]:
+              - strong [ref=f11e59]: "Employment data:"
+              - text: Job title, CV/resume, references, performance data
+          - listitem [ref=f11e60]:
+            - generic [ref=f11e62]:
+              - strong [ref=f11e63]: "Payment data:"
+              - text: Bank details, transaction records
+          - listitem [ref=f11e64]:
+            - generic [ref=f11e66]:
+              - strong [ref=f11e67]: "Technical data:"
+              - text: IP address, browser type, device identifiers
+          - listitem [ref=f11e68]:
+            - generic [ref=f11e70]:
+              - strong [ref=f11e71]: "Usage data:"
+              - text: Interactions with our website, services, or communications
+          - listitem [ref=f11e72]:
+            - generic [ref=f11e74]:
+              - strong [ref=f11e75]: "Marketing preferences:"
+              - text: Consent history
+        - paragraph [ref=f11e76]: We collect personal data directly from you, and automatically through cookies or similar technologies.
+      - generic [ref=f11e77]:
+        - heading "3 Why We Collect Your Data" [level=2] [ref=f11e78]:
+          - generic [ref=f11e79]: "3"
+          - text: Why We Collect Your Data
+        - paragraph [ref=f11e80]: "We process your personal data for the following purposes:"
+        - table [ref=f11e83]:
+          - rowgroup [ref=f11e84]:
+            - row [ref=f11e85]:
+              - columnheader "Purpose" [ref=f11e86]
+              - columnheader "Legal Basis" [ref=f11e87]
+          - rowgroup [ref=f11e88]:
+            - row [ref=f11e89]:
+              - cell "Processing job applications" [ref=f11e90]
+              - cell "Consent / Pre-contractual necessity" [ref=f11e91]
+            - row [ref=f11e92]:
+              - cell "Providing our products or services" [ref=f11e93]
+              - cell "Contractual necessity" [ref=f11e94]
+            - row [ref=f11e95]:
+              - cell "Sending service-related communications" [ref=f11e96]
+              - cell "Legitimate interests / Contractual necessity" [ref=f11e97]
+            - row [ref=f11e98]:
+              - cell "Marketing" [ref=f11e99]
+              - cell "Consent" [ref=f11e100]
+            - row [ref=f11e101]:
+              - cell "Analyzing website performance" [ref=f11e102]
+              - cell "Consent / Legitimate interests" [ref=f11e103]
+            - row [ref=f11e104]:
+              - cell "Complying with legal obligations" [ref=f11e105]
+              - cell "Legal obligation" [ref=f11e106]
+      - generic [ref=f11e107]:
+        - heading "4 How Long We Keep Your Data" [level=2] [ref=f11e108]:
+          - generic [ref=f11e109]: "4"
+          - text: How Long We Keep Your Data
+        - paragraph [ref=f11e110]: We retain personal data only for as long as necessary for the purpose for which it was collected, including legal or regulatory requirements.
+        - paragraph [ref=f11e111]: "For example:"
+        - list [ref=f11e112]:
+          - listitem [ref=f11e113]:
+            - generic [ref=f11e115]:
+              - strong [ref=f11e116]: "Recruitment data:"
+              - text: up to 12 months after the hiring decision
+          - listitem [ref=f11e117]:
+            - generic [ref=f11e119]:
+              - strong [ref=f11e120]: "Customer data:"
+              - text: as long as you use our services
+          - listitem [ref=f11e121]:
+            - generic [ref=f11e123]:
+              - strong [ref=f11e124]: "Website analytics:"
+              - text: anonymized data retained for analytics purposes
+        - paragraph [ref=f11e125]: You can request deletion of your data at any time unless we are required by law to retain it.
+      - generic [ref=f11e126]:
+        - heading "5 Who We Share Your Data With" [level=2] [ref=f11e127]:
+          - generic [ref=f11e128]: "5"
+          - text: Who We Share Your Data With
+        - paragraph [ref=f11e129]: "We may share your data with:"
+        - list [ref=f11e130]:
+          - listitem [ref=f11e131]:
+            - generic [ref=f11e133]:
+              - strong [ref=f11e134]: "Service providers and vendors:"
+              - text: Hosting, email, analytics, and HR systems
+          - listitem [ref=f11e135]:
+            - generic [ref=f11e137]:
+              - strong [ref=f11e138]: "Government authorities or regulators:"
+              - text: Where required by law
+          - listitem [ref=f11e139]:
+            - generic [ref=f11e141]:
+              - strong [ref=f11e142]: "Legal and professional advisors:"
+              - text: In the course of business operations or dispute resolution
+          - listitem [ref=f11e143]:
+            - generic [ref=f11e145]:
+              - strong [ref=f11e146]: "Third parties:"
+              - text: Only with your explicit consent or under legal obligation
+        - paragraph [ref=f11e147]: We do not sell or rent your personal data to third parties.
+      - generic [ref=f11e148]:
+        - heading "6 International Data Transfers" [level=2] [ref=f11e149]:
+          - generic [ref=f11e150]: "6"
+          - text: International Data Transfers
+        - paragraph [ref=f11e151]: "If we transfer your personal data, we will ensure appropriate safeguards are in place, such as:"
+        - list [ref=f11e152]:
+          - listitem [ref=f11e153]:
+            - generic [ref=f11e155]: Standard Contractual Clauses (SCCs)
+          - listitem [ref=f11e156]:
+            - generic [ref=f11e158]: Transfers to countries with adequate protection laws
+          - listitem [ref=f11e159]:
+            - generic [ref=f11e161]: Binding corporate rules or certification mechanisms
+      - generic [ref=f11e162]:
+        - heading "7 Your Data Protection Rights" [level=2] [ref=f11e163]:
+          - generic [ref=f11e164]: "7"
+          - text: Your Data Protection Rights
+        - paragraph [ref=f11e165]: "Under the GDPR, you have the right to:"
+        - list [ref=f11e166]:
+          - listitem [ref=f11e167]:
+            - generic [ref=f11e169]: Access your personal data and obtain a copy
+          - listitem [ref=f11e170]:
+            - generic [ref=f11e172]: Rectify inaccurate or incomplete data
+          - listitem [ref=f11e173]:
+            - generic [ref=f11e175]: Erase your personal data (“right to be forgotten”)
+          - listitem [ref=f11e176]:
+            - generic [ref=f11e178]: Restrict or object to processing in certain situations
+          - listitem [ref=f11e179]:
+            - generic [ref=f11e181]: Withdraw consent at any time
+          - listitem [ref=f11e182]:
+            - generic [ref=f11e184]: Port your data to another provider
+          - listitem [ref=f11e185]:
+            - generic [ref=f11e187]: Complain to a supervisory authority
+        - paragraph [ref=f11e188]:
+          - text: To exercise your rights, contact us at
+          - link "contact@stateai.in" [ref=f11e189] [cursor=pointer]:
+            - /url: mailto:contact@stateai.in
+          - text: .
+      - generic [ref=f11e190]:
+        - heading "8 Data Security" [level=2] [ref=f11e191]:
+          - generic [ref=f11e192]: "8"
+          - text: Data Security
+        - paragraph [ref=f11e193]: We use reasonable and appropriate technical and organizational security measures to protect your data from unauthorized access, loss, alteration, or misuse.
+        - generic [ref=f11e194]:
+          - generic [ref=f11e195]: Encrypted storage and transmission
+          - generic [ref=f11e196]: Access controls and password protections
+          - generic [ref=f11e197]: Employee training and awareness
+          - generic [ref=f11e198]: Regular audits of our systems and vendors
+        - paragraph [ref=f11e199]: Despite these measures, no method of data transmission is 100% secure. We encourage you to contact us immediately if you believe your personal data has been compromised.
+      - generic [ref=f11e200]:
+        - heading "9 Changes to This Policy" [level=2] [ref=f11e201]:
+          - generic [ref=f11e202]: "9"
+          - text: Changes to This Policy
+        - paragraph [ref=f11e203]: We may update this privacy policy from time to time to reflect legal, technical, or business changes. When we do, we'll post the revised policy on our website and update the effective date at the top.
+      - generic [ref=f11e204]:
+        - heading "FAQ Frequently Asked Questions" [level=2] [ref=f11e205]:
+          - generic [ref=f11e206]: FAQ
+          - text: Frequently Asked Questions
+        - generic [ref=f11e207]:
+          - group [ref=f11e208]:
+            - generic "What does GDPR mean for me as a job applicant?" [ref=f11e209] [cursor=pointer]
+          - group [ref=f11e214]:
+            - generic "Do you use cookies or tracking technologies?" [ref=f11e215] [cursor=pointer]
+          - group [ref=f11e220]:
+            - generic "How do I withdraw consent?" [ref=f11e221] [cursor=pointer]
+          - group [ref=f11e226]:
+            - generic "What happens if I don't want you to collect my data?" [ref=f11e227] [cursor=pointer]
+    - generic [ref=f11e236]:
+      - generic [ref=f11e237]:
+        - generic [ref=f11e238]:
+          - generic [ref=f11e239]:
+            - img "State AI Logo" [ref=f11e241]
+            - generic [ref=f11e242]: State AI
+          - paragraph [ref=f11e243]: Emerging AI Development Company delivering cutting-edge artificial intelligence solutions for businesses worldwide.
+          - generic [ref=f11e244]:
+            - link "info@stateai.in" [ref=f11e245] [cursor=pointer]:
+              - /url: mailto:info@stateai.in
+            - link "Chat on WhatsApp" [ref=f11e249] [cursor=pointer]:
+              - /url: https://wa.me/917006993325
+        - generic [ref=f11e252]:
+          - heading "Services" [level=3] [ref=f11e253]
+          - list [ref=f11e254]:
+            - listitem [ref=f11e255]:
+              - link "AI & Machine Learning" [ref=f11e256] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=f11e257]:
+              - link "Natural Language Processing" [ref=f11e258] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=f11e259]:
+              - link "Computer Vision" [ref=f11e260] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=f11e261]:
+              - link "Generative AI Solutions" [ref=f11e262] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=f11e263]:
+              - link "AI Strategy & Consulting" [ref=f11e264] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=f11e265]:
+              - link "AI Integration & Deployment" [ref=f11e266] [cursor=pointer]:
+                - /url: "#services"
+        - generic [ref=f11e267]:
+          - heading "Company" [level=3] [ref=f11e268]
+          - list [ref=f11e269]:
+            - listitem [ref=f11e270]:
+              - link "About Us" [ref=f11e271] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=f11e272]:
+              - link "Our Process" [ref=f11e273] [cursor=pointer]:
+                - /url: "#process"
+            - listitem [ref=f11e274]:
+              - link "Portfolio" [ref=f11e275] [cursor=pointer]:
+                - /url: "#portfolio"
+            - listitem [ref=f11e276]:
+              - link "Testimonials" [ref=f11e277] [cursor=pointer]:
+                - /url: "#testimonials"
+            - listitem [ref=f11e278]:
+              - link "Careers" [ref=f11e279] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f11e280]:
+              - link "Blog" [ref=f11e281] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f11e282]:
+          - heading "Stay Updated" [level=3] [ref=f11e283]
+          - paragraph [ref=f11e284]: Subscribe for the latest AI insights.
+          - generic [ref=f11e285]:
+            - textbox "Your email" [ref=f11e286]
+            - button "Subscribe" [ref=f11e287]
+          - generic [ref=f11e290]:
+            - link "LinkedIn" [ref=f11e291] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/stateintelligencetechnologies/
+            - link "X" [ref=f11e294] [cursor=pointer]:
+              - /url: https://x.com/_stateai
+            - link "Instagram" [ref=f11e297] [cursor=pointer]:
+              - /url: https://www.instagram.com/state_intelligencetechnologies?igsh=MTlpM3preThwa3JxMQ==
+            - link "YouTube" [ref=f11e300] [cursor=pointer]:
+              - /url: https://www.youtube.com/channel/UCtkBvvvjhMa74mhhAPE0bag
+      - generic [ref=f11e303]:
+        - paragraph [ref=f11e304]: © 2026 State AI. All rights reserved.
+        - generic [ref=f11e305]:
+          - link "Privacy Policy" [ref=f11e306] [cursor=pointer]:
+            - /url: /privacy-policy
+          - link "Terms of Service" [ref=f11e307] [cursor=pointer]:
+            - /url: /terms
+          - link "Cookie Policy" [ref=f11e308] [cursor=pointer]:
+            - /url: /cookie-policy
+  - button "Open Next.js Dev Tools" [ref=f11e314] [cursor=pointer]

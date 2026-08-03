@@ -1,0 +1,82 @@
+- generic [active] [ref=f6e1]:
+  - main [ref=f6e2]:
+    - generic [ref=f6e3]:
+      - generic [ref=f6e4]:
+        - generic [ref=f6e5]: Legal & Privacy
+        - heading "Cookie Policy" [level=1] [ref=f6e6]
+        - generic [ref=f6e7]:
+          - paragraph [ref=f6e8]:
+            - strong [ref=f6e9]: "Effective Date:"
+            - text: August 3, 2026
+          - paragraph [ref=f6e10]:
+            - strong [ref=f6e11]: "Last Updated:"
+            - text: August 3, 2026
+      - generic [ref=f6e12]:
+        - generic [ref=f6e13]:
+          - heading "1. What Are Cookies" [level=2] [ref=f6e14]
+          - paragraph [ref=f6e15]: Cookies are small text files stored on your device (browser or similar) when you visit a website. They allow the website to recognize your device, remember your preferences, and understand how the site is used. Cookies set by the website owner are called "first-party cookies," while cookies set by other parties are called "third-party cookies."
+        - generic [ref=f6e16]:
+          - heading "2. How We Use Cookies" [level=2] [ref=f6e17]
+          - paragraph [ref=f6e18]: "We use cookies and similar technologies to operate our website, measure its performance, and improve your experience. The categories of cookies we may use include:"
+          - table [ref=f6e21]:
+            - rowgroup [ref=f6e22]:
+              - row [ref=f6e23]:
+                - columnheader "Category" [ref=f6e24]
+                - columnheader "Purpose" [ref=f6e25]
+            - rowgroup [ref=f6e26]:
+              - row [ref=f6e27]:
+                - cell "Essential" [ref=f6e28]
+                - cell "Required for core website functionality. Cannot be disabled." [ref=f6e29]
+              - row [ref=f6e30]:
+                - cell "Analytics" [ref=f6e31]
+                - cell "Help us understand how visitors use the site so we can improve it." [ref=f6e32]
+              - row [ref=f6e33]:
+                - cell "Functional" [ref=f6e34]
+                - cell "Remember your preferences and settings for a smoother experience." [ref=f6e35]
+              - row [ref=f6e36]:
+                - cell "Marketing" [ref=f6e37]
+                - cell "Used to display relevant content and measure campaign effectiveness." [ref=f6e38]
+        - generic [ref=f6e39]:
+          - heading "3. Analytics & Vercel" [level=2] [ref=f6e40]
+          - paragraph [ref=f6e41]:
+            - text: This website is hosted on Vercel and uses
+            - strong [ref=f6e42]: Vercel Web Analytics
+            - text: to collect anonymized, aggregated information about site usage — such as the pages you visit and your approximate location at the country or region level. This data helps us understand what content is useful and improve the site.
+          - paragraph [ref=f6e43]: Vercel Web Analytics does not use persistent cookies and does not collect personal data such as your name, email, or IP address as personal data. You can learn more in Vercel's own documentation and privacy policy.
+        - generic [ref=f6e44]:
+          - heading "4. Third-Party Cookies" [level=2] [ref=f6e45]
+          - paragraph [ref=f6e46]: "Some cookies are placed by third parties whose services we use. These may include:"
+          - list [ref=f6e47]:
+            - listitem [ref=f6e48]: Analytics providers, to measure and understand site traffic
+            - listitem [ref=f6e50]: Social media platforms, if you use sharing features or follow our links
+            - listitem [ref=f6e52]: Advertising partners, only where you have consented to marketing cookies
+            - listitem [ref=f6e54]: Frameworks or tools used to provide website features
+        - generic [ref=f6e56]:
+          - heading "5. Managing or Disabling Cookies" [level=2] [ref=f6e57]
+          - paragraph [ref=f6e58]: Most browsers allow you to control cookies through their settings, including the ability to view, block, or delete cookies. The exact steps vary by browser — refer to your browser's help section for guidance.
+          - list [ref=f6e59]:
+            - listitem [ref=f6e60]: Use your browser settings to block or delete cookies
+            - listitem [ref=f6e62]: Choose "Do Not Track" or similar privacy settings if you prefer
+            - listitem [ref=f6e64]: Note that disabling essential cookies may affect website functionality
+          - paragraph [ref=f6e66]: Because our approach to cookies may change as we improve this website, we encourage you to review this Cookie Policy periodically.
+        - generic [ref=f6e67]:
+          - heading "6. Changes to This Cookie Policy" [level=2] [ref=f6e68]
+          - paragraph [ref=f6e69]: We may update this Cookie Policy from time to time to reflect changes in technology, our practices, or legal requirements. When we do, we will post the revised policy on this page and update the effective date at the top.
+        - generic [ref=f6e70]:
+          - heading "7. Contact Us" [level=2] [ref=f6e71]
+          - paragraph [ref=f6e72]:
+            - text: If you have any questions about our use of cookies, please contact us via our
+            - link "Privacy Policy" [ref=f6e73] [cursor=pointer]:
+              - /url: /privacy-policy
+            - text: "channels or at:"
+          - generic [ref=f6e74]:
+            - paragraph [ref=f6e75]: STATE AI
+            - paragraph [ref=f6e76]:
+              - text: "Email:"
+              - link "info@stateai.in" [ref=f6e77] [cursor=pointer]:
+                - /url: mailto:info@stateai.in
+            - paragraph [ref=f6e78]:
+              - text: "WhatsApp:"
+              - link "+917006993325" [ref=f6e79] [cursor=pointer]:
+                - /url: https://wa.me/917006993325
+  - button "Open Next.js Dev Tools" [ref=f6e85] [cursor=pointer]

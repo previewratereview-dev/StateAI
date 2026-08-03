@@ -1,0 +1,611 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e5]:
+        - link "State AI Logo State AI" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "State AI Logo" [ref=e8]
+          - generic [ref=e9]: State AI
+        - generic [ref=e10]:
+          - link "Services" [ref=e12] [cursor=pointer]:
+            - /url: "#services"
+          - link "About" [ref=e16] [cursor=pointer]:
+            - /url: "#about"
+          - link "Process" [ref=e18] [cursor=pointer]:
+            - /url: "#process"
+          - link "Industries" [ref=e20] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Team" [ref=e22] [cursor=pointer]:
+            - /url: "#team"
+          - link "Testimonials" [ref=e24] [cursor=pointer]:
+            - /url: "#testimonials"
+          - link "Careers" [ref=e26] [cursor=pointer]:
+            - /url: /careers
+          - link "Contact" [ref=e28] [cursor=pointer]:
+            - /url: "#contact"
+        - link "Book a Strategy Call" [ref=e30] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e32]:
+      - img "State AI" [ref=e34]
+      - img "State AI" [ref=e38]
+      - generic [ref=e42]:
+        - generic [ref=e43]: Emerging AI Development Company
+        - heading "The Strategic AI Partner for Modern Enterprises" [level=1] [ref=e46]: The Strategic AI Partnerfor Modern Enterprises
+        - paragraph [ref=e47]: From strategy to deployment, we build intelligent solutions that drive measurable business outcomes.
+        - paragraph [ref=e48]: Transforming Ideas into AI-Powered Solutions — empowering businesses to innovate, scale, and lead in the digital era.
+        - generic [ref=e49]:
+          - link "Get a Strategy Call" [ref=e50] [cursor=pointer]:
+            - /url: "#contact"
+          - link "Explore Solutions" [ref=e53] [cursor=pointer]:
+            - /url: "#services"
+      - generic [ref=e54]: Scroll to Explore
+      - generic:
+        - generic [ref=e59]:
+          - heading "AI AGENTS" [level=3] [ref=e64]
+          - paragraph [ref=e65]: Intelligent voice & chat agents that engage, qualify, and support customers 24/7.
+          - generic [ref=e66]:
+            - generic [ref=e67]: Voice AI
+            - generic [ref=e70]: Chat AI
+            - generic [ref=e73]: Lead Qualification
+            - generic [ref=e76]: Customer Support
+        - generic [ref=e80]:
+          - heading "AI WORKFLOW AUTOMATION" [level=3] [ref=e87]
+          - paragraph [ref=e88]: Automate repetitive tasks and business processes with intelligent workflows.
+          - generic [ref=e89]:
+            - generic [ref=e90]: Process Automation
+            - generic [ref=e93]: Approval Workflows
+            - generic [ref=e96]: Task Management
+            - generic [ref=e99]: Team Collaboration
+        - generic [ref=e103]:
+          - heading "AI INFRASTRUCTURE" [level=3] [ref=e110]
+          - paragraph [ref=e111]: Scalable, secure, and high-performance infrastructure built for enterprise AI.
+          - generic [ref=e112]:
+            - generic [ref=e113]: Scalable Architecture
+            - generic [ref=e116]: Model Operations
+            - generic [ref=e119]: Data & Retrieval Systems
+            - generic [ref=e122]: Security & Compliance
+        - generic [ref=e126]:
+          - heading "AI ANALYTICS" [level=3] [ref=e131]
+          - paragraph [ref=e132]: Turn data into actionable insights with advanced AI analytics.
+          - generic [ref=e133]:
+            - generic [ref=e134]: Performance Insights
+            - generic [ref=e137]: Predictive Analytics
+            - generic [ref=e140]: Real-time Dashboards
+            - generic [ref=e143]: Data Visualizations
+        - generic [ref=e147]:
+          - heading "AI WORKFORCE" [level=3] [ref=e153]
+          - paragraph [ref=e154]: Build and deploy a digital workforce that works around the clock to grow your business.
+          - generic [ref=e155]:
+            - generic [ref=e156]: 24/7 Availability
+            - generic [ref=e159]: Multi-task Execution
+            - generic [ref=e162]: Continuous Learning
+            - generic [ref=e165]: Cost Efficiency
+        - generic [ref=e168]: Click the Cube
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - generic [ref=e177]:
+            - img "Python logo" [ref=e179]
+            - generic [ref=e180]: Python
+          - generic [ref=e182]:
+            - img "TensorFlow logo" [ref=e184]
+            - generic [ref=e185]: TensorFlow
+          - generic [ref=e187]:
+            - img "PyTorch logo" [ref=e189]
+            - generic [ref=e190]: PyTorch
+          - generic [ref=e192]:
+            - img "OpenAI logo" [ref=e194]
+            - generic [ref=e195]: OpenAI
+          - generic [ref=e197]:
+            - img "AWS logo" [ref=e199]
+            - generic [ref=e200]: AWS
+          - generic [ref=e202]:
+            - img "Google Cloud logo" [ref=e204]
+            - generic [ref=e205]: Google Cloud
+          - generic [ref=e207]:
+            - img "Azure logo" [ref=e209]
+            - generic [ref=e210]: Azure
+          - generic [ref=e212]:
+            - img "Kubernetes logo" [ref=e214]
+            - generic [ref=e215]: Kubernetes
+          - generic [ref=e217]:
+            - img "Docker logo" [ref=e219]
+            - generic [ref=e220]: Docker
+          - generic [ref=e222]:
+            - img "React logo" [ref=e224]
+            - generic [ref=e225]: React
+          - generic [ref=e227]:
+            - img "Node.js logo" [ref=e229]
+            - generic [ref=e230]: Node.js
+          - generic [ref=e232]:
+            - img "PostgreSQL logo" [ref=e234]
+            - generic [ref=e235]: PostgreSQL
+          - generic [ref=e237]:
+            - img "MongoDB logo" [ref=e239]
+            - generic [ref=e240]: MongoDB
+          - generic [ref=e242]:
+            - img "Spark logo" [ref=e244]
+            - generic [ref=e245]: Spark
+          - generic [ref=e247]:
+            - img "Hugging Face logo" [ref=e249]
+            - generic [ref=e250]: Hugging Face
+          - generic [ref=e252]:
+            - img "LangChain logo" [ref=e254]
+            - generic [ref=e255]: LangChain
+          - generic [ref=e257]:
+            - img "Scikit-learn logo" [ref=e259]
+            - generic [ref=e260]: Scikit-learn
+          - generic [ref=e262]:
+            - img "Keras logo" [ref=e264]
+            - generic [ref=e265]: Keras
+        - generic [ref=e267]:
+          - generic [ref=e268]: Python
+          - generic [ref=e273]: TensorFlow
+          - generic [ref=e278]: PyTorch
+          - generic [ref=e283]: OpenAI
+          - generic [ref=e288]: AWS
+          - generic [ref=e293]: Google Cloud
+          - generic [ref=e298]: Azure
+          - generic [ref=e303]: Kubernetes
+          - generic [ref=e308]: Docker
+          - generic [ref=e313]: React
+          - generic [ref=e318]: Node.js
+          - generic [ref=e323]: PostgreSQL
+          - generic [ref=e328]: MongoDB
+          - generic [ref=e333]: Spark
+          - generic [ref=e338]: Hugging Face
+          - generic [ref=e343]: LangChain
+          - generic [ref=e348]: Scikit-learn
+          - generic [ref=e353]: Keras
+    - generic [ref=e363]:
+      - generic [ref=e364]:
+        - generic [ref=e365]: What We Offer
+        - heading "Our Services" [level=2] [ref=e367]
+        - paragraph [ref=e368]: End-to-end technology solutions designed to transform your business operations and drive measurable results.
+      - tablist "Service categories" [ref=e369]:
+        - tab "Software Development (4 services)" [selected] [ref=e370]:
+          - generic [ref=e376]: Software Dev
+          - generic [ref=e377]: (4)
+        - tab "Mobile App Development (4 services)" [ref=e378]:
+          - generic [ref=e382]: Mobile Apps
+          - generic [ref=e383]: (4)
+        - tab "Web Apps Development (4 services)" [ref=e384]:
+          - generic [ref=e389]: Web Apps
+          - generic [ref=e390]: (4)
+        - tab "AI Automation & Development (6 services)" [ref=e391]:
+          - generic [ref=e396]: AI Automation
+          - generic [ref=e397]: (6)
+      - generic [ref=e398]:
+        - generic [ref=e399]:
+          - img "Custom Software Development" [ref=e402]
+          - generic [ref=e403]:
+            - heading "Custom Software Development" [level=3] [ref=e404]
+            - paragraph [ref=e405]: Tailor-made enterprise software solutions built with modern architectures to solve your unique business challenges and scale with your growth.
+            - generic [ref=e406]:
+              - generic [ref=e407]: Microservices
+              - generic [ref=e408]: REST/GraphQL APIs
+              - generic [ref=e409]: Cloud Native
+            - link "Learn More" [ref=e410] [cursor=pointer]:
+              - /url: "#contact"
+        - generic [ref=e413]:
+          - img "Cloud-Native Solutions" [ref=e416]
+          - generic [ref=e417]:
+            - heading "Cloud-Native Solutions" [level=3] [ref=e418]
+            - paragraph [ref=e419]: Design, deploy, and manage cloud-native applications on AWS, Azure, and GCP with containerization, orchestration, and auto-scaling.
+            - generic [ref=e420]:
+              - generic [ref=e421]: AWS/Azure/GCP
+              - generic [ref=e422]: Docker & Kubernetes
+              - generic [ref=e423]: Serverless
+            - link "Learn More" [ref=e424] [cursor=pointer]:
+              - /url: "#contact"
+        - generic [ref=e427]:
+          - img "DevOps & Infrastructure" [ref=e430]
+          - generic [ref=e431]:
+            - heading "DevOps & Infrastructure" [level=3] [ref=e432]
+            - paragraph [ref=e433]: Streamline your development lifecycle with CI/CD pipelines, infrastructure as code, monitoring, and automated testing frameworks.
+            - generic [ref=e434]:
+              - generic [ref=e435]: CI/CD Pipelines
+              - generic [ref=e436]: Infrastructure as Code
+              - generic [ref=e437]: Monitoring
+            - link "Learn More" [ref=e438] [cursor=pointer]:
+              - /url: "#contact"
+        - generic [ref=e441]:
+          - img "Enterprise API Integration" [ref=e444]
+          - generic [ref=e445]:
+            - heading "Enterprise API Integration" [level=3] [ref=e446]
+            - paragraph [ref=e447]: Seamlessly connect your business systems with robust API gateways, middleware solutions, and third-party integrations.
+            - generic [ref=e448]:
+              - generic [ref=e449]: API Gateways
+              - generic [ref=e450]: Middleware
+              - generic [ref=e451]: Third-party Integration
+            - link "Learn More" [ref=e452] [cursor=pointer]:
+              - /url: "#contact"
+    - generic [ref=e460]:
+      - generic [ref=e461]:
+        - generic [ref=e462]: Why State AI
+        - heading "Why Choose Us" [level=2] [ref=e464]
+        - paragraph [ref=e465]: We combine deep technical expertise with business acumen to deliver AI solutions that create real impact.
+      - generic [ref=e466]:
+        - generic [ref=e467]:
+          - generic [ref=e472]: 500+
+          - generic [ref=e473]: Projects Delivered
+        - generic [ref=e474]:
+          - generic [ref=e478]: 98%
+          - generic [ref=e479]: Client Satisfaction
+        - generic [ref=e480]:
+          - generic [ref=e487]: 200+
+          - generic [ref=e488]: AI Experts
+        - generic [ref=e489]:
+          - generic [ref=e493]: 50+
+          - generic [ref=e494]: Countries Served
+      - generic [ref=e495]:
+        - generic [ref=e501]:
+          - heading "Proven AI Expertise" [level=3] [ref=e502]
+          - paragraph [ref=e503]: Our team of 200+ AI specialists brings deep expertise in machine learning, deep learning, NLP, and computer vision.
+        - generic [ref=e509]:
+          - heading "End-to-End Solutions" [level=3] [ref=e510]
+          - paragraph [ref=e511]: From ideation and strategy to development and deployment, we handle the entire AI lifecycle.
+        - generic [ref=e517]:
+          - heading "Industry-Specific Models" [level=3] [ref=e518]
+          - paragraph [ref=e519]: We build AI models tailored to your industry — healthcare, finance, retail, manufacturing, and more.
+        - generic [ref=e525]:
+          - heading "Scalable Architecture" [level=3] [ref=e526]
+          - paragraph [ref=e527]: Our solutions are built on cloud-native, scalable architectures that grow with your business needs.
+        - generic [ref=e533]:
+          - heading "Data Security First" [level=3] [ref=e534]
+          - paragraph [ref=e535]: Enterprise-grade security and compliance standards to protect your sensitive data and IP.
+        - generic [ref=e541]:
+          - heading "Continuous Support" [level=3] [ref=e542]
+          - paragraph [ref=e543]: Ongoing monitoring, optimization, and support to ensure your AI systems perform at their best.
+    - generic [ref=e546]:
+      - generic [ref=e547]:
+        - generic [ref=e548]: Tech Stack
+        - heading "Technologies We Work With" [level=2] [ref=e550]
+        - paragraph [ref=e551]: We leverage the latest and most powerful technologies to build robust, scalable AI solutions.
+      - generic [ref=e552]:
+        - generic [ref=e553]:
+          - img "Python logo" [ref=e555]
+          - generic [ref=e556]: Python
+          - generic [ref=e557]: Language
+        - generic [ref=e558]:
+          - img "TensorFlow logo" [ref=e560]
+          - generic [ref=e561]: TensorFlow
+          - generic [ref=e562]: Framework
+        - generic [ref=e563]:
+          - img "PyTorch logo" [ref=e565]
+          - generic [ref=e566]: PyTorch
+          - generic [ref=e567]: Framework
+        - generic [ref=e568]:
+          - img "OpenAI logo" [ref=e570]
+          - generic [ref=e571]: OpenAI
+          - generic [ref=e572]: API
+        - generic [ref=e573]:
+          - img "AWS logo" [ref=e575]
+          - generic [ref=e576]: AWS
+          - generic [ref=e577]: Cloud
+        - generic [ref=e578]:
+          - img "Google Cloud logo" [ref=e580]
+          - generic [ref=e581]: Google Cloud
+          - generic [ref=e582]: Cloud
+        - generic [ref=e583]:
+          - img "Azure logo" [ref=e585]
+          - generic [ref=e586]: Azure
+          - generic [ref=e587]: Cloud
+        - generic [ref=e588]:
+          - img "Kubernetes logo" [ref=e590]
+          - generic [ref=e591]: Kubernetes
+          - generic [ref=e592]: DevOps
+        - generic [ref=e593]:
+          - img "Docker logo" [ref=e595]
+          - generic [ref=e596]: Docker
+          - generic [ref=e597]: DevOps
+        - generic [ref=e598]:
+          - img "React logo" [ref=e600]
+          - generic [ref=e601]: React
+          - generic [ref=e602]: Frontend
+        - generic [ref=e603]:
+          - img "Node.js logo" [ref=e605]
+          - generic [ref=e606]: Node.js
+          - generic [ref=e607]: Backend
+        - generic [ref=e608]:
+          - img "PostgreSQL logo" [ref=e610]
+          - generic [ref=e611]: PostgreSQL
+          - generic [ref=e612]: Database
+        - generic [ref=e613]:
+          - img "MongoDB logo" [ref=e615]
+          - generic [ref=e616]: MongoDB
+          - generic [ref=e617]: Database
+        - generic [ref=e618]:
+          - img "Spark logo" [ref=e620]
+          - generic [ref=e621]: Spark
+          - generic [ref=e622]: Big Data
+        - generic [ref=e623]:
+          - img "Hugging Face logo" [ref=e625]
+          - generic [ref=e626]: Hugging Face
+          - generic [ref=e627]: NLP
+        - generic [ref=e628]:
+          - img "LangChain logo" [ref=e630]
+          - generic [ref=e631]: LangChain
+          - generic [ref=e632]: LLM
+        - generic [ref=e633]:
+          - img "Scikit-learn logo" [ref=e635]
+          - generic [ref=e636]: Scikit-learn
+          - generic [ref=e637]: ML
+        - generic [ref=e638]:
+          - img "Keras logo" [ref=e640]
+          - generic [ref=e641]: Keras
+          - generic [ref=e642]: Framework
+    - generic [ref=e648]:
+      - generic [ref=e649]:
+        - generic [ref=e650]: How We Work
+        - heading "Our Process" [level=2] [ref=e652]
+        - paragraph [ref=e653]: A proven methodology that ensures successful AI implementation, from concept to production.
+      - generic [ref=e656]:
+        - generic [ref=e657]:
+          - generic [ref=e662]: Step 01
+          - heading "Discovery & Analysis" [level=3] [ref=e663]
+          - paragraph [ref=e664]: We dive deep into your business challenge, analyze your data landscape, and identify the best AI approach.
+          - list [ref=e665]:
+            - listitem [ref=e666]: Requirement Analysis
+            - listitem [ref=e668]: Data Audit
+            - listitem [ref=e670]: Feasibility Study
+        - generic [ref=e672]:
+          - generic [ref=e678]: Step 02
+          - heading "Strategy & Design" [level=3] [ref=e679]
+          - paragraph [ref=e680]: Our team designs a comprehensive AI strategy with clear milestones, architecture blueprints, and a roadmap.
+          - list [ref=e681]:
+            - listitem [ref=e682]: AI Roadmap
+            - listitem [ref=e684]: Architecture Design
+            - listitem [ref=e686]: Sprint Planning
+        - generic [ref=e688]:
+          - generic [ref=e694]: Step 03
+          - heading "Development & Testing" [level=3] [ref=e695]
+          - paragraph [ref=e696]: We build, train, and rigorously test your AI models using agile methodologies and continuous integration.
+          - list [ref=e697]:
+            - listitem [ref=e698]: Model Development
+            - listitem [ref=e700]: Training & Validation
+            - listitem [ref=e702]: QA Testing
+        - generic [ref=e704]:
+          - generic [ref=e711]: Step 04
+          - heading "Deployment & Support" [level=3] [ref=e712]
+          - paragraph [ref=e713]: We deploy your AI solution to production, monitor performance, and provide ongoing optimization.
+          - list [ref=e714]:
+            - listitem [ref=e715]: Cloud Deployment
+            - listitem [ref=e717]: Performance Monitoring
+            - listitem [ref=e719]: 24/7 Support
+    - generic [ref=e723]:
+      - generic [ref=e729]:
+        - generic [ref=e730]: Industries We Serve
+        - heading "AI Solutions Across Every Industry" [level=2] [ref=e732]
+        - paragraph [ref=e733]: Deep domain expertise combined with cutting-edge AI to solve your industry's unique challenges.
+      - generic [ref=e734]:
+        - generic [ref=e736]:
+          - img "Agriculture" [ref=e737]
+          - heading "Agriculture" [level=3] [ref=e747]
+        - generic [ref=e749]:
+          - img "Automotive" [ref=e750]
+          - heading "Automotive" [level=3] [ref=e762]
+        - generic [ref=e764]:
+          - img "Real Estate" [ref=e765]
+          - heading "Real Estate" [level=3] [ref=e777]
+        - generic [ref=e779]:
+          - img "Retail & E-Commerce" [ref=e780]
+          - heading "Retail & E-Commerce" [level=3] [ref=e792]
+        - generic [ref=e794]:
+          - img "Healthcare" [ref=e795]
+          - heading "Healthcare" [level=3] [ref=e805]
+        - generic [ref=e807]:
+          - img "Transportation" [ref=e808]
+          - heading "Transportation" [level=3] [ref=e820]
+        - generic [ref=e822]:
+          - img "Manufacturing" [ref=e823]
+          - heading "Manufacturing" [level=3] [ref=e832]
+        - generic [ref=e834]:
+          - img "Travel & Tourism" [ref=e835]
+          - heading "Travel & Tourism" [level=3] [ref=e844]
+        - generic [ref=e846]:
+          - img "Professional Services" [ref=e847]
+          - heading "Professional Services" [level=3] [ref=e858]
+        - generic [ref=e860]:
+          - img "Software Vendors" [ref=e861]
+          - heading "Software Vendors" [level=3] [ref=e870]
+        - generic [ref=e872]:
+          - img "Human Resources" [ref=e873]
+          - heading "Human Resources" [level=3] [ref=e885]
+        - generic [ref=e887]:
+          - img "Education" [ref=e888]
+          - heading "Education" [level=3] [ref=e898]
+    - generic [ref=e901]:
+      - generic [ref=e902]:
+        - generic [ref=e903]: Our People
+        - heading "Meet the Team" [level=2] [ref=e905]
+        - paragraph [ref=e906]: The talented individuals behind State AI — passionate about building the future of intelligent technology.
+      - generic [ref=e907]:
+        - heading "Founders" [level=3] [ref=e908]
+        - generic [ref=e909]:
+          - generic [ref=e910]:
+            - generic [ref=e912]:
+              - img "Sartaj Ahmad" [ref=e913]
+              - generic [ref=e915]:
+                - heading "Sartaj Ahmad" [level=4] [ref=e916]
+                - paragraph [ref=e917]: Founder & CEO
+            - generic [ref=e919]:
+              - generic [ref=e920]:
+                - generic [ref=e921]: SA
+                - generic [ref=e924]:
+                  - paragraph [ref=e925]: Sartaj Ahmad
+                  - paragraph [ref=e926]: Founder & CEO
+                - link "Connect" [ref=e927] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/sartajahmed/
+              - generic [ref=e931]:
+                - generic [ref=e932]: Today
+                - generic [ref=e936]:
+                  - img "Sartaj Ahmad" [ref=e937]
+                  - generic [ref=e938]:
+                    - paragraph [ref=e939]: Sartaj Ahmad
+                    - paragraph [ref=e940]: At State AI, we don't just build AI tools — we engineer intelligent systems that stay ahead of our clients. Every product we ship is designed to create a real, lasting competitive edge.
+                    - generic [ref=e941]: 10:42 AM
+                - generic [ref=e945]: State AI is replying
+          - generic [ref=e950]:
+            - generic [ref=e952]:
+              - img "Rayees Amin" [ref=e953]
+              - generic [ref=e955]:
+                - heading "Rayees Amin" [level=4] [ref=e956]
+                - paragraph [ref=e957]: Co-Founder & CTO
+            - generic [ref=e959]:
+              - generic [ref=e960]:
+                - generic [ref=e961]: RA
+                - generic [ref=e964]:
+                  - paragraph [ref=e965]: Rayees Amin
+                  - paragraph [ref=e966]: Co-Founder & CTO
+                - link "Connect" [ref=e967] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/rayees-ahmad-rather-a6914b281
+              - generic [ref=e971]:
+                - generic [ref=e972]: Today
+                - generic [ref=e976]:
+                  - img "Rayees Amin" [ref=e977]
+                  - generic [ref=e978]:
+                    - paragraph [ref=e979]: Rayees Amin
+                    - paragraph [ref=e980]: I love solving the hard problems. On the engineering side we obsess over architecture and reliable pipelines, so the AI we ship feels effortless for the teams and customers who depend on it.
+                    - generic [ref=e981]: 11:26 AM
+                - generic [ref=e985]: State AI is replying
+      - generic [ref=e990]:
+        - heading "Team Members" [level=3] [ref=e991]
+        - generic [ref=e992]:
+          - generic [ref=e993]:
+            - img "Hikaru Saito" [ref=e994]
+            - generic [ref=e996]:
+              - heading "Hikaru Saito" [level=4] [ref=e997]
+              - paragraph [ref=e998]: Senior Software Engineer
+          - generic [ref=e999]:
+            - img "Ghulam Mustafa" [ref=e1000]
+            - generic [ref=e1002]:
+              - heading "Ghulam Mustafa" [level=4] [ref=e1003]
+              - paragraph [ref=e1004]: AI Automation Engineer
+          - generic [ref=e1005]:
+            - img "Shamil" [ref=e1006]
+            - generic [ref=e1008]:
+              - heading "Shamil" [level=4] [ref=e1009]
+              - paragraph [ref=e1010]: Full Stack Developer
+    - generic [ref=e1013]:
+      - generic [ref=e1014]:
+        - generic [ref=e1015]: Client Stories
+        - heading "What Our Clients Say" [level=2] [ref=e1017]
+        - paragraph [ref=e1018]: Trusted by businesses across industries to deliver AI-powered solutions that drive real results.
+      - generic [ref=e1019]:
+        - generic [ref=e1025]:
+          - paragraph [ref=e1037]: “State AI implemented a smart record management system that transformed how we handle data. Their attention to detail and understanding of our business needs was exceptional.”
+          - generic [ref=e1038]:
+            - generic [ref=e1039]: AS
+            - generic [ref=e1040]:
+              - generic [ref=e1041]: Aafaq Sir
+              - generic [ref=e1042]: CEO, JKCS
+        - generic [ref=e1043]:
+          - button "Previous testimonial" [ref=e1044]
+          - generic [ref=e1047]:
+            - button "Go to testimonial 1" [ref=e1048]
+            - button "Go to testimonial 2" [ref=e1049]
+            - button "Go to testimonial 3" [ref=e1050]
+            - button "Go to testimonial 4" [ref=e1051]
+            - button "Go to testimonial 5" [ref=e1052]
+            - button "Go to testimonial 6" [ref=e1053]
+          - button "Next testimonial" [ref=e1054]
+      - generic [ref=e1057]:
+        - paragraph [ref=e1058]: Trusted by innovative companies worldwide
+        - generic [ref=e1059]:
+          - generic [ref=e1060]: JKCS
+          - generic [ref=e1061]: AEW
+          - generic [ref=e1062]: Nazira Memorial
+          - generic [ref=e1063]: Gulposh Tiffin
+          - generic [ref=e1064]: Rather Plaza
+          - generic [ref=e1065]: Alfalak Transport
+    - generic [ref=e1072]:
+      - heading "Ready to Transform Your Business with AI?" [level=2] [ref=e1077]: Ready to Transform Your Businesswith AI?
+      - paragraph [ref=e1078]: Let's discuss how our AI solutions can help you innovate, optimize, and grow. Our team is ready to bring your vision to life.
+      - generic [ref=e1079]:
+        - button "Book a Strategy Call" [ref=e1080] [cursor=pointer]
+        - link "Chat on WhatsApp" [ref=e1083] [cursor=pointer]:
+          - /url: https://wa.me/917006993325
+      - generic [ref=e1084]:
+        - generic [ref=e1085]: Free Consultation
+        - generic [ref=e1087]: NDA Protected
+        - generic [ref=e1089]: 24/7 Support
+        - generic [ref=e1091]: Agile Development
+    - generic [ref=e1097]:
+      - generic [ref=e1098]:
+        - generic [ref=e1099]:
+          - generic [ref=e1100]:
+            - img "State AI Logo" [ref=e1102]
+            - generic [ref=e1103]: State AI
+          - paragraph [ref=e1104]: Emerging AI Development Company delivering cutting-edge artificial intelligence solutions for businesses worldwide.
+          - generic [ref=e1105]:
+            - link "info@stateai.in" [ref=e1106] [cursor=pointer]:
+              - /url: mailto:info@stateai.in
+            - link "Chat on WhatsApp" [ref=e1110] [cursor=pointer]:
+              - /url: https://wa.me/917006993325
+        - generic [ref=e1113]:
+          - heading "Services" [level=3] [ref=e1114]
+          - list [ref=e1115]:
+            - listitem [ref=e1116]:
+              - link "AI & Machine Learning" [ref=e1117] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e1118]:
+              - link "Natural Language Processing" [ref=e1119] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e1120]:
+              - link "Computer Vision" [ref=e1121] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e1122]:
+              - link "Generative AI Solutions" [ref=e1123] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e1124]:
+              - link "AI Strategy & Consulting" [ref=e1125] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e1126]:
+              - link "AI Integration & Deployment" [ref=e1127] [cursor=pointer]:
+                - /url: "#services"
+        - generic [ref=e1128]:
+          - heading "Company" [level=3] [ref=e1129]
+          - list [ref=e1130]:
+            - listitem [ref=e1131]:
+              - link "About Us" [ref=e1132] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=e1133]:
+              - link "Our Process" [ref=e1134] [cursor=pointer]:
+                - /url: "#process"
+            - listitem [ref=e1135]:
+              - link "Portfolio" [ref=e1136] [cursor=pointer]:
+                - /url: "#portfolio"
+            - listitem [ref=e1137]:
+              - link "Testimonials" [ref=e1138] [cursor=pointer]:
+                - /url: "#testimonials"
+            - listitem [ref=e1139]:
+              - link "Careers" [ref=e1140] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e1141]:
+              - link "Blog" [ref=e1142] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e1143]:
+          - heading "Stay Updated" [level=3] [ref=e1144]
+          - paragraph [ref=e1145]: Subscribe for the latest AI insights.
+          - generic [ref=e1146]:
+            - textbox "Your email" [ref=e1147]
+            - button "Subscribe" [ref=e1148]
+          - generic [ref=e1151]:
+            - link "LinkedIn" [ref=e1152] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/stateintelligencetechnologies/
+            - link "X" [ref=e1155] [cursor=pointer]:
+              - /url: https://x.com/_stateai
+            - link "Instagram" [ref=e1158] [cursor=pointer]:
+              - /url: https://www.instagram.com/state_intelligencetechnologies?igsh=MTlpM3preThwa3JxMQ==
+            - link "YouTube" [ref=e1161] [cursor=pointer]:
+              - /url: https://www.youtube.com/channel/UCtkBvvvjhMa74mhhAPE0bag
+      - generic [ref=e1164]:
+        - paragraph [ref=e1165]: © 2026 State AI. All rights reserved.
+        - generic [ref=e1166]:
+          - link "Privacy Policy" [ref=e1167] [cursor=pointer]:
+            - /url: /privacy-policy
+          - link "Terms of Service" [ref=e1168] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e1169] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e1175] [cursor=pointer]

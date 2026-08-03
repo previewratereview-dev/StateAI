@@ -1,0 +1,84 @@
+- generic [active] [ref=f5e1]:
+  - main [ref=f5e2]:
+    - generic [ref=f5e3]:
+      - generic [ref=f5e4]:
+        - generic [ref=f5e5]: Legal & Terms
+        - heading "Terms & Conditions" [level=1] [ref=f5e6]
+        - generic [ref=f5e7]:
+          - paragraph [ref=f5e8]:
+            - strong [ref=f5e9]: "Effective Date:"
+            - text: August 3, 2026
+          - paragraph [ref=f5e10]:
+            - strong [ref=f5e11]: "Last Reviewed:"
+            - text: August 3, 2026
+      - generic [ref=f5e12]:
+        - generic [ref=f5e13]:
+          - heading "1. Acceptance of Terms" [level=2] [ref=f5e14]
+          - paragraph [ref=f5e15]: These Terms & Conditions ("Terms") govern your use of the STATE AI website, services, and any related materials (collectively, the "Services"). By accessing or using our Services, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use our Services.
+        - generic [ref=f5e16]:
+          - heading "2. About Our Services" [level=2] [ref=f5e17]
+          - paragraph [ref=f5e18]: STATE AI provides artificial intelligence, machine learning, natural language processing, computer vision, and generative AI development and consulting services. Any specific scope, deliverables, timelines, and fees for services are defined in a separate agreement between you and STATE AI. In the event of a conflict, the terms of that agreement take precedence over these Terms.
+        - generic [ref=f5e19]:
+          - heading "3. Use of the Website" [level=2] [ref=f5e20]
+          - paragraph [ref=f5e21]: "When using our website, you agree not to:"
+          - list [ref=f5e22]:
+            - listitem [ref=f5e23]: Use the website in any way that violates applicable law or regulation
+            - listitem [ref=f5e25]: Attempt to gain unauthorized access to any part of the website, servers, or systems
+            - listitem [ref=f5e27]: Interfere with or disrupt the security, performance, or availability of the website
+            - listitem [ref=f5e29]: Reverse engineer, decompile, or attempt to extract the source code of any software
+            - listitem [ref=f5e31]: Submit false, misleading, or harmful information through our forms
+            - listitem [ref=f5e33]: Use automated tools to scrape or harvest data from the website without permission
+        - generic [ref=f5e35]:
+          - heading "4. Intellectual Property" [level=2] [ref=f5e36]
+          - paragraph [ref=f5e37]: All content on this website — including text, graphics, logos, images, code, and other materials — is the property of STATE AI or its licensors and is protected by applicable intellectual property laws. You may not copy, reproduce, distribute, or create derivative works from any content without our prior written consent.
+          - paragraph [ref=f5e38]: Unless otherwise agreed in writing, any intellectual property created by STATE AI in the course of a client engagement is owned by STATE AI until full payment is received, at which point ownership of the agreed deliverables transfers to the client in accordance with the applicable agreement.
+        - generic [ref=f5e39]:
+          - heading "5. Client Responsibilities" [level=2] [ref=f5e40]
+          - paragraph [ref=f5e41]: "You agree to provide accurate, complete, and timely information and access as reasonably required for STATE AI to perform its services. You are responsible for:"
+          - list [ref=f5e42]:
+            - listitem [ref=f5e43]: Maintaining the confidentiality of any credentials or accounts we provision
+            - listitem [ref=f5e45]: Ensuring you have the rights to any data, content, or materials you provide
+            - listitem [ref=f5e47]: Complying with all applicable laws in connection with your use of our services
+            - listitem [ref=f5e49]: Reviewing deliverables and providing feedback within agreed timelines
+        - generic [ref=f5e51]:
+          - heading "6. Fees and Payment" [level=2] [ref=f5e52]
+          - paragraph [ref=f5e53]: Fees for services are as set out in your agreement or proposal. Invoices are due within the payment terms specified. Late payments may incur interest or suspension of services until payment is received. All fees are exclusive of taxes, which will be added where applicable.
+        - generic [ref=f5e54]:
+          - heading "7. Third-Party Services" [level=2] [ref=f5e55]
+          - paragraph [ref=f5e56]: Our Services may link to or integrate with third-party websites, tools, or platforms. We do not control and are not responsible for the content, privacy practices, or availability of any third-party services. Your use of such services is subject to their own terms and policies.
+        - generic [ref=f5e57]:
+          - heading "8. Disclaimers" [level=2] [ref=f5e58]
+          - paragraph [ref=f5e59]: Our Services are provided on an "as is" and "as available" basis, without warranties of any kind, whether express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement. While we strive for accuracy, we do not warrant that the website will be uninterrupted, error-free, or free of harmful components. AI outputs may be imperfect or require review, and we make no guarantee regarding the performance or suitability of any output for your specific purpose.
+        - generic [ref=f5e60]:
+          - heading "9. Limitation of Liability" [level=2] [ref=f5e61]
+          - paragraph [ref=f5e62]: To the maximum extent permitted by law, STATE AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of profits, revenue, data, or goodwill, arising out of or related to your use of the Services. Our total aggregate liability for any claim arising from these Terms shall not exceed the amounts paid by you to STATE AI in the twelve (12) months preceding the claim.
+        - generic [ref=f5e63]:
+          - heading "10. Indemnification" [level=2] [ref=f5e64]
+          - paragraph [ref=f5e65]: You agree to indemnify, defend, and hold harmless STATE AI and its officers, employees, and agents from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising out of your use of the Services, your violation of these Terms, or your infringement of any third-party rights.
+        - generic [ref=f5e66]:
+          - heading "11. Confidentiality" [level=2] [ref=f5e67]
+          - paragraph [ref=f5e68]: Each party agrees to keep confidential any non-public information disclosed in connection with the Services, and to use such information only for the purpose of performing obligations under these Terms or the applicable agreement. This obligation does not apply to information that is publicly available, independently developed, or required to be disclosed by law.
+        - generic [ref=f5e69]:
+          - heading "12. Termination" [level=2] [ref=f5e70]
+          - paragraph [ref=f5e71]: We may suspend or terminate your access to the Services at any time if you breach these Terms. Upon termination, any rights granted to you under these Terms immediately cease. Provisions that by their nature should survive termination — including intellectual property, disclaimers, limitation of liability, and governing law — will survive.
+        - generic [ref=f5e72]:
+          - heading "13. Governing Law" [level=2] [ref=f5e73]
+          - paragraph [ref=f5e74]: These Terms are governed by and construed in accordance with the laws of [Jurisdiction], without regard to its conflict of law principles. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of [Jurisdiction].
+        - generic [ref=f5e75]:
+          - heading "14. Changes to These Terms" [level=2] [ref=f5e76]
+          - paragraph [ref=f5e77]: We may update these Terms from time to time to reflect legal, technical, or business changes. When we do, we will post the revised Terms on this page and update the effective date at the top. Your continued use of the Services after changes are posted constitutes acceptance of the revised Terms.
+        - generic [ref=f5e78]:
+          - heading "15. Contact Us" [level=2] [ref=f5e79]
+          - paragraph [ref=f5e80]: "If you have any questions about these Terms, please contact us:"
+          - generic [ref=f5e81]:
+            - paragraph [ref=f5e82]: STATE AI
+            - paragraph [ref=f5e83]: "[Company Address]"
+            - paragraph [ref=f5e84]:
+              - text: "Email:"
+              - link "info@stateai.in" [ref=f5e85] [cursor=pointer]:
+                - /url: mailto:info@stateai.in
+            - paragraph [ref=f5e86]:
+              - text: "WhatsApp:"
+              - link "+917006993325" [ref=f5e87] [cursor=pointer]:
+                - /url: https://wa.me/917006993325
+  - button "Open Next.js Dev Tools" [ref=f5e93] [cursor=pointer]
