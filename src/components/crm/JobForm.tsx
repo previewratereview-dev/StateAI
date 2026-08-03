@@ -75,9 +75,9 @@ export default function JobForm({ job }: { job?: Job | null }) {
     width: "100%",
     padding: "10px 14px",
     borderRadius: 10,
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(177,178,180,0.12)",
-    color: "#fcfcfe",
+    background: "rgb(var(--crm-overlay) / 0.04)",
+    border: "1px solid rgb(var(--crm-line) / 0.12)",
+    color: "var(--crm-text)",
     fontSize: "0.88rem",
     fontFamily: "inherit",
     outline: "none",
@@ -89,7 +89,7 @@ export default function JobForm({ job }: { job?: Job | null }) {
     display: "block",
     fontSize: "0.8rem",
     fontWeight: 600,
-    color: "#a1a3a6",
+    color: "var(--crm-text-2)",
     marginBottom: 6,
     textTransform: "uppercase",
     letterSpacing: "0.04em",
@@ -104,7 +104,7 @@ export default function JobForm({ job }: { job?: Job | null }) {
     backgroundPosition: "right 12px center",
     backgroundSize: "12px",
     paddingRight: 36,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgb(var(--crm-overlay) / 0.04)",
   };
 
   const textareaStyle: React.CSSProperties = {
@@ -125,10 +125,10 @@ export default function JobForm({ job }: { job?: Job | null }) {
         }}
       >
         <div>
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
+          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>
             {isEditing ? "Edit Job" : "New Job Listing"}
           </h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", margin: "4px 0 0" }}>
+          <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem", margin: "4px 0 0" }}>
             {isEditing ? `Editing "${job?.title}"` : "Create a new job posting"}
           </p>
         </div>
@@ -139,9 +139,9 @@ export default function JobForm({ job }: { job?: Job | null }) {
             style={{
               padding: "10px 20px",
               borderRadius: 10,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(177,178,180,0.12)",
-              color: "#818286",
+              background: "rgb(var(--crm-overlay) / 0.04)",
+              border: "1px solid rgb(var(--crm-line) / 0.12)",
+              color: "var(--crm-muted)",
               fontSize: "0.85rem",
               fontWeight: 600,
               cursor: "pointer",

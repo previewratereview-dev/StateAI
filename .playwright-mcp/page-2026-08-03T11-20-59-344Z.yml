@@ -1,0 +1,84 @@
+- generic [active] [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - complementary [ref=f27e3]:
+      - generic [ref=f27e4]:
+        - generic [ref=f27e5]: State AI CRM
+        - generic [ref=f27e12]:
+          - button "Toggle theme" [ref=f27e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f27e16] [cursor=pointer]
+      - navigation [ref=f27e19]:
+        - link "Dashboard" [ref=f27e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f27e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f27e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f27e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f27e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f27e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f27e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f27e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f27e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f27e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f27e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f27e85]:
+        - generic [ref=f27e86]:
+          - generic [ref=f27e87]: R
+          - generic [ref=f27e88]:
+            - generic [ref=f27e89]: rayees
+            - generic [ref=f27e90]: admin
+        - button "Sign Out" [ref=f27e93] [cursor=pointer]
+    - main [ref=f27e97]:
+      - generic [ref=f27e99]:
+        - link "Back to Contacts" [ref=f27e100] [cursor=pointer]:
+          - /url: /crm/contacts
+        - generic [ref=f27e103]:
+          - generic [ref=f27e104]:
+            - generic [ref=f27e105]:
+              - generic [ref=f27e106]:
+                - generic [ref=f27e107]: SS
+                - heading "Sudhanshu Shridhar" [level=1] [ref=f27e108]
+                - paragraph [ref=f27e109]: Business Owner
+                - paragraph [ref=f27e110]: SFM Tour & Travels
+                - button "Claim" [ref=f27e112] [cursor=pointer]
+                - button "Contacted" [ref=f27e114] [cursor=pointer]
+              - generic [ref=f27e118]:
+                - generic [ref=f27e119]:
+                  - generic [ref=f27e120]: Win Rate
+                  - generic [ref=f27e121]: 0%
+                - generic [ref=f27e122]:
+                  - generic [ref=f27e123]: Value
+                  - generic [ref=f27e124]: $0
+              - generic [ref=f27e125]:
+                - generic [ref=f27e126]:
+                  - generic [ref=f27e127]: ✉️
+                  - link "sudhanshu.shridhar@sfmtravels.com" [ref=f27e128] [cursor=pointer]:
+                    - /url: mailto:sudhanshu.shridhar@sfmtravels.com
+                - generic [ref=f27e129]:
+                  - generic [ref=f27e130]: 📞
+                  - link "097110 38584" [ref=f27e131] [cursor=pointer]:
+                    - /url: tel:097110 38584
+              - generic [ref=f27e132]:
+                - button "✉️ Send Email" [ref=f27e133] [cursor=pointer]
+                - button "📋 Log Interaction" [ref=f27e134] [cursor=pointer]
+            - generic [ref=f27e135]:
+              - heading "Deals (0)" [level=3] [ref=f27e136]
+              - paragraph [ref=f27e137]: No deals linked
+          - generic [ref=f27e138]:
+            - generic [ref=f27e139]:
+              - heading "Timeline" [level=2] [ref=f27e140]
+              - button "+ Log Activity" [ref=f27e141] [cursor=pointer]
+            - generic [ref=f27e142]:
+              - generic [ref=f27e143]: 📭
+              - paragraph [ref=f27e144]: No history found for this contact.
+              - paragraph [ref=f27e145]: Log your first interaction to start tracking.
+  - button "Open Next.js Dev Tools" [ref=f27e151] [cursor=pointer]
+  - alert [ref=f27e155]

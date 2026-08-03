@@ -75,12 +75,12 @@ function ContactDrawer({
   }
 
   const inputStyle: React.CSSProperties = {
-    width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)",
-    borderRadius: 10, padding: "0.65rem 0.875rem", color: "#fcfcfe", fontSize: "0.875rem",
+    width: "100%", background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)",
+    borderRadius: 10, padding: "0.65rem 0.875rem", color: "var(--crm-text)", fontSize: "0.875rem",
     outline: "none", fontFamily: "inherit", boxSizing: "border-box", transition: "border-color 0.2s",
   };
   const labelStyle: React.CSSProperties = {
-    display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#818286",
+    display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-muted)",
     marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em",
   };
 
@@ -88,15 +88,15 @@ function ContactDrawer({
     <div style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex" }}>
       <div style={{ flex: 1, background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} onClick={onClose} />
       <div style={{
-        width: 460, background: "#0d0d12", borderLeft: "1px solid rgba(177,178,180,0.1)",
+        width: 460, background: "var(--crm-modal)", borderLeft: "1px solid rgb(var(--crm-line) / 0.1)",
         height: "100%", overflowY: "auto", padding: "1.75rem",
         boxShadow: "-20px 0 60px rgba(0,0,0,0.5)",
       }} className="crm-drawer-panel">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
+          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>
             {editing ? "Edit Contact" : "New Contact"}
           </h2>
-          <button onClick={onClose} style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--crm-faint)", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
         </div>
         <form onSubmit={handleSubmit}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
@@ -104,13 +104,13 @@ function ContactDrawer({
               <label style={labelStyle}>First Name *</label>
               <input name="first_name" required defaultValue={editing?.first_name} style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.5)"}
-                onBlur={e => e.target.style.borderColor = "rgba(177,178,180,0.12)"} />
+                onBlur={e => e.target.style.borderColor = "rgb(var(--crm-line) / 0.12)"} />
             </div>
             <div>
               <label style={labelStyle}>Last Name *</label>
               <input name="last_name" required defaultValue={editing?.last_name} style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.5)"}
-                onBlur={e => e.target.style.borderColor = "rgba(177,178,180,0.12)"} />
+                onBlur={e => e.target.style.borderColor = "rgb(var(--crm-line) / 0.12)"} />
             </div>
           </div>
           {[
@@ -123,7 +123,7 @@ function ContactDrawer({
               <label style={labelStyle}>{f.label}</label>
               <input name={f.name} type={f.type} required={f.required} defaultValue={f.value} style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.5)"}
-                onBlur={e => e.target.style.borderColor = "rgba(177,178,180,0.12)"} />
+                onBlur={e => e.target.style.borderColor = "rgb(var(--crm-line) / 0.12)"} />
             </div>
           ))}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
@@ -147,12 +147,12 @@ function ContactDrawer({
             <textarea name="notes" rows={3} defaultValue={editing?.notes || ""}
               style={{ ...inputStyle, resize: "vertical" }}
               onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.5)"}
-              onBlur={e => e.target.style.borderColor = "rgba(177,178,180,0.12)"} />
+              onBlur={e => e.target.style.borderColor = "rgb(var(--crm-line) / 0.12)"} />
           </div>
           {error && <div style={{ color: "#ef4444", fontSize: "0.82rem", marginBottom: "1rem", background: "rgba(239,68,68,0.08)", padding: "0.6rem 0.75rem", borderRadius: 8, border: "1px solid rgba(239,68,68,0.2)" }}>{error}</div>}
           <div style={{ display: "flex", gap: 10 }}>
-            <button type="button" onClick={onClose} style={{ flex: 1, padding: "0.7rem", borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>Cancel</button>
-            <button type="submit" disabled={isPending} style={{ flex: 2, padding: "0.7rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", cursor: isPending ? "not-allowed" : "pointer", fontFamily: "inherit", fontWeight: 700 }}>
+            <button type="button" onClick={onClose} style={{ flex: 1, padding: "0.7rem", borderRadius: 10, background: "rgb(var(--crm-overlay) / 0.05)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-muted)", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}>Cancel</button>
+            <button type="submit" disabled={isPending} style={{ flex: 2, padding: "0.7rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "var(--crm-on-accent)", cursor: isPending ? "not-allowed" : "pointer", fontFamily: "inherit", fontWeight: 700 }}>
               {isPending ? "Saving…" : editing ? "Save Changes" : "Add Contact"}
             </button>
           </div>
@@ -227,10 +227,10 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
         <div>
-          <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Contacts</h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>{contacts.length} total contacts</p>
+          <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "var(--crm-text)", margin: 0, letterSpacing: "-0.03em" }}>Contacts</h1>
+          <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem", marginTop: 4 }}>{contacts.length} total contacts</p>
         </div>
-        <button onClick={() => setDrawer({ open: true })} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "#fcfcfe", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)", minHeight: 44 }}>
+        <button onClick={() => setDrawer({ open: true })} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.65rem 1.25rem", borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))", border: "1px solid rgba(99,102,241,0.4)", color: "var(--crm-on-accent)", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(99,102,241,0.2)", minHeight: 44 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
           Add Contact
         </button>
@@ -239,11 +239,11 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       {/* Filters */}
       <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ position: "relative", flex: "1 1 280px" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5d5e60" strokeWidth="2" style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--crm-faint)" strokeWidth="2" style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)" }}>
             <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search contacts…"
-            style={{ width: "100%", background: "rgba(13,13,18,0.7)", border: "1px solid rgba(177,178,180,0.1)", borderRadius: 10, padding: "0.6rem 0.875rem 0.6rem 2.5rem", color: "#fcfcfe", fontSize: "0.875rem", outline: "none", fontFamily: "inherit", boxSizing: "border-box" }} />
+            style={{ width: "100%", background: "var(--crm-raised)", border: "1px solid rgb(var(--crm-line) / 0.12)", borderRadius: 10, padding: "0.6rem 0.875rem 0.6rem 2.5rem", color: "var(--crm-text)", fontSize: "0.875rem", outline: "none", fontFamily: "inherit", boxSizing: "border-box" }} />
         </div>
         <div style={{ display: "flex", gap: 6 }}>
           {(["all", "new", "contacted", "qualified", "proposal", "negotiation", "won", "lost", "churned"] as const).map(s => {
@@ -251,7 +251,7 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
             const cfg = s !== "all" ? STATUS_CFG[s] : null;
             return (
               <button key={s} onClick={() => setStatusFilter(s)}
-                style={{ padding: "0.5rem 0.875rem", borderRadius: 8, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", border: isActive ? `1px solid ${cfg ? cfg.color + "40" : "rgba(177,178,180,0.3)"}` : "1px solid transparent", background: isActive ? (cfg ? cfg.bg : "rgba(177,178,180,0.08)") : "transparent", color: isActive ? (cfg ? cfg.color : "#fcfcfe") : "#5d5e60" }}>
+                style={{ padding: "0.5rem 0.875rem", borderRadius: 8, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", border: isActive ? `1px solid ${cfg ? cfg.color + "40" : "rgb(var(--crm-line) / 0.3)"}` : "1px solid transparent", background: isActive ? (cfg ? cfg.bg : "rgb(var(--crm-line) / 0.08)") : "transparent", color: isActive ? (cfg ? cfg.color : "var(--crm-text)") : "var(--crm-faint)" }}>
                 {s === "all" ? "All" : STATUS_CFG[s].label} ({counts[s] || 0})
               </button>
             );
@@ -260,18 +260,18 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
       </div>
 
       {/* Table */}
-      <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
+      <div style={{ background: "rgb(var(--crm-card-rgb) / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgb(var(--crm-line) / 0.08)", borderRadius: 16, overflow: "hidden" }}>
         {/* Table header - hidden on mobile */}
         {!isMobile && (
-          <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.75rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgb(var(--crm-overlay) / 0.02)" }}>
             {["Contact", "Company", "Status", "Source", "Created", ""].map(h => (
-              <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
+              <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
             ))}
           </div>
         )}
 
         {filtered.length === 0 ? (
-          <div style={{ padding: "3rem", textAlign: "center", color: "#3d3e40" }}>
+          <div style={{ padding: "3rem", textAlign: "center", color: "var(--crm-faint)" }}>
             <div style={{ fontSize: "2rem", marginBottom: 8 }}>👤</div>
             No contacts found. {search ? "Try a different search." : "Add your first contact!"}
           </div>
@@ -281,27 +281,27 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
             {filtered.map(contact => {
               const cfg = STATUS_CFG[contact.status];
               return (
-                <div key={contact.id} style={{ padding: "1rem", borderBottom: "1px solid rgba(177,178,180,0.06)" }}>
+                <div key={contact.id} style={{ padding: "1rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
                     <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${cfg.color}30, ${cfg.color}10)`, border: `1px solid ${cfg.color}25`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: cfg.color, flexShrink: 0 }}>
                       {getInitials(contact.first_name, contact.last_name)}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <a href={`/crm/contacts/${contact.id}`} style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe", textDecoration: "none", display: "block" }}>
+                      <a href={`/crm/contacts/${contact.id}`} style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--crm-text)", textDecoration: "none", display: "block" }}>
                         {contact.first_name} {contact.last_name}
                       </a>
-                      <div style={{ fontSize: "0.75rem", color: "#5d5e60", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{contact.email}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--crm-faint)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{contact.email}</div>
                     </div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.05em", color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30`, flexShrink: 0 }}>
                       <span style={{ width: 5, height: 5, borderRadius: "50%", background: cfg.color, boxShadow: `0 0 5px ${cfg.color}` }} />
                       {cfg.label}
                     </span>
                   </div>
-                  {contact.company && <div style={{ fontSize: "0.78rem", color: "#818286", marginBottom: 4 }}>{contact.company}{contact.job_title ? ` · ${contact.job_title}` : ""}</div>}
+                  {contact.company && <div style={{ fontSize: "0.78rem", color: "var(--crm-muted)", marginBottom: 4 }}>{contact.company}{contact.job_title ? ` · ${contact.job_title}` : ""}</div>}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ fontSize: "0.72rem", color: "#3d3e40" }}>{formatDate(contact.created_at)}</div>
+                    <div style={{ fontSize: "0.72rem", color: "var(--crm-faint)" }}>{formatDate(contact.created_at)}</div>
                     <div style={{ display: "flex", gap: 6 }}>
-                      <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.1)", color: "#818286", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Edit</button>
+                      <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.1)", color: "var(--crm-muted)", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Edit</button>
                       {isAdmin && <button onClick={() => handleDelete(contact.id)} style={{ padding: "6px 14px", borderRadius: 7, fontSize: "0.75rem", background: "transparent", border: "1px solid rgba(239,68,68,0.2)", color: "rgba(239,68,68,0.6)", cursor: "pointer", fontFamily: "inherit", minHeight: 36 }}>Del</button>}
                     </div>
                   </div>
@@ -314,8 +314,8 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
           filtered.map(contact => {
             const cfg = STATUS_CFG[contact.status];
             return (
-              <div key={contact.id} style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center", transition: "background 0.15s" }}
-                onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)"}
+              <div key={contact.id} style={{ display: "grid", gridTemplateColumns: "2.5fr 2fr 1.5fr 1.5fr 1fr auto", gap: "1rem", padding: "0.875rem 1.25rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)", alignItems: "center", transition: "background 0.15s" }}
+                onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "rgb(var(--crm-overlay) / 0.02)"}
                 onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "transparent"}>
                 {/* Contact */}
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -323,28 +323,28 @@ export default function ContactsTable({ initialContacts, isAdmin }: { initialCon
                     {getInitials(contact.first_name, contact.last_name)}
                   </div>
                   <div>
-                    <a href={`/crm/contacts/${contact.id}`} style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe", textDecoration: "none", display: "block" }}
+                    <a href={`/crm/contacts/${contact.id}`} style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--crm-text)", textDecoration: "none", display: "block" }}
                       onMouseEnter={e => (e.target as HTMLElement).style.color = "#818cf8"}
-                      onMouseLeave={e => (e.target as HTMLElement).style.color = "#fcfcfe"}>
+                      onMouseLeave={e => (e.target as HTMLElement).style.color = "var(--crm-text)"}>
                       {contact.first_name} {contact.last_name}
                     </a>
-                    <div style={{ fontSize: "0.75rem", color: "#5d5e60" }}>{contact.email}</div>
+                    <div style={{ fontSize: "0.75rem", color: "var(--crm-faint)" }}>{contact.email}</div>
                   </div>
                 </div>
                 {/* Company */}
-                <div style={{ fontSize: "0.85rem", color: "#818286" }}>{contact.company || "—"}<br /><span style={{ fontSize: "0.72rem", color: "#5d5e60" }}>{contact.job_title || ""}</span></div>
+                <div style={{ fontSize: "0.85rem", color: "var(--crm-muted)" }}>{contact.company || "—"}<br /><span style={{ fontSize: "0.72rem", color: "var(--crm-faint)" }}>{contact.job_title || ""}</span></div>
                 {/* Status */}
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.05em", color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30`, width: "fit-content" }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: cfg.color, boxShadow: `0 0 5px ${cfg.color}` }} />
                   {cfg.label}
                 </span>
                 {/* Source */}
-                <div style={{ fontSize: "0.8rem", color: "#5d5e60" }}>{SOURCE_LABELS[contact.lead_source] || contact.lead_source}</div>
+                <div style={{ fontSize: "0.8rem", color: "var(--crm-faint)" }}>{SOURCE_LABELS[contact.lead_source] || contact.lead_source}</div>
                 {/* Created */}
-                <div style={{ fontSize: "0.78rem", color: "#3d3e40" }}>{formatDate(contact.created_at)}</div>
+                <div style={{ fontSize: "0.78rem", color: "var(--crm-faint)" }}>{formatDate(contact.created_at)}</div>
                 {/* Actions */}
                 <div style={{ display: "flex", gap: 6 }}>
-                  <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "4px 10px", borderRadius: 7, fontSize: "0.72rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.1)", color: "#818286", cursor: "pointer", fontFamily: "inherit" }}>Edit</button>
+                  <button onClick={() => setDrawer({ open: true, editing: contact })} style={{ padding: "4px 10px", borderRadius: 7, fontSize: "0.72rem", background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.1)", color: "var(--crm-muted)", cursor: "pointer", fontFamily: "inherit" }}>Edit</button>
                   {isAdmin && <button onClick={() => handleDelete(contact.id)} style={{ padding: "4px 10px", borderRadius: 7, fontSize: "0.72rem", background: "transparent", border: "1px solid rgba(239,68,68,0.2)", color: "rgba(239,68,68,0.6)", cursor: "pointer", fontFamily: "inherit" }}>Del</button>}
                 </div>
               </div>

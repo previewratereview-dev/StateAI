@@ -183,7 +183,7 @@ export default function ContactDetailClient({
           display: "inline-flex",
           alignItems: "center",
           gap: 6,
-          color: "#5d5e60",
+          color: "var(--crm-faint)",
           fontSize: "0.82rem",
           textDecoration: "none",
           marginBottom: "1.5rem",
@@ -209,9 +209,9 @@ export default function ContactDetailClient({
           {/* Contact Card */}
           <div
             style={{
-              background: "rgb(13 13 18 / 70%)",
+              background: "rgb(var(--crm-card-rgb) / 70%)",
               backdropFilter: "blur(20px)",
-              border: "1px solid rgba(177,178,180,0.08)",
+              border: "1px solid rgb(var(--crm-line) / 0.08)",
               borderRadius: 16,
               padding: "1.75rem",
             }}
@@ -248,7 +248,7 @@ export default function ContactDetailClient({
                 style={{
                   fontSize: "1.3rem",
                   fontWeight: 700,
-                  color: "#fcfcfe",
+                  color: "var(--crm-text)",
                   margin: 0,
                   textAlign: "center",
                   letterSpacing: "-0.02em",
@@ -257,12 +257,12 @@ export default function ContactDetailClient({
                 {contact.first_name} {contact.last_name}
               </h1>
               {contact.job_title && (
-                <p style={{ color: "#818286", fontSize: "0.85rem", margin: "6px 0 0", fontWeight: 500 }}>
+                <p style={{ color: "var(--crm-muted)", fontSize: "0.85rem", margin: "6px 0 0", fontWeight: 500 }}>
                   {contact.job_title}
                 </p>
               )}
               {contact.company && (
-                <p style={{ color: "#5d5e60", fontSize: "0.8rem", margin: "2px 0 0" }}>
+                <p style={{ color: "var(--crm-faint)", fontSize: "0.8rem", margin: "2px 0 0" }}>
                   {contact.company}
                 </p>
               )}
@@ -285,7 +285,7 @@ export default function ContactDetailClient({
                             }
                           });
                         }}
-                        style={{ padding: "6px 10px", borderRadius: 8, background: "transparent", border: "1px solid rgba(255,255,255,0.06)", color: "#b1b2b4", cursor: "pointer" }}
+                        style={{ padding: "6px 10px", borderRadius: 8, background: "transparent", border: "1px solid rgb(var(--crm-overlay) / 0.06)", color: "var(--crm-text-2)", cursor: "pointer" }}
                       >
                         Release
                       </button>
@@ -308,7 +308,7 @@ export default function ContactDetailClient({
                         }
                       });
                     }}
-                    style={{ padding: "6px 10px", borderRadius: 8, background: "#11121a", border: "1px solid rgba(255,255,255,0.04)", color: "#b1b2b4", cursor: "pointer" }}
+                    style={{ padding: "6px 10px", borderRadius: 8, background: "var(--crm-raised)", border: "1px solid rgb(var(--crm-overlay) / 0.04)", color: "var(--crm-text-2)", cursor: "pointer" }}
                   >
                     Claim
                   </button>
@@ -363,8 +363,8 @@ export default function ContactDetailClient({
                         left: "50%",
                         transform: "translateX(-50%)",
                         marginTop: 6,
-                        background: "#1a1a23",
-                        border: "1px solid rgba(177,178,180,0.12)",
+                        background: "var(--crm-popover)",
+                        border: "1px solid rgb(var(--crm-line) / 0.12)",
                         borderRadius: 12,
                         padding: "0.5rem",
                         zIndex: 51,
@@ -393,7 +393,7 @@ export default function ContactDetailClient({
                                 ? `${opt.color}15`
                                 : "transparent",
                             color:
-                              opt.value === contact.status ? opt.color : "#b1b2b4",
+                              opt.value === contact.status ? opt.color : "var(--crm-text-2)",
                             cursor:
                               opt.value === contact.status
                                 ? "default"
@@ -405,7 +405,7 @@ export default function ContactDetailClient({
                           }}
                           onMouseEnter={(e) => {
                             if (opt.value !== contact.status)
-                              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                              e.currentTarget.style.background = "rgb(var(--crm-overlay) / 0.04)";
                           }}
                           onMouseLeave={(e) => {
                             if (opt.value !== contact.status)
@@ -423,7 +423,7 @@ export default function ContactDetailClient({
                           />
                           {opt.label}
                           {opt.value === contact.status && (
-                            <span style={{ marginLeft: "auto", fontSize: "0.65rem", color: "#5d5e60" }}>
+                            <span style={{ marginLeft: "auto", fontSize: "0.65rem", color: "var(--crm-faint)" }}>
                               (current)
                             </span>
                           )}
@@ -443,13 +443,13 @@ export default function ContactDetailClient({
                 gap: "1rem",
                 marginBottom: "1.5rem",
                 paddingBottom: "1.5rem",
-                borderBottom: "1px solid rgba(177,178,180,0.08)",
+                borderBottom: "1px solid rgb(var(--crm-line) / 0.08)",
               }}
             >
               <div
                 style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(177,178,180,0.06)",
+                  background: "rgb(var(--crm-overlay) / 0.02)",
+                  border: "1px solid rgb(var(--crm-line) / 0.06)",
                   borderRadius: 12,
                   padding: "1rem",
                   textAlign: "center",
@@ -458,7 +458,7 @@ export default function ContactDetailClient({
                 <div
                   style={{
                     fontSize: "0.7rem",
-                    color: "#5d5e60",
+                    color: "var(--crm-faint)",
                     textTransform: "uppercase",
                     fontWeight: 700,
                     letterSpacing: "0.05em",
@@ -466,14 +466,14 @@ export default function ContactDetailClient({
                 >
                   Win Rate
                 </div>
-                <div style={{ fontSize: "1.25rem", color: "#fcfcfe", fontWeight: 800, marginTop: 4 }}>
+                <div style={{ fontSize: "1.25rem", color: "var(--crm-text)", fontWeight: 800, marginTop: 4 }}>
                   {winRate.toFixed(0)}%
                 </div>
               </div>
               <div
                 style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(177,178,180,0.06)",
+                  background: "rgb(var(--crm-overlay) / 0.02)",
+                  border: "1px solid rgb(var(--crm-line) / 0.06)",
                   borderRadius: 12,
                   padding: "1rem",
                   textAlign: "center",
@@ -482,7 +482,7 @@ export default function ContactDetailClient({
                 <div
                   style={{
                     fontSize: "0.7rem",
-                    color: "#5d5e60",
+                    color: "var(--crm-faint)",
                     textTransform: "uppercase",
                     fontWeight: 700,
                     letterSpacing: "0.05em",
@@ -512,13 +512,13 @@ export default function ContactDetailClient({
                       alignItems: "center",
                       gap: 12,
                       fontSize: "0.85rem",
-                      color: "#818286",
+                      color: "var(--crm-muted)",
                       fontWeight: 500,
                     }}
                   >
                     <span
                       style={{
-                        background: "rgba(255,255,255,0.04)",
+                        background: "rgb(var(--crm-overlay) / 0.04)",
                         padding: 6,
                         borderRadius: 8,
                       }}
@@ -529,7 +529,7 @@ export default function ContactDetailClient({
                       <a
                         href={r.href}
                         style={{
-                          color: "#818286",
+                          color: "var(--crm-muted)",
                           textDecoration: "none",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -563,7 +563,7 @@ export default function ContactDetailClient({
                   padding: "0.85rem",
                   borderRadius: 12,
                   background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))",
-                  color: "#fcfcfe",
+                  color: "var(--crm-on-accent)",
                   fontWeight: 700,
                   border: "none",
                   cursor: "pointer",
@@ -579,16 +579,16 @@ export default function ContactDetailClient({
                   width: "100%",
                   padding: "0.85rem",
                   borderRadius: 12,
-                  background: "rgba(255,255,255,0.06)",
-                  color: "#fcfcfe",
+                  background: "rgb(var(--crm-overlay) / 0.06)",
+                  color: "var(--crm-text)",
                   fontWeight: 700,
-                  border: "1px solid rgba(177,178,180,0.12)",
+                  border: "1px solid rgb(var(--crm-line) / 0.12)",
                   cursor: "pointer",
                   fontSize: "0.85rem",
                   transition: "background 0.2s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "rgb(var(--crm-overlay) / 0.1)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "rgb(var(--crm-overlay) / 0.06)")}
               >
                 📋 Log Interaction
               </button>
@@ -598,9 +598,9 @@ export default function ContactDetailClient({
           {/* Deals Section */}
           <div
             style={{
-              background: "rgb(13 13 18 / 70%)",
+              background: "rgb(var(--crm-card-rgb) / 70%)",
               backdropFilter: "blur(20px)",
-              border: "1px solid rgba(177,178,180,0.08)",
+              border: "1px solid rgb(var(--crm-line) / 0.08)",
               borderRadius: 16,
               padding: "1.5rem",
             }}
@@ -609,7 +609,7 @@ export default function ContactDetailClient({
               style={{
                 fontSize: "0.85rem",
                 fontWeight: 700,
-                color: "#fcfcfe",
+                color: "var(--crm-text)",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
                 margin: "0 0 1rem",
@@ -618,7 +618,7 @@ export default function ContactDetailClient({
               Deals ({deals.length})
             </h3>
             {deals.length === 0 ? (
-              <p style={{ color: "#5d5e60", fontSize: "0.85rem" }}>No deals linked</p>
+              <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem" }}>No deals linked</p>
             ) : (
               deals.map((d: any) => {
                 const autoActivity = (activities || []).find((a: any) => a.deal_id === d.id && a.metadata && a.metadata.auto_created);
@@ -627,14 +627,14 @@ export default function ContactDetailClient({
                     key={d.id}
                     style={{
                       padding: "0.75rem 1rem",
-                      background: "rgba(255,255,255,0.03)",
+                      background: "rgb(var(--crm-overlay) / 0.03)",
                       borderRadius: 10,
-                      border: "1px solid rgba(177,178,180,0.06)",
+                      border: "1px solid rgb(var(--crm-line) / 0.06)",
                       marginBottom: 8,
                     }}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div style={{ fontSize: "0.85rem", color: "#fcfcfe", fontWeight: 600 }}>{d.title}</div>
+                      <div style={{ fontSize: "0.85rem", color: "var(--crm-text)", fontWeight: 600 }}>{d.title}</div>
                       {autoActivity && (
                         <UndoAutoDealButton deal={d} contactId={contact.id} showToast={showToast} />
                       )}
@@ -644,7 +644,7 @@ export default function ContactDetailClient({
                         display: "flex",
                         justifyContent: "space-between",
                         fontSize: "0.75rem",
-                        color: "#818286",
+                        color: "var(--crm-muted)",
                         marginTop: 4,
                       }}
                     >
@@ -661,9 +661,9 @@ export default function ContactDetailClient({
         {/* ======================== RIGHT COLUMN - TIMELINE ======================== */}
         <div
           style={{
-            background: "rgb(13 13 18 / 70%)",
+            background: "rgb(var(--crm-card-rgb) / 70%)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(177,178,180,0.08)",
+            border: "1px solid rgb(var(--crm-line) / 0.08)",
             borderRadius: 16,
             padding: "1.75rem",
             minHeight: 600,
@@ -681,7 +681,7 @@ export default function ContactDetailClient({
               style={{
                 fontSize: "1.1rem",
                 fontWeight: 700,
-                color: "#fcfcfe",
+                color: "var(--crm-text)",
                 margin: 0,
                 letterSpacing: "-0.01em",
               }}
@@ -716,12 +716,12 @@ export default function ContactDetailClient({
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "4rem 0",
-                color: "#5d5e60",
+                color: "var(--crm-faint)",
               }}
             >
               <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>📭</div>
               <p style={{ fontSize: "0.9rem" }}>No history found for this contact.</p>
-              <p style={{ fontSize: "0.8rem", color: "#818286", marginTop: 4 }}>
+              <p style={{ fontSize: "0.8rem", color: "var(--crm-muted)", marginTop: 4 }}>
                 Log your first interaction to start tracking.
               </p>
             </div>
@@ -734,7 +734,7 @@ export default function ContactDetailClient({
                   top: 0,
                   bottom: 0,
                   width: 2,
-                  background: "rgba(177,178,180,0.06)",
+                  background: "rgb(var(--crm-line) / 0.06)",
                   borderRadius: 999,
                 }}
               />
@@ -747,8 +747,8 @@ export default function ContactDetailClient({
 
                 // Determine icon and colors
                 let icon = "📌";
-                let color = "#818286";
-                let bg = "rgba(177,178,180,0.1)";
+                let color = "var(--crm-muted)";
+                let bg = "rgb(var(--crm-line) / 0.1)";
                 let label = "Activity";
 
                 if (isEmail) {
@@ -791,8 +791,8 @@ export default function ContactDetailClient({
                     label = "Status Changed";
                   } else {
                     icon = "📌";
-                    color = "#818286";
-                    bg = "rgba(177,178,180,0.1)";
+                    color = "var(--crm-muted)";
+                    bg = "rgb(var(--crm-line) / 0.1)";
                     label = item.type.replace(/_/g, " ");
                   }
                 }
@@ -825,7 +825,7 @@ export default function ContactDetailClient({
                           fontSize: "0.8rem",
                           color: color,
                           zIndex: 10,
-                          boxShadow: `0 0 0 4px #0d0d12`,
+                          boxShadow: `0 0 0 4px var(--crm-modal)`,
                         }}
                       >
                         {icon}
@@ -835,16 +835,16 @@ export default function ContactDetailClient({
                     <div
                       style={{
                         padding: "1.25rem",
-                        background: "rgba(255,255,255,0.02)",
+                        background: "rgb(var(--crm-overlay) / 0.02)",
                         borderRadius: 12,
-                        border: "1px solid rgba(177,178,180,0.06)",
+                        border: "1px solid rgb(var(--crm-line) / 0.06)",
                         transition: "background 0.2s",
                       }}
                       onMouseEnter={(e) =>
-                        (e.currentTarget.style.background = "rgba(255,255,255,0.04)")
+                        (e.currentTarget.style.background = "rgb(var(--crm-overlay) / 0.04)")
                       }
                       onMouseLeave={(e) =>
-                        (e.currentTarget.style.background = "rgba(255,255,255,0.02)")
+                        (e.currentTarget.style.background = "rgb(var(--crm-overlay) / 0.02)")
                       }
                     >
                       <div
@@ -866,7 +866,7 @@ export default function ContactDetailClient({
                         >
                           {label}
                         </div>
-                        <div style={{ fontSize: "0.7rem", color: "#5d5e60", fontWeight: 600 }}>
+                        <div style={{ fontSize: "0.7rem", color: "var(--crm-faint)", fontWeight: 600 }}>
                           {item._date.toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
@@ -880,7 +880,7 @@ export default function ContactDetailClient({
                         <div
                           style={{
                             fontSize: "0.72rem",
-                            color: "#5d5e60",
+                            color: "var(--crm-faint)",
                             fontWeight: 500,
                             marginBottom: 6,
                           }}
@@ -894,7 +894,7 @@ export default function ContactDetailClient({
                           <div
                             style={{
                               fontSize: "0.9rem",
-                              color: "#fcfcfe",
+                              color: "var(--crm-text)",
                               fontWeight: 600,
                               marginBottom: 6,
                             }}
@@ -904,7 +904,7 @@ export default function ContactDetailClient({
                           <div
                             style={{
                               fontSize: "0.85rem",
-                              color: "#b1b2b4",
+                              color: "var(--crm-text-2)",
                               lineHeight: 1.6,
                               display: "-webkit-box",
                               WebkitLineClamp: 3,
@@ -921,7 +921,7 @@ export default function ContactDetailClient({
                         <div
                           style={{
                             fontSize: "0.85rem",
-                            color: "#d1d5db",
+                            color: "var(--crm-text-2)",
                             lineHeight: 1.6,
                           }}
                         >
@@ -930,7 +930,7 @@ export default function ContactDetailClient({
                       )}
 
                       {isActivity && (
-                        <div style={{ fontSize: "0.85rem", color: "#d1d5db", lineHeight: 1.6 }}>
+                        <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)", lineHeight: 1.6 }}>
                           {item.content || item.type.replace(/_/g, " ")}
                           {item.metadata?.follow_up_date && (
                             <div
@@ -960,7 +960,7 @@ export default function ContactDetailClient({
                               style={{
                                 marginTop: 4,
                                 fontSize: "0.75rem",
-                                color: "#818286",
+                                color: "var(--crm-muted)",
                               }}
                             >
                               Outcome: {item.metadata.outcome}
@@ -970,12 +970,12 @@ export default function ContactDetailClient({
                       )}
 
                       {isStatusChange && (
-                        <div style={{ fontSize: "0.85rem", color: "#b1b2b4", lineHeight: 1.6 }}>
-                          <span style={{ color: "#5d5e60" }}>
+                        <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)", lineHeight: 1.6 }}>
+                          <span style={{ color: "var(--crm-faint)" }}>
                             {item.from_status || "?"}
                           </span>
-                          <span style={{ margin: "0 8px", color: "#5d5e60" }}>→</span>
-                          <span style={{ color: "#fcfcfe", fontWeight: 600 }}>
+                          <span style={{ margin: "0 8px", color: "var(--crm-faint)" }}>→</span>
+                          <span style={{ color: "var(--crm-text)", fontWeight: 600 }}>
                             {item.to_status}
                           </span>
                           {item.reason && (
@@ -983,7 +983,7 @@ export default function ContactDetailClient({
                               style={{
                                 marginTop: 6,
                                 fontSize: "0.8rem",
-                                color: "#818286",
+                                color: "var(--crm-muted)",
                                 fontStyle: "italic",
                               }}
                             >
@@ -1027,9 +1027,9 @@ export default function ContactDetailClient({
               position: "relative",
               width: "100%",
               maxWidth: 600,
-              background: "#0d0d12",
+              background: "var(--crm-modal)",
               borderRadius: 20,
-              border: "1px solid rgba(177,178,180,0.1)",
+              border: "1px solid rgb(var(--crm-line) / 0.1)",
               padding: "2rem",
               boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
               zIndex: 901,
@@ -1043,28 +1043,28 @@ export default function ContactDetailClient({
                 marginBottom: "1.5rem",
               }}
             >
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "#fcfcfe" }}>
+              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "var(--crm-text)" }}>
                 Email {contact.first_name}
               </h2>
               <button
                 onClick={() => setIsComposing(false)}
-                style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", fontSize: "1.2rem" }}
+                style={{ background: "none", border: "none", color: "var(--crm-faint)", cursor: "pointer", fontSize: "1.2rem" }}
               >
                 ✕
               </button>
             </div>
             <form onSubmit={handleSendEmail} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   From
                 </label>
                 <select
                   name="fromBox"
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
@@ -1072,19 +1072,19 @@ export default function ContactDetailClient({
                     fontSize: "0.85rem",
                   }}
                 >
-                  <option value="contact@stateai.in" style={{ background: "#0d0d12" }}>
+                  <option value="contact@stateai.in" style={{ background: "var(--crm-modal)" }}>
                     contact@stateai.in
                   </option>
-                  <option value="support@stateai.in" style={{ background: "#0d0d12" }}>
+                  <option value="support@stateai.in" style={{ background: "var(--crm-modal)" }}>
                     support@stateai.in
                   </option>
-                  <option value="info@stateai.in" style={{ background: "#0d0d12" }}>
+                  <option value="info@stateai.in" style={{ background: "var(--crm-modal)" }}>
                     info@stateai.in
                   </option>
                 </select>
               </div>
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Subject
                 </label>
                 <input
@@ -1093,9 +1093,9 @@ export default function ContactDetailClient({
                   placeholder="What is this about?"
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
@@ -1104,7 +1104,7 @@ export default function ContactDetailClient({
                 />
               </div>
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Message
                 </label>
                 <textarea
@@ -1114,9 +1114,9 @@ export default function ContactDetailClient({
                   placeholder="Write your email here..."
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
@@ -1134,8 +1134,8 @@ export default function ContactDetailClient({
                     padding: "0.75rem 1.5rem",
                     borderRadius: 10,
                     background: "transparent",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#818286",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-muted)",
                     cursor: "pointer",
                     fontWeight: 600,
                   }}
@@ -1150,7 +1150,7 @@ export default function ContactDetailClient({
                     borderRadius: 10,
                     background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))",
                     border: "none",
-                    color: "#fcfcfe",
+                    color: "var(--crm-on-accent)",
                     cursor: isPending ? "not-allowed" : "pointer",
                     fontWeight: 700,
                   }}
@@ -1189,9 +1189,9 @@ export default function ContactDetailClient({
               position: "relative",
               width: "100%",
               maxWidth: 560,
-              background: "#0d0d12",
+              background: "var(--crm-modal)",
               borderRadius: 20,
-              border: "1px solid rgba(177,178,180,0.1)",
+              border: "1px solid rgb(var(--crm-line) / 0.1)",
               padding: "2rem",
               boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
               zIndex: 901,
@@ -1205,12 +1205,12 @@ export default function ContactDetailClient({
                 marginBottom: "1.5rem",
               }}
             >
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "#fcfcfe" }}>
+              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "var(--crm-text)" }}>
                 📋 Log Interaction
               </h2>
               <button
                 onClick={() => setIsLoggingInteraction(false)}
-                style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", fontSize: "1.2rem" }}
+                style={{ background: "none", border: "none", color: "var(--crm-faint)", cursor: "pointer", fontSize: "1.2rem" }}
               >
                 ✕
               </button>
@@ -1218,7 +1218,7 @@ export default function ContactDetailClient({
             <form onSubmit={handleLogInteraction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               {/* Channel Selection */}
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Channel *
                 </label>
                 <div
@@ -1239,10 +1239,10 @@ export default function ContactDetailClient({
                         gap: 4,
                         padding: "0.6rem 0.3rem",
                         borderRadius: 10,
-                        border: "1px solid rgba(177,178,180,0.12)",
+                        border: "1px solid rgb(var(--crm-line) / 0.12)",
                         cursor: "pointer",
                         fontSize: "0.7rem",
-                        color: "#818286",
+                        color: "var(--crm-muted)",
                         fontWeight: 600,
                         textAlign: "center",
                         transition: "all 0.15s",
@@ -1262,7 +1262,7 @@ export default function ContactDetailClient({
                               .querySelectorAll("label[data-channel]")
                               .forEach((l) => {
                                 (l as HTMLElement).style.borderColor =
-                                  "rgba(177,178,180,0.12)";
+                                  "rgb(var(--crm-line) / 0.12)";
                                 (l as HTMLElement).style.background = "transparent";
                               });
                             parent.style.borderColor = "#818cf8";
@@ -1287,10 +1287,10 @@ export default function ContactDetailClient({
                       gap: 6,
                       padding: "0.4rem 0.8rem",
                       borderRadius: 8,
-                      border: "1px solid rgba(177,178,180,0.12)",
+                      border: "1px solid rgb(var(--crm-line) / 0.12)",
                       cursor: "pointer",
                       fontSize: "0.75rem",
-                      color: "#818286",
+                      color: "var(--crm-muted)",
                       fontWeight: 600,
                     }}
                   >
@@ -1307,7 +1307,7 @@ export default function ContactDetailClient({
 
               {/* Content */}
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Notes / Description *
                 </label>
                 <textarea
@@ -1317,9 +1317,9 @@ export default function ContactDetailClient({
                   placeholder="Describe the interaction..."
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
@@ -1332,16 +1332,16 @@ export default function ContactDetailClient({
 
               {/* Outcome */}
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Outcome (optional)
                 </label>
                 <select
                   name="outcome"
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
@@ -1349,21 +1349,21 @@ export default function ContactDetailClient({
                     fontSize: "0.85rem",
                   }}
                 >
-                  <option value="" style={{ background: "#0d0d12" }}>— Select outcome —</option>
-                  <option value="interested" style={{ background: "#0d0d12" }}>Interested</option>
-                  <option value="not_interested" style={{ background: "#0d0d12" }}>Not Interested</option>
-                  <option value="follow_up" style={{ background: "#0d0d12" }}>Needs Follow-up</option>
-                  <option value="meeting_booked" style={{ background: "#0d0d12" }}>Meeting Booked</option>
-                  <option value="demo_scheduled" style={{ background: "#0d0d12" }}>Demo Scheduled</option>
-                  <option value="no_response" style={{ background: "#0d0d12" }}>No Response</option>
-                  <option value="decision_maker" style={{ background: "#0d0d12" }}>Reached Decision Maker</option>
-                  <option value="other" style={{ background: "#0d0d12" }}>Other</option>
+                  <option value="" style={{ background: "var(--crm-modal)" }}>— Select outcome —</option>
+                  <option value="interested" style={{ background: "var(--crm-modal)" }}>Interested</option>
+                  <option value="not_interested" style={{ background: "var(--crm-modal)" }}>Not Interested</option>
+                  <option value="follow_up" style={{ background: "var(--crm-modal)" }}>Needs Follow-up</option>
+                  <option value="meeting_booked" style={{ background: "var(--crm-modal)" }}>Meeting Booked</option>
+                  <option value="demo_scheduled" style={{ background: "var(--crm-modal)" }}>Demo Scheduled</option>
+                  <option value="no_response" style={{ background: "var(--crm-modal)" }}>No Response</option>
+                  <option value="decision_maker" style={{ background: "var(--crm-modal)" }}>Reached Decision Maker</option>
+                  <option value="other" style={{ background: "var(--crm-modal)" }}>Other</option>
                 </select>
               </div>
 
               {/* Follow-up Date */}
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 6, fontWeight: 600 }}>
+                <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 6, fontWeight: 600 }}>
                   Follow-up Date (optional)
                 </label>
                 <input
@@ -1371,14 +1371,14 @@ export default function ContactDetailClient({
                   name="followUpDate"
                   style={{
                     width: "100%",
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-overlay) / 0.04)",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-text)",
                     padding: "0.75rem",
                     borderRadius: 10,
                     outline: "none",
                     fontSize: "0.85rem",
-                    colorScheme: "dark",
+                    colorScheme: "var(--crm-scheme)",
                   }}
                 />
               </div>
@@ -1391,8 +1391,8 @@ export default function ContactDetailClient({
                     padding: "0.75rem 1.5rem",
                     borderRadius: 10,
                     background: "transparent",
-                    border: "1px solid rgba(177,178,180,0.12)",
-                    color: "#818286",
+                    border: "1px solid rgb(var(--crm-line) / 0.12)",
+                    color: "var(--crm-muted)",
                     cursor: "pointer",
                     fontWeight: 600,
                   }}
@@ -1407,7 +1407,7 @@ export default function ContactDetailClient({
                     borderRadius: 10,
                     background: "linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85))",
                     border: "none",
-                    color: "#fcfcfe",
+                    color: "var(--crm-on-accent)",
                     cursor: isPending ? "not-allowed" : "pointer",
                     fontWeight: 700,
                   }}

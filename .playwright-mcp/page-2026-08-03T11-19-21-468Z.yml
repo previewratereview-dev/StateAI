@@ -1,0 +1,174 @@
+- generic [active] [ref=f25e1]:
+  - generic [ref=f25e2]:
+    - complementary [ref=f25e3]:
+      - generic [ref=f25e4]:
+        - generic [ref=f25e5]: State AI CRM
+        - generic [ref=f25e12]:
+          - button "Toggle theme" [ref=f25e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f25e20] [cursor=pointer]
+      - navigation [ref=f25e23]:
+        - link "Dashboard" [ref=f25e24] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f25e32] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f25e40] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f25e45] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f25e50] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f25e55] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f25e61] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f25e65] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f25e71] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f25e77] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f25e83] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f25e89]:
+        - generic [ref=f25e90]:
+          - generic [ref=f25e91]: R
+          - generic [ref=f25e92]:
+            - generic [ref=f25e93]: rayees
+            - generic [ref=f25e94]: admin
+        - button "Sign Out" [ref=f25e97] [cursor=pointer]
+    - main [ref=f25e101]:
+      - generic [ref=f25e103]:
+        - generic [ref=f25e104]:
+          - generic [ref=f25e105]:
+            - heading "Good afternoon, rayees 👋" [level=1] [ref=f25e106]
+            - paragraph [ref=f25e107]: Monday, August 3· Here's what's happening with your pipeline today.
+          - generic [ref=f25e108]:
+            - link "New Contact" [ref=f25e109] [cursor=pointer]:
+              - /url: /crm/contacts
+            - link "Reports" [ref=f25e111] [cursor=pointer]:
+              - /url: /crm/reports
+        - generic [ref=f25e113]:
+          - generic [ref=f25e114]:
+            - generic [ref=f25e125]: "21"
+            - generic [ref=f25e126]: Total Contacts
+            - generic [ref=f25e127]: 0 won contacts
+          - generic [ref=f25e128]:
+            - generic [ref=f25e136]: "3"
+            - generic [ref=f25e137]: Active Deals
+            - generic [ref=f25e138]: $20,000 pipeline
+          - generic [ref=f25e139]:
+            - generic [ref=f25e148]: "1"
+            - generic [ref=f25e149]: Open Tasks
+            - generic [ref=f25e150]: 1 overdue
+          - generic [ref=f25e151]:
+            - generic [ref=f25e160]: 0%
+            - generic [ref=f25e161]: Conversion Rate
+            - generic [ref=f25e162]: 0 won of 3 deals
+          - generic [ref=f25e163]:
+            - generic [ref=f25e171]: "0"
+            - generic [ref=f25e172]: Bookings (7d)
+            - generic [ref=f25e173]: 0 confirmed
+        - generic [ref=f25e174]:
+          - generic [ref=f25e175]:
+            - generic [ref=f25e176]:
+              - generic [ref=f25e177]:
+                - heading "Pipeline Health" [level=2] [ref=f25e178]
+                - generic [ref=f25e179]: $20,000
+              - generic [ref=f25e180]:
+                - generic [ref=f25e191]:
+                  - generic [ref=f25e192]: "3"
+                  - generic [ref=f25e193]: deals
+                - generic [ref=f25e194]:
+                  - generic [ref=f25e195]:
+                    - generic [ref=f25e197]: New
+                    - generic [ref=f25e199]: "0"
+                  - generic [ref=f25e200]:
+                    - generic [ref=f25e202]: Qualified
+                    - generic [ref=f25e205]: "1"
+                  - generic [ref=f25e206]:
+                    - generic [ref=f25e208]: Proposal
+                    - generic [ref=f25e211]: "1"
+                  - generic [ref=f25e212]:
+                    - generic [ref=f25e214]: Negotiation
+                    - generic [ref=f25e217]: "1"
+                  - generic [ref=f25e218]:
+                    - generic [ref=f25e220]: Won
+                    - generic [ref=f25e222]: "0"
+                  - generic [ref=f25e223]:
+                    - generic [ref=f25e225]: Lost
+                    - generic [ref=f25e227]: "0"
+            - generic [ref=f25e228]:
+              - generic [ref=f25e229]:
+                - heading "Upcoming Tasks" [level=2] [ref=f25e230]
+                - link "View all →" [ref=f25e231] [cursor=pointer]:
+                  - /url: /crm/tasks
+              - generic [ref=f25e232]: 2/3 done
+              - generic [ref=f25e236]: ⚠️ Jul 15
+          - generic [ref=f25e240]:
+            - heading "Recent Activity" [level=2] [ref=f25e241]
+            - generic [ref=f25e242]:
+              - generic [ref=f25e243]:
+                - generic [ref=f25e244]: Jul 28
+                - generic [ref=f25e246]:
+                  - generic [ref=f25e247]: 📝
+                  - generic [ref=f25e248]:
+                    - generic [ref=f25e249]: Had a call with Manpreet, he connected me with Rudra from the IT Team. Meeting scheduled for 29th July at 4 pm IST.
+                    - generic [ref=f25e250]: Saleesh samuel · 6d ago
+              - generic [ref=f25e251]:
+                - generic [ref=f25e252]: Jul 22
+                - generic [ref=f25e253]:
+                  - generic [ref=f25e254]:
+                    - generic [ref=f25e255]: 🔄
+                    - generic [ref=f25e256]:
+                      - generic [ref=f25e257]: "Status changed from \"new\" to \"contacted\": First interaction logged"
+                      - generic [ref=f25e258]: Muzamil Rashid · 12d ago
+                  - generic [ref=f25e259]:
+                    - generic [ref=f25e260]: 📞
+                    - generic [ref=f25e261]:
+                      - generic [ref=f25e262]: scheduled meeting tommarow around 2 pm
+                      - generic [ref=f25e263]: Muzamil Rashid · 12d ago
+              - generic [ref=f25e264]:
+                - generic [ref=f25e265]: Jul 20
+                - generic [ref=f25e266]:
+                  - generic [ref=f25e267]:
+                    - generic [ref=f25e268]: 💼
+                    - generic [ref=f25e269]:
+                      - generic [ref=f25e270]: Auto-created deal "Ashok Chawla — Opportunity" from contact status change
+                      - generic [ref=f25e271]: Saleesh samuel · 14d ago
+                  - generic [ref=f25e272]:
+                    - generic [ref=f25e273]: 🔄
+                    - generic [ref=f25e274]:
+                      - generic [ref=f25e275]: Status changed from "contacted" to "qualified"
+                      - generic [ref=f25e276]: Saleesh samuel · 14d ago
+              - generic [ref=f25e277]:
+                - generic [ref=f25e278]: Jul 15
+                - generic [ref=f25e279]:
+                  - generic [ref=f25e280]:
+                    - generic [ref=f25e281]: ✉️
+                    - generic [ref=f25e282]:
+                      - generic [ref=f25e283]: "Sent email: Thank You, Rajesh – Looking Forward to Our Discussion on 17th July at 3:00 PM IST"
+                      - generic [ref=f25e284]: Saleesh samuel · 19d ago
+                  - generic [ref=f25e285]:
+                    - generic [ref=f25e286]: 💼
+                    - generic [ref=f25e287]:
+                      - generic [ref=f25e288]: Auto-created deal "Pragya Chandra — Opportunity" from interaction outcome "demo_scheduled"
+                      - generic [ref=f25e289]: Saleesh samuel · 19d ago
+                  - generic [ref=f25e290]:
+                    - generic [ref=f25e291]: 📞
+                    - generic [ref=f25e292]:
+                      - generic [ref=f25e293]: Meeting rescheduled for 16th July 3:30 pm IST. He is currently traveling and hence the meeting had to be rescheduled.
+                      - generic [ref=f25e294]: Saleesh samuel · 19d ago
+              - generic [ref=f25e295]:
+                - generic [ref=f25e296]: Jul 1
+                - generic [ref=f25e297]:
+                  - generic [ref=f25e298]:
+                    - generic [ref=f25e299]: 💬
+                    - generic [ref=f25e300]:
+                      - generic [ref=f25e301]: message on whatsapp
+                      - generic [ref=f25e302]: rayees · 33d ago
+                  - generic [ref=f25e303]:
+                    - generic [ref=f25e304]: 🔄
+                    - generic [ref=f25e305]:
+                      - generic [ref=f25e306]: "Status changed from \"new\" to \"contacted\": First interaction logged"
+                      - generic [ref=f25e307]: rayees · 33d ago
+  - button "Open Next.js Dev Tools" [ref=f25e313] [cursor=pointer]

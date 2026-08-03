@@ -1,0 +1,72 @@
+/* ─────────────────────────────────────────────────────────────────────
+   CRM theme tokens — scoped to .crm-shell so the public site is untouched
+   ───────────────────────────────────────────────────────────────────── */
+
+.crm-shell {
+  --crm-bg: #08080c;
+  --crm-card-rgb: 13 13 18;
+  --crm-sidebar-rgb: 9 9 14;
+  --crm-line: 177 178 180;
+  --crm-overlay: 255 255 255;
+  --crm-text: #fcfcfe;
+  --crm-text-2: #b1b2b4;
+  --crm-muted: #818286;
+  --crm-faint: #5d5e60;
+  --crm-modal: #0d0d12;
+  --crm-popover: #1a1a23;
+  --crm-raised: #11121a;
+  --crm-on-accent: #fcfcfe;
+  --crm-scheme: dark;
+  --crm-bg-glow: radial-gradient(ellipse 60% 40% at 80% 10%, rgba(99,102,241,0.04), transparent 55%), radial-gradient(ellipse 50% 35% at 20% 90%, rgba(139,92,246,0.03), transparent 55%);
+  color-scheme: dark;
+}
+
+.crm-shell[data-theme="light"] {
+  --crm-bg: #eef1f7;
+  --crm-card-rgb: 255 255 255;
+  --crm-sidebar-rgb: 255 255 255;
+  --crm-line: 20 26 38;
+  --crm-overlay: 20 26 38;
+  --crm-text: #0f141b;
+  --crm-text-2: #3a4353;
+  --crm-muted: #5d6675;
+  --crm-faint: #8a92a0;
+  --crm-modal: #ffffff;
+  --crm-popover: #ffffff;
+  --crm-raised: #f3f5fa;
+  --crm-on-accent: #ffffff;
+  --crm-scheme: light;
+  --crm-bg-glow: radial-gradient(ellipse 60% 40% at 80% 10%, rgba(99,102,241,0.1), transparent 55%), radial-gradient(ellipse 50% 35% at 20% 90%, rgba(139,92,246,0.08), transparent 55%);
+  color-scheme: light;
+}
+
+/* Smooth theme cross-fade without affecting component-level hover transitions */
+.crm-shell,
+.crm-shell * {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Dashboard entrance */
+@keyframes crm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes crm-spark {
+  from {
+    stroke-dashoffset: 120;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}

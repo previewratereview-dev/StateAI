@@ -113,7 +113,7 @@ function StatCard({
         background: active
           ? `linear-gradient(135deg, ${color}18, ${color}08)`
           : "rgb(17 17 24 / 60%)",
-        border: `1px solid ${active ? color + "40" : "rgb(177 178 180 / 10%)"}`,
+        border: `1px solid ${active ? color + "40" : "rgb(var(--crm-line) / 10%)"}`,
         borderRadius: 16,
         padding: "1.25rem 1.5rem",
         display: "flex",
@@ -123,7 +123,7 @@ function StatCard({
         transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
         backdropFilter: "blur(20px)",
         boxShadow: active
-          ? `0 8px 32px ${color}18, inset 0 1px rgb(255 255 255 / 4%)`
+          ? `0 8px 32px ${color}18, inset 0 1px rgb(var(--crm-overlay) / 4%)`
           : "0 4px 16px rgb(0 0 0 / 25%)",
         width: "100%",
         textAlign: "left",
@@ -150,7 +150,7 @@ function StatCard({
           style={{
             fontSize: "1.75rem",
             fontWeight: 700,
-            color: active ? color : "#fcfcfe",
+            color: active ? color : "var(--crm-text)",
             lineHeight: 1,
             letterSpacing: "-0.02em",
           }}
@@ -160,7 +160,7 @@ function StatCard({
         <div
           style={{
             fontSize: "0.75rem",
-            color: "#818286",
+            color: "var(--crm-muted)",
             marginTop: 3,
             fontWeight: 500,
             letterSpacing: "0.04em",
@@ -234,7 +234,7 @@ function BookingCard({
     <div
       style={{
         background: "rgb(17 17 24 / 55%)",
-        border: `1px solid rgb(177 178 180 / 10%)`,
+        border: `1px solid rgb(var(--crm-line) / 10%)`,
         borderRadius: 16,
         overflow: "hidden",
         transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
@@ -287,7 +287,7 @@ function BookingCard({
             <span
               style={{
                 fontWeight: 600,
-                color: "#fcfcfe",
+                color: "var(--crm-text)",
                 fontSize: "0.95rem",
               }}
             >
@@ -297,9 +297,9 @@ function BookingCard({
               <span
                 style={{
                   fontSize: "0.75rem",
-                  color: "#5d5e60",
-                  background: "rgb(255 255 255 / 4%)",
-                  border: "1px solid rgb(177 178 180 / 8%)",
+                  color: "var(--crm-faint)",
+                  background: "rgb(var(--crm-overlay) / 4%)",
+                  border: "1px solid rgb(var(--crm-line) / 8%)",
                   padding: "1px 8px",
                   borderRadius: 999,
                 }}
@@ -318,17 +318,17 @@ function BookingCard({
               flexWrap: "wrap",
             }}
           >
-            <span style={{ fontSize: "0.78rem", color: "#818286" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--crm-muted)" }}>
               📧 {booking.email}
             </span>
-            <span style={{ fontSize: "0.78rem", color: "#818286" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--crm-muted)" }}>
               📅 {formatDate(booking.meeting_date)} · {booking.meeting_time}
             </span>
-            <span style={{ fontSize: "0.78rem", color: "#818286" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--crm-muted)" }}>
               ⏱{" "}
               {DURATION_LABELS[booking.duration] || `${booking.duration} min`}
             </span>
-            <span style={{ fontSize: "0.78rem", color: "#5d5e60" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--crm-faint)" }}>
               Submitted {formatCreatedAt(booking.created_at)}
             </span>
           </div>
@@ -340,7 +340,7 @@ function BookingCard({
           height="18"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#5d5e60"
+          stroke="var(--crm-faint)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -358,7 +358,7 @@ function BookingCard({
       {expanded && (
         <div
           style={{
-            borderTop: "1px solid rgb(177 178 180 / 8%)",
+            borderTop: "1px solid rgb(var(--crm-line) / 8%)",
             padding: "1.25rem 1.5rem",
             display: "flex",
             flexDirection: "column",
@@ -377,7 +377,7 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.7rem",
-                  color: "#5d5e60",
+                  color: "var(--crm-faint)",
                   textTransform: "uppercase",
                   letterSpacing: "0.06em",
                   fontWeight: 600,
@@ -389,9 +389,9 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.85rem",
-                  color: "#b1b2b4",
-                  background: "rgb(255 255 255 / 3%)",
-                  border: "1px solid rgb(177 178 180 / 8%)",
+                  color: "var(--crm-text-2)",
+                  background: "rgb(var(--crm-overlay) / 3%)",
+                  border: "1px solid rgb(var(--crm-line) / 8%)",
                   borderRadius: 8,
                   padding: "0.5rem 0.75rem",
                 }}
@@ -403,7 +403,7 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.7rem",
-                  color: "#5d5e60",
+                  color: "var(--crm-faint)",
                   textTransform: "uppercase",
                   letterSpacing: "0.06em",
                   fontWeight: 600,
@@ -415,10 +415,10 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.72rem",
-                  color: "#5d5e60",
+                  color: "var(--crm-faint)",
                   fontFamily: "monospace",
-                  background: "rgb(255 255 255 / 3%)",
-                  border: "1px solid rgb(177 178 180 / 8%)",
+                  background: "rgb(var(--crm-overlay) / 3%)",
+                  border: "1px solid rgb(var(--crm-line) / 8%)",
                   borderRadius: 8,
                   padding: "0.5rem 0.75rem",
                   wordBreak: "break-all",
@@ -434,7 +434,7 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.7rem",
-                  color: "#5d5e60",
+                  color: "var(--crm-faint)",
                   textTransform: "uppercase",
                   letterSpacing: "0.06em",
                   fontWeight: 600,
@@ -446,9 +446,9 @@ function BookingCard({
               <div
                 style={{
                   fontSize: "0.85rem",
-                  color: "#b1b2b4",
-                  background: "rgb(255 255 255 / 3%)",
-                  border: "1px solid rgb(177 178 180 / 8%)",
+                  color: "var(--crm-text-2)",
+                  background: "rgb(var(--crm-overlay) / 3%)",
+                  border: "1px solid rgb(var(--crm-line) / 8%)",
                   borderRadius: 8,
                   padding: "0.75rem",
                   lineHeight: 1.6,
@@ -464,7 +464,7 @@ function BookingCard({
             <div
               style={{
                 fontSize: "0.7rem",
-                color: "#5d5e60",
+                color: "var(--crm-faint)",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
                 fontWeight: 600,
@@ -490,9 +490,9 @@ function BookingCard({
                       fontSize: "0.72rem",
                       fontWeight: 600,
                       letterSpacing: "0.04em",
-                      border: `1px solid ${isActive ? c.color + "50" : "rgb(177 178 180 / 12%)"}`,
+                      border: `1px solid ${isActive ? c.color + "50" : "rgb(var(--crm-line) / 12%)"}`,
                       background: isActive ? c.bg : "transparent",
-                      color: isActive ? c.color : "#818286",
+                      color: isActive ? c.color : "var(--crm-muted)",
                       cursor: isActive ? "default" : "pointer",
                       transition: "all 0.2s ease",
                       textTransform: "uppercase",
@@ -510,7 +510,7 @@ function BookingCard({
             <div
               style={{
                 fontSize: "0.7rem",
-                color: "#5d5e60",
+                color: "var(--crm-faint)",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
                 fontWeight: 600,
@@ -530,11 +530,11 @@ function BookingCard({
               rows={3}
               style={{
                 width: "100%",
-                background: "rgb(255 255 255 / 3%)",
-                border: "1px solid rgb(177 178 180 / 10%)",
+                background: "rgb(var(--crm-overlay) / 3%)",
+                border: "1px solid rgb(var(--crm-line) / 10%)",
                 borderRadius: 10,
                 padding: "0.75rem",
-                color: "#fcfcfe",
+                color: "var(--crm-text)",
                 fontSize: "0.85rem",
                 lineHeight: 1.6,
                 resize: "vertical",
@@ -544,10 +544,10 @@ function BookingCard({
                 transition: "border-color 0.2s ease",
               }}
               onFocus={(e) =>
-                (e.target.style.borderColor = "rgb(177 178 180 / 25%)")
+                (e.target.style.borderColor = "rgb(var(--crm-line) / 25%)")
               }
               onBlur={(e) =>
-                (e.target.style.borderColor = "rgb(177 178 180 / 10%)")
+                (e.target.style.borderColor = "rgb(var(--crm-line) / 10%)")
               }
             />
             {notesDirty && (
@@ -565,9 +565,9 @@ function BookingCard({
                     borderRadius: 8,
                     fontSize: "0.78rem",
                     fontWeight: 600,
-                    background: "rgb(177 178 180 / 15%)",
-                    border: "1px solid rgb(177 178 180 / 20%)",
-                    color: "#fcfcfe",
+                    background: "rgb(var(--crm-line) / 15%)",
+                    border: "1px solid rgb(var(--crm-line) / 20%)",
+                    color: "var(--crm-text)",
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                   }}
@@ -581,7 +581,7 @@ function BookingCard({
           {/* Delete */}
           <div
             style={{
-              borderTop: "1px solid rgb(177 178 180 / 6%)",
+              borderTop: "1px solid rgb(var(--crm-line) / 6%)",
               paddingTop: "1rem",
               display: "flex",
               justifyContent: "flex-end",
@@ -622,7 +622,7 @@ function BookingCard({
               </button>
             ) : (
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: "0.78rem", color: "#818286" }}>
+                <span style={{ fontSize: "0.78rem", color: "var(--crm-muted)" }}>
                   Permanently delete this booking?
                 </span>
                 <button
@@ -632,8 +632,8 @@ function BookingCard({
                     borderRadius: 8,
                     fontSize: "0.75rem",
                     background: "transparent",
-                    border: "1px solid rgb(177 178 180 / 15%)",
-                    color: "#818286",
+                    border: "1px solid rgb(var(--crm-line) / 15%)",
+                    color: "var(--crm-muted)",
                     cursor: "pointer",
                   }}
                 >
@@ -774,7 +774,7 @@ export default function CRMDashboard({
     <div
       style={{
         minHeight: "100vh",
-        background: "#08080c",
+        background: "var(--crm-bg)",
         fontFamily: "var(--font-geist-sans), Arial, sans-serif",
         position: "relative",
       }}
@@ -787,8 +787,8 @@ export default function CRMDashboard({
           pointerEvents: "none",
           zIndex: 0,
           background: `
-            radial-gradient(ellipse 60% 40% at 10% 0%, rgb(177 178 180 / 5%), transparent 55%),
-            radial-gradient(ellipse 50% 35% at 90% 100%, rgb(177 178 180 / 4%), transparent 55%)
+            radial-gradient(ellipse 60% 40% at 10% 0%, rgb(var(--crm-line) / 5%), transparent 55%),
+            radial-gradient(ellipse 50% 35% at 90% 100%, rgb(var(--crm-line) / 4%), transparent 55%)
           `,
         }}
       />
@@ -828,18 +828,18 @@ export default function CRMDashboard({
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
-                  color: "#818286",
+                  color: "var(--crm-muted)",
                   textDecoration: "none",
                   fontSize: "0.8rem",
                   transition: "color 0.2s ease",
                 }}
                 onMouseEnter={(e) =>
                   ((e.currentTarget as HTMLAnchorElement).style.color =
-                    "#fcfcfe")
+                    "var(--crm-text)")
                 }
                 onMouseLeave={(e) =>
                   ((e.currentTarget as HTMLAnchorElement).style.color =
-                    "#818286")
+                    "var(--crm-muted)")
                 }
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -850,7 +850,7 @@ export default function CRMDashboard({
               style={{
                 fontSize: "clamp(1.6rem, 4vw, 2.2rem)",
                 fontWeight: 700,
-                color: "#fcfcfe",
+                color: "var(--crm-text)",
                 letterSpacing: "-0.03em",
                 margin: 0,
                 lineHeight: 1.2,
@@ -858,7 +858,7 @@ export default function CRMDashboard({
             >
               CRM Dashboard
             </h1>
-            <p style={{ color: "#5d5e60", margin: "6px 0 0", fontSize: "0.88rem" }}>
+            <p style={{ color: "var(--crm-faint)", margin: "6px 0 0", fontSize: "0.88rem" }}>
               Manage bookings, track status, and add internal notes.
             </p>
           </div>
@@ -878,8 +878,8 @@ export default function CRMDashboard({
               padding: "8px 18px",
               borderRadius: 10,
               background: "rgb(17 17 24 / 80%)",
-              border: "1px solid rgb(177 178 180 / 12%)",
-              color: "#b1b2b4",
+              border: "1px solid rgb(var(--crm-line) / 12%)",
+              color: "var(--crm-text-2)",
               fontSize: "0.82rem",
               fontWeight: 600,
               cursor: "pointer",
@@ -944,7 +944,7 @@ export default function CRMDashboard({
           <StatCard
             label="Total Bookings"
             value={stats.total}
-            color="#b1b2b4"
+            color="var(--crm-text-2)"
             active={statusFilter === "all"}
             onClick={() => setStatusFilter("all")}
             icon={
@@ -1005,7 +1005,7 @@ export default function CRMDashboard({
             height="16"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#5d5e60"
+            stroke="var(--crm-faint)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -1029,9 +1029,9 @@ export default function CRMDashboard({
               width: "100%",
               padding: "0.75rem 1rem 0.75rem 2.75rem",
               background: "rgb(17 17 24 / 60%)",
-              border: "1px solid rgb(177 178 180 / 10%)",
+              border: "1px solid rgb(var(--crm-line) / 10%)",
               borderRadius: 12,
-              color: "#fcfcfe",
+              color: "var(--crm-text)",
               fontSize: "0.9rem",
               outline: "none",
               backdropFilter: "blur(16px)",
@@ -1040,10 +1040,10 @@ export default function CRMDashboard({
               fontFamily: "inherit",
             }}
             onFocus={(e) =>
-              (e.target.style.borderColor = "rgb(177 178 180 / 25%)")
+              (e.target.style.borderColor = "rgb(var(--crm-line) / 25%)")
             }
             onBlur={(e) =>
-              (e.target.style.borderColor = "rgb(177 178 180 / 10%)")
+              (e.target.style.borderColor = "rgb(var(--crm-line) / 10%)")
             }
           />
           {search && (
@@ -1056,7 +1056,7 @@ export default function CRMDashboard({
                 transform: "translateY(-50%)",
                 background: "none",
                 border: "none",
-                color: "#5d5e60",
+                color: "var(--crm-faint)",
                 cursor: "pointer",
                 padding: 4,
                 display: "flex",
@@ -1071,7 +1071,7 @@ export default function CRMDashboard({
         <div
           style={{
             fontSize: "0.78rem",
-            color: "#5d5e60",
+            color: "var(--crm-faint)",
             marginBottom: "1rem",
           }}
         >
@@ -1094,14 +1094,14 @@ export default function CRMDashboard({
               textAlign: "center",
               padding: "5rem 2rem",
               background: "rgb(17 17 24 / 40%)",
-              border: "1px solid rgb(177 178 180 / 8%)",
+              border: "1px solid rgb(var(--crm-line) / 8%)",
               borderRadius: 20,
             }}
           >
             <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>
               {bookings.length === 0 ? "📭" : "🔍"}
             </div>
-            <p style={{ color: "#5d5e60", fontSize: "0.95rem", margin: 0 }}>
+            <p style={{ color: "var(--crm-faint)", fontSize: "0.95rem", margin: 0 }}>
               {bookings.length === 0
                 ? "No bookings yet. They'll appear here once people submit the contact form."
                 : "No bookings match your current filter."}

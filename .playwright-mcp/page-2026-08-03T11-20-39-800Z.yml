@@ -1,0 +1,360 @@
+- generic [active] [ref=f26e1]:
+  - generic [ref=f26e2]:
+    - complementary [ref=f26e3]:
+      - generic [ref=f26e4]:
+        - generic [ref=f26e5]: State AI CRM
+        - generic [ref=f26e12]:
+          - button "Toggle theme" [ref=f26e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f26e16] [cursor=pointer]
+      - navigation [ref=f26e19]:
+        - link "Dashboard" [ref=f26e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f26e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f26e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f26e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f26e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f26e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f26e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f26e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f26e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f26e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f26e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f26e85]:
+        - generic [ref=f26e86]:
+          - generic [ref=f26e87]: R
+          - generic [ref=f26e88]:
+            - generic [ref=f26e89]: rayees
+            - generic [ref=f26e90]: admin
+        - button "Sign Out" [ref=f26e93] [cursor=pointer]
+    - main [ref=f26e97]:
+      - generic [ref=f26e99]:
+        - generic [ref=f26e100]:
+          - generic [ref=f26e101]:
+            - heading "Contacts" [level=1] [ref=f26e102]
+            - paragraph [ref=f26e103]: 21 total contacts
+          - button "Add Contact" [ref=f26e104] [cursor=pointer]
+        - generic [ref=f26e106]:
+          - textbox "Search contacts…" [ref=f26e111]
+          - generic [ref=f26e112]:
+            - button "All (21)" [ref=f26e113] [cursor=pointer]
+            - button "New (1)" [ref=f26e114] [cursor=pointer]
+            - button "Contacted (16)" [ref=f26e115] [cursor=pointer]
+            - button "Qualified (3)" [ref=f26e116] [cursor=pointer]
+            - button "Proposal (1)" [ref=f26e117] [cursor=pointer]
+            - button "Negotiation (0)" [ref=f26e118] [cursor=pointer]
+            - button "Won (0)" [ref=f26e119] [cursor=pointer]
+            - button "Lost (0)" [ref=f26e120] [cursor=pointer]
+            - button "Churned (0)" [ref=f26e121] [cursor=pointer]
+        - generic [ref=f26e122]:
+          - generic [ref=f26e123]:
+            - generic [ref=f26e124]: Contact
+            - generic [ref=f26e125]: Company
+            - generic [ref=f26e126]: Status
+            - generic [ref=f26e127]: Source
+            - generic [ref=f26e128]: Created
+          - generic [ref=f26e130]:
+            - generic [ref=f26e131]:
+              - generic [ref=f26e132]: SS
+              - generic [ref=f26e133]:
+                - link "Sudhanshu Shridhar" [ref=f26e134] [cursor=pointer]:
+                  - /url: /crm/contacts/d8fe2d7f-28ca-4258-9713-1587342d6031
+                - generic [ref=f26e135]: sudhanshu.shridhar@sfmtravels.com
+            - generic [ref=f26e136]: SFM Tour & TravelsBusiness Owner
+            - generic [ref=f26e137]: Contacted
+            - generic [ref=f26e139]: Cold Call
+            - generic [ref=f26e140]: Jul 29, 2026
+            - generic [ref=f26e141]:
+              - button "Edit" [ref=f26e142] [cursor=pointer]
+              - button "Del" [ref=f26e143] [cursor=pointer]
+          - generic [ref=f26e144]:
+            - generic [ref=f26e145]:
+              - generic [ref=f26e146]: RM
+              - generic [ref=f26e147]:
+                - link "Ravi Mehta" [ref=f26e148] [cursor=pointer]:
+                  - /url: /crm/contacts/c7ed186b-e70c-42a4-a7f5-05b1c9c0abd0
+                - generic [ref=f26e149]: rahagirtravels@outlook.com
+            - generic [ref=f26e150]: Rahagir TravelsBusiness Owner
+            - generic [ref=f26e151]: Contacted
+            - generic [ref=f26e153]: Cold Call
+            - generic [ref=f26e154]: Jul 23, 2026
+            - generic [ref=f26e155]:
+              - button "Edit" [ref=f26e156] [cursor=pointer]
+              - button "Del" [ref=f26e157] [cursor=pointer]
+          - generic [ref=f26e158]:
+            - generic [ref=f26e159]:
+              - generic [ref=f26e160]: RS
+              - generic [ref=f26e161]:
+                - link "Rachit Sabharwal" [ref=f26e162] [cursor=pointer]:
+                  - /url: /crm/contacts/b3005227-e87c-4491-a961-6e6b808e69a9
+                - generic [ref=f26e163]: info@sabharwaltravels.com
+            - generic [ref=f26e164]: Sabharwal TravelsBusiness Owner
+            - generic [ref=f26e165]: Contacted
+            - generic [ref=f26e167]: Cold Call
+            - generic [ref=f26e168]: Jul 23, 2026
+            - generic [ref=f26e169]:
+              - button "Edit" [ref=f26e170] [cursor=pointer]
+              - button "Del" [ref=f26e171] [cursor=pointer]
+          - generic [ref=f26e172]:
+            - generic [ref=f26e173]:
+              - generic [ref=f26e174]: AH
+              - generic [ref=f26e175]:
+                - link "Al Qasim hajj, umarah, and ziyarat tour services" [ref=f26e176] [cursor=pointer]:
+                  - /url: /crm/contacts/01890a22-5d6e-4372-9c0a-b35fbccdc856
+                - generic [ref=f26e177]: muzamil@gmail.com
+            - generic [ref=f26e178]: tour and travelsowner
+            - generic [ref=f26e179]: Contacted
+            - generic [ref=f26e181]: Cold Call
+            - generic [ref=f26e182]: Jul 22, 2026
+            - generic [ref=f26e183]:
+              - button "Edit" [ref=f26e184] [cursor=pointer]
+              - button "Del" [ref=f26e185] [cursor=pointer]
+          - generic [ref=f26e186]:
+            - generic [ref=f26e187]:
+              - generic [ref=f26e188]: AT
+              - generic [ref=f26e189]:
+                - link "AL Maroof Tour and Travels" [ref=f26e190] [cursor=pointer]:
+                  - /url: /crm/contacts/9c1e3541-3c57-4a36-8f79-ada9a7f01fe7
+                - generic [ref=f26e191]: muzamil@gmail.com
+            - generic [ref=f26e192]: tour and travelsoffice manager 'as owner was not available
+            - generic [ref=f26e193]: New
+            - generic [ref=f26e195]: Cold Call
+            - generic [ref=f26e196]: Jul 21, 2026
+            - generic [ref=f26e197]:
+              - button "Edit" [ref=f26e198] [cursor=pointer]
+              - button "Del" [ref=f26e199] [cursor=pointer]
+          - generic [ref=f26e200]:
+            - generic [ref=f26e201]:
+              - generic [ref=f26e202]: K.
+              - generic [ref=f26e203]:
+                - link "Karan ." [ref=f26e204] [cursor=pointer]:
+                  - /url: /crm/contacts/f355ac68-a488-47c6-b6f3-3dcd7b221803
+                - generic [ref=f26e205]: info@monatours.in
+            - generic [ref=f26e206]: Mona Tour & TravelsBusiness Manager
+            - generic [ref=f26e207]: Contacted
+            - generic [ref=f26e209]: Cold Call
+            - generic [ref=f26e210]: Jul 20, 2026
+            - generic [ref=f26e211]:
+              - button "Edit" [ref=f26e212] [cursor=pointer]
+              - button "Del" [ref=f26e213] [cursor=pointer]
+          - generic [ref=f26e214]:
+            - generic [ref=f26e215]:
+              - generic [ref=f26e216]: AS
+              - generic [ref=f26e217]:
+                - link "Akash Shukla" [ref=f26e218] [cursor=pointer]:
+                  - /url: /crm/contacts/7706d05e-0747-4490-8116-1bc1901822a6
+                - generic [ref=f26e219]: shuklatravels@gmail.com
+            - generic [ref=f26e220]: Shukla tour and TravelBusiness Owner
+            - generic [ref=f26e221]: Contacted
+            - generic [ref=f26e223]: Cold Call
+            - generic [ref=f26e224]: Jul 20, 2026
+            - generic [ref=f26e225]:
+              - button "Edit" [ref=f26e226] [cursor=pointer]
+              - button "Del" [ref=f26e227] [cursor=pointer]
+          - generic [ref=f26e228]:
+            - generic [ref=f26e229]:
+              - generic [ref=f26e230]: MS
+              - generic [ref=f26e231]:
+                - link "Manpreet Singh" [ref=f26e232] [cursor=pointer]:
+                  - /url: /crm/contacts/63ead35b-ce54-47cd-af67-4fe99565fa5b
+                - generic [ref=f26e233]: shaenshatravel@gmail.com
+            - generic [ref=f26e234]: Shaensha Travel & Tour Pvt. Ltd.Owner
+            - generic [ref=f26e235]: Qualified
+            - generic [ref=f26e237]: Cold Call
+            - generic [ref=f26e238]: Jul 20, 2026
+            - generic [ref=f26e239]:
+              - button "Edit" [ref=f26e240] [cursor=pointer]
+              - button "Del" [ref=f26e241] [cursor=pointer]
+          - generic [ref=f26e242]:
+            - generic [ref=f26e243]:
+              - generic [ref=f26e244]: AC
+              - generic [ref=f26e245]:
+                - link "Ashok Chawla" [ref=f26e246] [cursor=pointer]:
+                  - /url: /crm/contacts/1523900f-bc5e-49b8-9e5e-5b29f61c0bb1
+                - generic [ref=f26e247]: md@travelmaxholiday.com
+            - generic [ref=f26e248]: Travel Max Holiday Pvt. Ltd.Business Owner
+            - generic [ref=f26e249]: Qualified
+            - generic [ref=f26e251]: Cold Call
+            - generic [ref=f26e252]: Jul 20, 2026
+            - generic [ref=f26e253]:
+              - button "Edit" [ref=f26e254] [cursor=pointer]
+              - button "Del" [ref=f26e255] [cursor=pointer]
+          - generic [ref=f26e256]:
+            - generic [ref=f26e257]:
+              - generic [ref=f26e258]: MS
+              - generic [ref=f26e259]:
+                - link "Mohit Saini" [ref=f26e260] [cursor=pointer]:
+                  - /url: /crm/contacts/293c2748-c8a5-4b47-bc00-a84699d33455
+                - generic [ref=f26e261]: info@vacationsol.com
+            - generic [ref=f26e262]: VacationSol Travel IndiaBusiness Owner
+            - generic [ref=f26e263]: Contacted
+            - generic [ref=f26e265]: Cold Call
+            - generic [ref=f26e266]: Jul 15, 2026
+            - generic [ref=f26e267]:
+              - button "Edit" [ref=f26e268] [cursor=pointer]
+              - button "Del" [ref=f26e269] [cursor=pointer]
+          - generic [ref=f26e270]:
+            - generic [ref=f26e271]:
+              - generic [ref=f26e272]: RK
+              - generic [ref=f26e273]:
+                - link "Rajesh Kapoor" [ref=f26e274] [cursor=pointer]:
+                  - /url: /crm/contacts/bab233af-190d-4a4a-b126-1f0c91bb5cab
+                - generic [ref=f26e275]: kapoorrajesh274@gmail.com
+            - generic [ref=f26e276]: Vadika Tour & TravelDirector
+            - generic [ref=f26e277]: Contacted
+            - generic [ref=f26e279]: Cold Call
+            - generic [ref=f26e280]: Jul 14, 2026
+            - generic [ref=f26e281]:
+              - button "Edit" [ref=f26e282] [cursor=pointer]
+              - button "Del" [ref=f26e283] [cursor=pointer]
+          - generic [ref=f26e284]:
+            - generic [ref=f26e285]:
+              - generic [ref=f26e286]: G.
+              - generic [ref=f26e287]:
+                - link "Gurvinder ." [ref=f26e288] [cursor=pointer]:
+                  - /url: /crm/contacts/f2ca1584-d227-42ad-86ed-ae6541a88695
+                - generic [ref=f26e289]: givcservices@gmail.com
+            - generic [ref=f26e290]: Global ServicesOwner
+            - generic [ref=f26e291]: Contacted
+            - generic [ref=f26e293]: Cold Call
+            - generic [ref=f26e294]: Jul 14, 2026
+            - generic [ref=f26e295]:
+              - button "Edit" [ref=f26e296] [cursor=pointer]
+              - button "Del" [ref=f26e297] [cursor=pointer]
+          - generic [ref=f26e298]:
+            - generic [ref=f26e299]:
+              - generic [ref=f26e300]: PC
+              - generic [ref=f26e301]:
+                - link "Pragya Chandra" [ref=f26e302] [cursor=pointer]:
+                  - /url: /crm/contacts/cee0071e-d02c-47a4-b64a-c2c97d4ea528
+                - generic [ref=f26e303]: pragya@crocustravel.com
+            - generic [ref=f26e304]: Crocus Travel Pvt LtdCEO
+            - generic [ref=f26e305]: Proposal
+            - generic [ref=f26e307]: Cold Call
+            - generic [ref=f26e308]: Jul 10, 2026
+            - generic [ref=f26e309]:
+              - button "Edit" [ref=f26e310] [cursor=pointer]
+              - button "Del" [ref=f26e311] [cursor=pointer]
+          - generic [ref=f26e312]:
+            - generic [ref=f26e313]:
+              - generic [ref=f26e314]: S.
+              - generic [ref=f26e315]:
+                - link "Santosh ." [ref=f26e316] [cursor=pointer]:
+                  - /url: /crm/contacts/54473595-31d1-4d1b-b320-afc3ab53bd6a
+                - generic [ref=f26e317]: hello@travelogyindia.com
+            - generic [ref=f26e318]: Palace on Wheels Luxury Train TourDirector
+            - generic [ref=f26e319]: Contacted
+            - generic [ref=f26e321]: Cold Call
+            - generic [ref=f26e322]: Jul 10, 2026
+            - generic [ref=f26e323]:
+              - button "Edit" [ref=f26e324] [cursor=pointer]
+              - button "Del" [ref=f26e325] [cursor=pointer]
+          - generic [ref=f26e326]:
+            - generic [ref=f26e327]:
+              - generic [ref=f26e328]: S.
+              - generic [ref=f26e329]:
+                - link "Sunil ." [ref=f26e330] [cursor=pointer]:
+                  - /url: /crm/contacts/86290771-2978-43e4-bc0f-a1affd0851e3
+                - generic [ref=f26e331]: sunil@visitafair.com
+            - generic [ref=f26e332]: Visit A FairDirector
+            - generic [ref=f26e333]: Qualified
+            - generic [ref=f26e335]: Cold Call
+            - generic [ref=f26e336]: Jul 10, 2026
+            - generic [ref=f26e337]:
+              - button "Edit" [ref=f26e338] [cursor=pointer]
+              - button "Del" [ref=f26e339] [cursor=pointer]
+          - generic [ref=f26e340]:
+            - generic [ref=f26e341]:
+              - generic [ref=f26e342]: M.
+              - generic [ref=f26e343]:
+                - link "Mukesh ." [ref=f26e344] [cursor=pointer]:
+                  - /url: /crm/contacts/d2b13dcf-bf57-434d-b761-7e5df9d67e0a
+                - generic [ref=f26e345]: dreamindias@gmail.com
+            - generic [ref=f26e346]: Dream India TourOwner
+            - generic [ref=f26e347]: Contacted
+            - generic [ref=f26e349]: Cold Call
+            - generic [ref=f26e350]: Jul 10, 2026
+            - generic [ref=f26e351]:
+              - button "Edit" [ref=f26e352] [cursor=pointer]
+              - button "Del" [ref=f26e353] [cursor=pointer]
+          - generic [ref=f26e354]:
+            - generic [ref=f26e355]:
+              - generic [ref=f26e356]: HI
+              - generic [ref=f26e357]:
+                - link "haniya ice and meadows" [ref=f26e358] [cursor=pointer]:
+                  - /url: /crm/contacts/8ed8e0a2-2eea-4bd0-a7b4-03a53e6b50a8
+                - generic [ref=f26e359]: haniyaice@aol.com
+            - generic [ref=f26e360]: tour and travels owner
+            - generic [ref=f26e361]: Contacted
+            - generic [ref=f26e363]: Referral
+            - generic [ref=f26e364]: Jul 1, 2026
+            - generic [ref=f26e365]:
+              - button "Edit" [ref=f26e366] [cursor=pointer]
+              - button "Del" [ref=f26e367] [cursor=pointer]
+          - generic [ref=f26e368]:
+            - generic [ref=f26e369]:
+              - generic [ref=f26e370]: ST
+              - generic [ref=f26e371]:
+                - link "Sadaqat Tours travels" [ref=f26e372] [cursor=pointer]:
+                  - /url: /crm/contacts/72cc0fdb-cb28-4f67-a9e0-a01f7a64b037
+                - generic [ref=f26e373]: saprar003@gmail.com
+            - generic [ref=f26e374]: —
+            - generic [ref=f26e375]: Contacted
+            - generic [ref=f26e377]: Cold Call
+            - generic [ref=f26e378]: Jun 18, 2026
+            - generic [ref=f26e379]:
+              - button "Edit" [ref=f26e380] [cursor=pointer]
+              - button "Del" [ref=f26e381] [cursor=pointer]
+          - generic [ref=f26e382]:
+            - generic [ref=f26e383]:
+              - generic [ref=f26e384]: MT
+              - generic [ref=f26e385]:
+                - link "Mir Travels tour" [ref=f26e386] [cursor=pointer]:
+                  - /url: /crm/contacts/849c8eb9-a311-4e45-b6d9-e95bb9f6f2b3
+                - generic [ref=f26e387]: saprar003@gmail.com
+            - generic [ref=f26e388]: —
+            - generic [ref=f26e389]: Contacted
+            - generic [ref=f26e391]: Other
+            - generic [ref=f26e392]: Jun 18, 2026
+            - generic [ref=f26e393]:
+              - button "Edit" [ref=f26e394] [cursor=pointer]
+              - button "Del" [ref=f26e395] [cursor=pointer]
+          - generic [ref=f26e396]:
+            - generic [ref=f26e397]:
+              - generic [ref=f26e398]: AT
+              - generic [ref=f26e399]:
+                - link "Al bareeq tourtravel" [ref=f26e400] [cursor=pointer]:
+                  - /url: /crm/contacts/3a93e50b-b087-40fc-b46c-18b1b7b32435
+                - generic [ref=f26e401]: basitshafi003@gmail.com
+            - generic [ref=f26e402]: —
+            - generic [ref=f26e403]: Contacted
+            - generic [ref=f26e405]: Cold Call
+            - generic [ref=f26e406]: Jun 18, 2026
+            - generic [ref=f26e407]:
+              - button "Edit" [ref=f26e408] [cursor=pointer]
+              - button "Del" [ref=f26e409] [cursor=pointer]
+          - generic [ref=f26e410]:
+            - generic [ref=f26e411]:
+              - generic [ref=f26e412]: A
+              - generic [ref=f26e413]:
+                - link "AsFaJa Dairy solutions" [ref=f26e414] [cursor=pointer]:
+                  - /url: /crm/contacts/e19bffa9-ce66-405b-aa38-7ef1e5294f37
+                - generic [ref=f26e415]: NA@gmail.com
+            - generic [ref=f26e416]: Dairy farmOWNER ASFAJA DAIRY SOLUTION
+            - generic [ref=f26e417]: Contacted
+            - generic [ref=f26e419]: Other
+            - generic [ref=f26e420]: Jun 15, 2026
+            - generic [ref=f26e421]:
+              - button "Edit" [ref=f26e422] [cursor=pointer]
+              - button "Del" [ref=f26e423] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f26e429] [cursor=pointer]
+  - alert [ref=f26e433]

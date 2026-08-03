@@ -1,0 +1,75 @@
+- generic [active] [ref=f36e1]:
+  - generic [ref=f36e2]:
+    - complementary [ref=f36e3]:
+      - generic [ref=f36e4]:
+        - generic [ref=f36e5]: State AI CRM
+        - generic [ref=f36e12]:
+          - button "Toggle theme" [ref=f36e13] [cursor=pointer]
+          - button "Collapse sidebar" [ref=f36e16] [cursor=pointer]
+      - navigation [ref=f36e19]:
+        - link "Dashboard" [ref=f36e20] [cursor=pointer]:
+          - /url: /crm/dashboard
+        - link "Contacts" [ref=f36e28] [cursor=pointer]:
+          - /url: /crm/contacts
+        - link "Pipeline" [ref=f36e36] [cursor=pointer]:
+          - /url: /crm/leads
+        - link "Deals" [ref=f36e41] [cursor=pointer]:
+          - /url: /crm/deals
+        - link "Bookings" [ref=f36e46] [cursor=pointer]:
+          - /url: /crm/bookings
+        - link "Tasks" [ref=f36e51] [cursor=pointer]:
+          - /url: /crm/tasks
+        - link "Reports" [ref=f36e57] [cursor=pointer]:
+          - /url: /crm/reports
+        - link "Mailbox" [ref=f36e61] [cursor=pointer]:
+          - /url: /crm/mailbox
+        - link "Jobs" [ref=f36e67] [cursor=pointer]:
+          - /url: /crm/jobs
+        - link "Applications" [ref=f36e73] [cursor=pointer]:
+          - /url: /crm/applications
+        - link "Settings" [ref=f36e79] [cursor=pointer]:
+          - /url: /crm/settings
+      - generic [ref=f36e85]:
+        - generic [ref=f36e86]:
+          - generic [ref=f36e87]: R
+          - generic [ref=f36e88]:
+            - generic [ref=f36e89]: rayees
+            - generic [ref=f36e90]: admin
+        - button "Sign Out" [ref=f36e93] [cursor=pointer]
+    - main [ref=f36e97]:
+      - generic [ref=f36e100]:
+        - generic [ref=f36e101]:
+          - generic [ref=f36e102]:
+            - link "Back to site" [ref=f36e104] [cursor=pointer]:
+              - /url: /
+            - heading "CRM Dashboard" [level=1] [ref=f36e107]
+            - paragraph [ref=f36e108]: Manage bookings, track status, and add internal notes.
+          - button "Refresh" [ref=f36e109] [cursor=pointer]
+        - generic [ref=f36e113]:
+          - button "0 Total Bookings" [ref=f36e114] [cursor=pointer]:
+            - generic [ref=f36e118]:
+              - generic [ref=f36e119]: "0"
+              - generic [ref=f36e120]: Total Bookings
+          - button "0 Pending" [ref=f36e121] [cursor=pointer]:
+            - generic [ref=f36e126]:
+              - generic [ref=f36e127]: "0"
+              - generic [ref=f36e128]: Pending
+          - button "0 Confirmed" [ref=f36e129] [cursor=pointer]:
+            - generic [ref=f36e134]:
+              - generic [ref=f36e135]: "0"
+              - generic [ref=f36e136]: Confirmed
+          - button "0 Completed" [ref=f36e137] [cursor=pointer]:
+            - generic [ref=f36e141]:
+              - generic [ref=f36e142]: "0"
+              - generic [ref=f36e143]: Completed
+          - button "0 Cancelled" [ref=f36e144] [cursor=pointer]:
+            - generic [ref=f36e150]:
+              - generic [ref=f36e151]: "0"
+              - generic [ref=f36e152]: Cancelled
+        - textbox "Search by name, email, company, or purpose…" [ref=f36e154]
+        - generic [ref=f36e155]: No bookings found
+        - generic [ref=f36e156]:
+          - generic [ref=f36e157]: 📭
+          - paragraph [ref=f36e158]: No bookings yet. They'll appear here once people submit the contact form.
+  - button "Open Next.js Dev Tools" [ref=f36e164] [cursor=pointer]
+  - alert [ref=f36e168]

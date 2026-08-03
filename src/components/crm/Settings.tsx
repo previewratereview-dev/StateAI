@@ -140,7 +140,7 @@ export default function SettingsClient({
     cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s",
     background: active ? "rgba(99,102,241,0.12)" : "transparent",
     border: active ? "1px solid rgba(99,102,241,0.25)" : "1px solid transparent",
-    color: active ? "#818cf8" : "#5d5e60",
+    color: active ? "#818cf8" : "var(--crm-faint)",
   });
 
   return (
@@ -148,8 +148,8 @@ export default function SettingsClient({
       {toast && <div style={{ position: "fixed", top: 20, right: 20, zIndex: 200, background: toast.type === "success" ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)", border: `1px solid ${toast.type === "success" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`, color: toast.type === "success" ? "#10b981" : "#ef4444", padding: "0.75rem 1.25rem", borderRadius: 12, fontSize: "0.85rem", fontWeight: 600, backdropFilter: "blur(20px)" }}>{toast.msg}</div>}
 
       <div style={{ marginBottom: "1.75rem" }}>
-        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "#fcfcfe", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
-        <p style={{ color: "#5d5e60", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
+        <h1 style={{ fontSize: isMobile ? "1.25rem" : "1.5rem", fontWeight: 700, color: "var(--crm-text)", margin: 0, letterSpacing: "-0.03em" }}>Settings</h1>
+        <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem", marginTop: 4 }}>Manage your CRM workspace</p>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: "1.5rem" }}>
@@ -159,15 +159,15 @@ export default function SettingsClient({
       </div>
 
       {tab === "general" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, padding: isMobile ? "1.25rem" : "1.75rem" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: "0 0 1.5rem" }}>Your Profile</h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(177,178,180,0.08)", marginBottom: "1.5rem" }}>
+        <div style={{ background: "rgb(var(--crm-card-rgb) / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgb(var(--crm-line) / 0.08)", borderRadius: 16, padding: isMobile ? "1.25rem" : "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--crm-text)", margin: "0 0 1.5rem" }}>Your Profile</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.25rem", background: "rgb(var(--crm-overlay) / 0.03)", borderRadius: 12, border: "1px solid rgb(var(--crm-line) / 0.08)", marginBottom: "1.5rem" }}>
             <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", fontSize: "1.1rem", fontWeight: 800, color: "#818cf8", flexShrink: 0 }}>
               {getInitials(currentUser.full_name)}
             </div>
             <div>
-              <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe" }}>{currentUser.full_name || "—"}</div>
-              <div style={{ fontSize: "0.82rem", color: "#818286", marginTop: 2 }}>{currentUser.email}</div>
+              <div style={{ fontSize: "1rem", fontWeight: 700, color: "var(--crm-text)" }}>{currentUser.full_name || "—"}</div>
+              <div style={{ fontSize: "0.82rem", color: "var(--crm-muted)", marginTop: 2 }}>{currentUser.email}</div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: currentUser.role === "admin" ? "#f59e0b" : "#10b981", background: currentUser.role === "admin" ? "rgba(245,158,11,0.1)" : "rgba(16,185,129,0.1)", padding: "2px 8px", borderRadius: 999, marginTop: 6, border: `1px solid ${currentUser.role === "admin" ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)"}` }}>
                 {currentUser.role}
               </div>
@@ -177,11 +177,11 @@ export default function SettingsClient({
       )}
 
       {tab === "team" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ background: "rgb(var(--crm-card-rgb) / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgb(var(--crm-line) / 0.08)", borderRadius: 16, overflow: "hidden" }}>
+          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Team Members</h2>
-              <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>{profileList.length} members · Manage roles below</p>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>Team Members</h2>
+              <p style={{ fontSize: "0.78rem", color: "var(--crm-faint)", margin: "4px 0 0" }}>{profileList.length} members · Manage roles below</p>
             </div>
             <button onClick={() => setAddingMember(true)} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(16,185,129,0.15)", color: "#10b981", fontWeight: 600, border: "1px solid rgba(16,185,129,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
               + Add Team Member
@@ -190,35 +190,35 @@ export default function SettingsClient({
 
           {/* Add Team Member Modal */}
           {addingMember && (
-            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(16,185,129,0.03)" }}>
-              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>Add New Sales Team Member</h3>
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgba(16,185,129,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "var(--crm-text)" }}>Add New Sales Team Member</h3>
               <form onSubmit={handleCreateMember} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Full Name *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 4 }}>Full Name *</label>
                     <input
                       value={newMemberName}
                       onChange={(e) => handleNameChange(e.target.value)}
                       required
                       placeholder="e.g. Muzamil Khan"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text)", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Login Email *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 4 }}>Login Email *</label>
                     <input
                       type="email"
                       value={newMemberEmail}
                       onChange={(e) => setNewMemberEmail(e.target.value)}
                       required
                       placeholder="muzamil@company.com"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text)", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Initial Password *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 4 }}>Initial Password *</label>
                     <input
                       type="password"
                       value={newMemberPassword}
@@ -226,11 +226,11 @@ export default function SettingsClient({
                       required
                       minLength={6}
                       placeholder="Min 6 characters"
-                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", padding: "0.5rem", borderRadius: 6, background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text)", fontSize: "0.85rem", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Assigned Mailbox *</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 4 }}>Assigned Mailbox *</label>
                     <input
                       value={newMemberMailbox}
                       onChange={(e) => { setNewMemberMailbox(e.target.value); setMailboxTouched(true); }}
@@ -241,36 +241,36 @@ export default function SettingsClient({
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: 10, marginTop: "0.25rem" }}>
-                  <button type="submit" disabled={isPending || !newMemberName.trim() || !newMemberMailbox.trim()} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#10b981", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer", opacity: isPending ? 0.6 : 1 }}>
+                  <button type="submit" disabled={isPending || !newMemberName.trim() || !newMemberMailbox.trim()} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#10b981", border: "none", color: "var(--crm-on-accent)", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer", opacity: isPending ? 0.6 : 1 }}>
                     {isPending ? "Creating..." : "Create User"}
                   </button>
-                  <button type="button" onClick={() => { setAddingMember(false); setNewMemberName(""); setNewMemberEmail(""); setNewMemberPassword(""); setNewMemberMailbox(""); setMailboxTouched(false); }} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                  <button type="button" onClick={() => { setAddingMember(false); setNewMemberName(""); setNewMemberEmail(""); setNewMemberPassword(""); setNewMemberMailbox(""); setMailboxTouched(false); }} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-muted)", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
                 </div>
               </form>
             </div>
           )}
 
           {!isMobile && (
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-              {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgb(var(--crm-overlay) / 0.02)" }}>
+              {["Member", "Current Role", "Change Role"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
             </div>
           )}
 
           {profileList.map(p => {
             const isCurrentUser = p.id === currentUser.id;
             return isMobile ? (
-              <div key={p.id} style={{ padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)" }}>
-                <div style={{ fontWeight: 600, color: "#fcfcfe" }}>{p.full_name}</div>
-                <div style={{ fontSize: "0.75rem", color: "#818286" }}>{p.role}</div>
+              <div key={p.id} style={{ padding: "1rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)" }}>
+                <div style={{ fontWeight: 600, color: "var(--crm-text)" }}>{p.full_name}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--crm-muted)" }}>{p.role}</div>
               </div>
             ) : (
-              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
+              <div key={p.id} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.15))", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, color: "#818cf8" }}>
                     {getInitials(p.full_name)}
                   </div>
                   <div>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fcfcfe" }}>
+                    <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--crm-text)" }}>
                       {p.full_name || "Unnamed User"}
                       {isCurrentUser && <span style={{ fontSize: "0.65rem", background: "rgba(99,102,241,0.15)", color: "#818cf8", padding: "1px 7px", borderRadius: 999, marginLeft: 8, fontWeight: 700 }}>You</span>}
                     </div>
@@ -291,9 +291,9 @@ export default function SettingsClient({
                     value={p.role} 
                     onChange={(e) => handleRoleChange(p.id, e.target.value)}
                     disabled={isPending}
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", padding: "4px 8px", borderRadius: 6, fontSize: "0.8rem", outline: "none", cursor: "pointer" }}
+                    style={{ background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text)", padding: "4px 8px", borderRadius: 6, fontSize: "0.8rem", outline: "none", cursor: "pointer" }}
                   >
-                    {roleList.map(r => <option key={r.id} value={r.name} style={{ background: "#0d0d12" }}>{r.name}</option>)}
+                    {roleList.map(r => <option key={r.id} value={r.name} style={{ background: "var(--crm-modal)" }}>{r.name}</option>)}
                   </select>
                 </div>
               </div>
@@ -303,11 +303,11 @@ export default function SettingsClient({
       )}
 
       {tab === "roles" && (
-        <div style={{ background: "rgb(13 13 18 / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgba(177,178,180,0.08)", borderRadius: 16, overflow: "hidden" }}>
-          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ background: "rgb(var(--crm-card-rgb) / 70%)", backdropFilter: "blur(20px)", border: "1px solid rgb(var(--crm-line) / 0.08)", borderRadius: 16, overflow: "hidden" }}>
+          <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>Roles & Permissions</h2>
-              <p style={{ fontSize: "0.78rem", color: "#5d5e60", margin: "4px 0 0" }}>Create and manage custom roles</p>
+              <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>Roles & Permissions</h2>
+              <p style={{ fontSize: "0.78rem", color: "var(--crm-faint)", margin: "4px 0 0" }}>Create and manage custom roles</p>
             </div>
             <button onClick={() => setEditingRole({ id: "new", name: "", permissions: {} })} style={{ padding: "0.5rem 1rem", borderRadius: 8, background: "rgba(99,102,241,0.15)", color: "#818cf8", fontWeight: 600, border: "1px solid rgba(99,102,241,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>
               + New Role
@@ -315,19 +315,19 @@ export default function SettingsClient({
           </div>
 
           {editingRole && (
-            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(99,102,241,0.03)" }}>
-              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "#fcfcfe" }}>{editingRole.id === "new" ? "Create New Role" : "Edit Role"}</h3>
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgba(99,102,241,0.03)" }}>
+              <h3 style={{ margin: "0 0 1rem", fontSize: "0.9rem", color: "var(--crm-text)" }}>{editingRole.id === "new" ? "Create New Role" : "Edit Role"}</h3>
               <form onSubmit={handleSaveRole} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 4 }}>Role Name</label>
-                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: "100%", maxWidth: 250, padding: "0.5rem", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(177,178,180,0.12)", color: "#fcfcfe", fontSize: "0.85rem", outline: "none" }} />
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 4 }}>Role Name</label>
+                  <input name="name" defaultValue={editingRole.name} required readOnly={editingRole.name === 'admin'} style={{ width: "100%", maxWidth: 250, padding: "0.5rem", borderRadius: 6, background: "rgb(var(--crm-overlay) / 0.04)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text)", fontSize: "0.85rem", outline: "none" }} />
                   {editingRole.name === 'admin' && <span style={{ marginLeft: 10, fontSize: "0.7rem", color: "#ef4444" }}>Admin name cannot be changed</span>}
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", color: "#818286", marginBottom: 8 }}>Permissions</label>
+                  <label style={{ display: "block", fontSize: "0.75rem", color: "var(--crm-muted)", marginBottom: 8 }}>Permissions</label>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {["can_manage_roles", "can_manage_deals", "can_manage_contacts", "can_access_mailbox"].map(perm => (
-                      <label key={perm} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.85rem", color: "#d1d5db" }}>
+                      <label key={perm} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.85rem", color: "var(--crm-text-2)" }}>
                         <input type="checkbox" name={perm} defaultChecked={editingRole.permissions?.[perm]} style={{ accentColor: "#6366f1" }} />
                         {perm.split('_').join(' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </label>
@@ -335,22 +335,22 @@ export default function SettingsClient({
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: 10, marginTop: "0.5rem" }}>
-                  <button type="submit" disabled={isPending} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#6366f1", border: "none", color: "#fff", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer" }}>Save</button>
-                  <button type="button" onClick={() => setEditingRole(null)} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgba(177,178,180,0.12)", color: "#818286", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                  <button type="submit" disabled={isPending} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "#6366f1", border: "none", color: "var(--crm-on-accent)", fontWeight: 600, cursor: isPending ? "not-allowed" : "pointer" }}>Save</button>
+                  <button type="button" onClick={() => setEditingRole(null)} style={{ padding: "0.5rem 1.25rem", borderRadius: 6, background: "transparent", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-muted)", fontWeight: 600, cursor: "pointer" }}>Cancel</button>
                 </div>
               </form>
             </div>
           )}
 
           {!isMobile && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.06)", background: "rgba(255,255,255,0.02)" }}>
-              {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "0.75rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.06)", background: "rgb(var(--crm-overlay) / 0.02)" }}>
+              {["Role Name", "Permissions", "Actions"].map(h => <div key={h} style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>)}
             </div>
           )}
 
           {roleList.map(r => (
-            <div key={r.id} style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(177,178,180,0.04)", alignItems: "center" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe", marginBottom: isMobile ? "0.5rem" : 0 }}>{r.name}</div>
+            <div key={r.id} style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1rem", padding: "1rem 1.5rem", borderBottom: "1px solid rgb(var(--crm-line) / 0.04)", alignItems: "center" }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--crm-text)", marginBottom: isMobile ? "0.5rem" : 0 }}>{r.name}</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {Object.entries(r.permissions).map(([k, v]) => v ? (
                   <span key={k} style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(99,102,241,0.1)", color: "#818cf8", borderRadius: 4, border: "1px solid rgba(99,102,241,0.2)" }}>
@@ -359,7 +359,7 @@ export default function SettingsClient({
                 ) : null)}
               </div>
               <div style={{ display: "flex", gap: 8, marginTop: isMobile ? "0.75rem" : 0 }}>
-                <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(177,178,180,0.12)", color: "#d1d5db", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
+                <button onClick={() => setEditingRole(r)} style={{ padding: "4px 10px", borderRadius: 6, background: "rgb(var(--crm-overlay) / 0.05)", border: "1px solid rgb(var(--crm-line) / 0.12)", color: "var(--crm-text-2)", fontSize: "0.75rem", cursor: "pointer" }}>Edit</button>
                 {r.name !== "admin" && r.name !== "sales" && (
                   <button onClick={() => handleDeleteRole(r.id)} disabled={isPending} style={{ padding: "4px 10px", borderRadius: 6, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444", fontSize: "0.75rem", cursor: "pointer" }}>Delete</button>
                 )}

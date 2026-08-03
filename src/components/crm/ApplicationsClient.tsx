@@ -52,19 +52,19 @@ export default function ApplicationsClient({
   const cellStyle: React.CSSProperties = {
     padding: "10px 14px",
     fontSize: "0.84rem",
-    color: "#a1a3a6",
-    borderBottom: "1px solid rgba(177,178,180,0.06)",
+    color: "var(--crm-text-2)",
+    borderBottom: "1px solid rgb(var(--crm-line) / 0.06)",
     verticalAlign: "middle",
   };
 
   const headerStyle: React.CSSProperties = {
     ...cellStyle,
-    color: "#5d5e60",
+    color: "var(--crm-faint)",
     fontWeight: 600,
     fontSize: "0.75rem",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
-    borderBottom: "1px solid rgba(177,178,180,0.1)",
+    borderBottom: "1px solid rgb(var(--crm-line) / 0.1)",
   };
 
   return (
@@ -72,25 +72,25 @@ export default function ApplicationsClient({
       {/* List */}
       <div>
         <div style={{ marginBottom: 24 }}>
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
+          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>
             Applications
           </h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", margin: "4px 0 0" }}>
+          <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem", margin: "4px 0 0" }}>
             {applications.length} total
           </p>
         </div>
 
         {applications.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "4rem 2rem", background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(177,178,180,0.08)" }}>
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#5d5e60" strokeWidth="1.5" style={{ marginBottom: 16 }}>
+          <div style={{ textAlign: "center", padding: "4rem 2rem", background: "rgb(var(--crm-overlay) / 0.02)", borderRadius: 16, border: "1px solid rgb(var(--crm-line) / 0.08)" }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--crm-faint)" strokeWidth="1.5" style={{ marginBottom: 16 }}>
               <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
               <path d="M6 12v5c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-5" />
             </svg>
-            <h3 style={{ color: "#fcfcfe", fontSize: "1.1rem", fontWeight: 600, marginBottom: 8 }}>No applications yet</h3>
-            <p style={{ color: "#5d5e60", fontSize: "0.9rem" }}>Applications will appear here once candidates start applying.</p>
+            <h3 style={{ color: "var(--crm-text)", fontSize: "1.1rem", fontWeight: 600, marginBottom: 8 }}>No applications yet</h3>
+            <p style={{ color: "var(--crm-faint)", fontSize: "0.9rem" }}>Applications will appear here once candidates start applying.</p>
           </div>
         ) : (
-          <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 14, border: "1px solid rgba(177,178,180,0.08)", overflow: "hidden" }}>
+          <div style={{ background: "rgb(var(--crm-overlay) / 0.02)", borderRadius: 14, border: "1px solid rgb(var(--crm-line) / 0.08)", overflow: "hidden" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr>
@@ -118,7 +118,7 @@ export default function ApplicationsClient({
                       }}
                       onMouseEnter={(e) => {
                         if (selectedApp?.id !== app.id)
-                          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                          (e.currentTarget as HTMLElement).style.background = "rgb(var(--crm-overlay) / 0.03)";
                       }}
                       onMouseLeave={(e) => {
                         if (selectedApp?.id !== app.id)
@@ -126,12 +126,12 @@ export default function ApplicationsClient({
                       }}
                     >
                       <td style={cellStyle}>
-                        <span style={{ color: "#fcfcfe", fontWeight: 600, fontSize: "0.88rem" }}>
+                        <span style={{ color: "var(--crm-text)", fontWeight: 600, fontSize: "0.88rem" }}>
                           {app.first_name} {app.last_name}
                         </span>
                       </td>
                       <td style={cellStyle}>
-                        <span style={{ color: "#818286", fontSize: "0.82rem" }}>
+                        <span style={{ color: "var(--crm-muted)", fontSize: "0.82rem" }}>
                           {app.jobs?.title || "—"}
                         </span>
                       </td>
@@ -157,9 +157,9 @@ export default function ApplicationsClient({
       {selectedApp && (
         <div
           style={{
-            background: "rgba(255,255,255,0.02)",
+            background: "rgb(var(--crm-overlay) / 0.02)",
             borderRadius: 14,
-            border: "1px solid rgba(177,178,180,0.08)",
+            border: "1px solid rgb(var(--crm-line) / 0.08)",
             padding: "1.5rem",
             maxHeight: "calc(100vh - 120px)",
             overflowY: "auto",
@@ -168,12 +168,12 @@ export default function ApplicationsClient({
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>
               {selectedApp.first_name} {selectedApp.last_name}
             </h2>
             <button
               onClick={() => setSelectedApp(null)}
-              style={{ background: "none", border: "none", color: "#5d5e60", cursor: "pointer", padding: 4 }}
+              style={{ background: "none", border: "none", color: "var(--crm-faint)", cursor: "pointer", padding: 4 }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -183,7 +183,7 @@ export default function ApplicationsClient({
 
           {/* Status */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Status</label>
+            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Status</label>
             <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
               {statuses.map((s) => {
                 const ss = getStatusStyle(s);
@@ -196,8 +196,8 @@ export default function ApplicationsClient({
                       borderRadius: 999,
                       fontSize: "0.72rem",
                       fontWeight: 600,
-                      background: selectedApp.status === s ? ss.bg : "rgba(177,178,180,0.06)",
-                      color: selectedApp.status === s ? ss.color : "#5d5e60",
+                      background: selectedApp.status === s ? ss.bg : "rgb(var(--crm-line) / 0.06)",
+                      color: selectedApp.status === s ? ss.color : "var(--crm-faint)",
                       border: selectedApp.status === s ? `1px solid ${ss.color}20` : "1px solid transparent",
                       cursor: "pointer",
                       fontFamily: "inherit",
@@ -213,18 +213,18 @@ export default function ApplicationsClient({
 
           {/* Contact Info */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Contact</label>
-            <div style={{ fontSize: "0.85rem", color: "#a1a3a6", lineHeight: 1.8 }}>
-              <div><strong style={{ color: "#818286" }}>Email:</strong> {selectedApp.email}</div>
-              {selectedApp.phone && <div><strong style={{ color: "#818286" }}>Phone:</strong> {selectedApp.phone}</div>}
+            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Contact</label>
+            <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)", lineHeight: 1.8 }}>
+              <div><strong style={{ color: "var(--crm-muted)" }}>Email:</strong> {selectedApp.email}</div>
+              {selectedApp.phone && <div><strong style={{ color: "var(--crm-muted)" }}>Phone:</strong> {selectedApp.phone}</div>}
               {selectedApp.linkedin_url && (
-                <div><strong style={{ color: "#818286" }}>LinkedIn:</strong> <a href={selectedApp.linkedin_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>View Profile</a></div>
+                <div><strong style={{ color: "var(--crm-muted)" }}>LinkedIn:</strong> <a href={selectedApp.linkedin_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>View Profile</a></div>
               )}
               {selectedApp.portfolio_url && (
-                <div><strong style={{ color: "#818286" }}>Portfolio:</strong> <a href={selectedApp.portfolio_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>View</a></div>
+                <div><strong style={{ color: "var(--crm-muted)" }}>Portfolio:</strong> <a href={selectedApp.portfolio_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>View</a></div>
               )}
               {selectedApp.website_url && (
-                <div><strong style={{ color: "#818286" }}>Website:</strong> <a href={selectedApp.website_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>Visit</a></div>
+                <div><strong style={{ color: "var(--crm-muted)" }}>Website:</strong> <a href={selectedApp.website_url} target="_blank" rel="noopener noreferrer" style={{ color: "#818cf8" }}>Visit</a></div>
               )}
               {selectedApp.resume_url && (
                 <div
@@ -249,8 +249,8 @@ export default function ApplicationsClient({
                       <polyline points="10 9 9 9 8 9" />
                     </svg>
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#fcfcfe" }}>Resume</div>
-                      <div style={{ fontSize: "0.72rem", color: "#5d5e60", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--crm-text)" }}>Resume</div>
+                      <div style={{ fontSize: "0.72rem", color: "var(--crm-faint)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {selectedApp.resume_url.split("/").pop() || "resume"}
                       </div>
                     </div>
@@ -294,19 +294,19 @@ export default function ApplicationsClient({
 
           {/* Job Info */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Applied For</label>
-            <div style={{ fontSize: "0.85rem", color: "#a1a3a6" }}>
+            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Applied For</label>
+            <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)" }}>
               <Link href={`/careers/${selectedApp.jobs?.slug}`} target="_blank" style={{ color: "#818cf8", textDecoration: "none" }}>
                 {selectedApp.jobs?.title}
               </Link>
-              <div style={{ color: "#5d5e60", fontSize: "0.78rem" }}>{selectedApp.jobs?.department} • {selectedApp.jobs?.type}</div>
+              <div style={{ color: "var(--crm-faint)", fontSize: "0.78rem" }}>{selectedApp.jobs?.department} • {selectedApp.jobs?.type}</div>
             </div>
           </div>
 
           {/* Extra Details */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Details</label>
-            <div style={{ fontSize: "0.85rem", color: "#a1a3a6", lineHeight: 1.8 }}>
+            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Details</label>
+            <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)", lineHeight: 1.8 }}>
               {selectedApp.currently_employed && <div>✅ Currently employed</div>}
               {selectedApp.start_date && <div>Start: {selectedApp.start_date}</div>}
               {selectedApp.expected_salary != null && (
@@ -319,14 +319,14 @@ export default function ApplicationsClient({
           {/* Cover Letter */}
           {selectedApp.cover_letter && (
             <div style={{ marginBottom: 16 }}>
-              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Cover Letter</label>
-              <div style={{ fontSize: "0.85rem", color: "#a1a3a6", lineHeight: 1.7, whiteSpace: "pre-wrap", background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: 12 }}>{selectedApp.cover_letter}</div>
+              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Cover Letter</label>
+              <div style={{ fontSize: "0.85rem", color: "var(--crm-text-2)", lineHeight: 1.7, whiteSpace: "pre-wrap", background: "rgb(var(--crm-overlay) / 0.03)", borderRadius: 10, padding: 12 }}>{selectedApp.cover_letter}</div>
             </div>
           )}
 
           {/* Admin Notes */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#5d5e60", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Admin Notes</label>
+            <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--crm-faint)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Admin Notes</label>
             <textarea
               value={adminNotes}
               onChange={(e) => setAdminNotes(e.target.value)}
@@ -336,9 +336,9 @@ export default function ApplicationsClient({
                 minHeight: 80,
                 padding: "10px 12px",
                 borderRadius: 10,
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(177,178,180,0.12)",
-                color: "#fcfcfe",
+                background: "rgb(var(--crm-overlay) / 0.04)",
+                border: "1px solid rgb(var(--crm-line) / 0.12)",
+                color: "var(--crm-text)",
                 fontSize: "0.85rem",
                 fontFamily: "inherit",
                 outline: "none",

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
 import type { UserProfile } from "@/lib/auth";
 import { useIsMobile } from "@/lib/useIsMobile";
+import type { CRMTheme } from "./CRMShell";
 
 const NAV_ITEMS = [
   {
@@ -143,7 +144,15 @@ function getInitials(name: string | null | undefined) {
   return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 }
 
-export default function CRMSidebar({ profile }: { profile: UserProfile }) {
+export default function CRMSidebar({
+  profile,
+  theme,
+  onToggleTheme,
+}: {
+  profile: UserProfile;
+  theme: CRMTheme;
+  onToggleTheme: () => void;
+}) {
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
@@ -181,9 +190,9 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
         position: isMobile ? "fixed" : "sticky",
         top: 0,
         left: 0,
-        background: "rgb(9 9 14 / 95%)",
+        background: "rgb(var(--crm-sidebar-rgb) / 95%)",
         backdropFilter: "blur(24px)",
-        borderRight: "1px solid rgb(177 178 180 / 8%)",
+        borderRight: "1px solid rgb(var(--crm-line) / 8%)",
         display: "flex",
         flexDirection: "column",
         transition: isMobile ? "none" : "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
@@ -196,7 +205,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
       <div
         style={{
           padding: showLabels ? "1.25rem 1rem" : "1.25rem 0",
-          borderBottom: "1px solid rgb(177 178 180 / 6%)",
+          borderBottom: "1px solid rgb(var(--crm-line) / 6%)",
           display: "flex",
           alignItems: "center",
           justifyContent: showLabels ? "space-between" : "center",
@@ -224,43 +233,33 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                 <path d="M2 12l10 5 10-5" stroke="#818cf8" strokeWidth="1.5" strokeLinejoin="round" />
               </svg>
             </div>
-            <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fcfcfe", letterSpacing: "-0.01em" }}>
+            <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--crm-text)", letterSpacing: "-0.01em" }}>
               State AI CRM
             </span>
           </div>
         )}
-        {isMobile ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            flexShrink: 0,
+            ...(showLabels
+              ? {}
+              : { flexDirection: "column" as const, alignItems: "center" }),
+          }}
+        >
           <button
-            onClick={() => setMobileOpen(false)}
+            onClick={onToggleTheme}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label="Toggle theme"
             style={{
               width: 28,
               height: 28,
               borderRadius: 7,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(177,178,180,0.1)",
-              color: "#5d5e60",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        ) : (
-          <button
-            onClick={() => setCollapsed((c) => !c)}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 7,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(177,178,180,0.1)",
-              color: "#5d5e60",
+              background: "rgb(var(--crm-overlay) / 0.04)",
+              border: "1px solid rgb(var(--crm-line) / 0.1)",
+              color: "var(--crm-muted)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -268,14 +267,73 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               flexShrink: 0,
               transition: "all 0.2s",
             }}
-            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              style={{ transform: collapsed ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            {theme === "dark" ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
           </button>
-        )}
+          {isMobile ? (
+            <button
+              onClick={() => setMobileOpen(false)}
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: 7,
+                background: "rgb(var(--crm-overlay) / 0.04)",
+                border: "1px solid rgb(var(--crm-line) / 0.1)",
+                color: "var(--crm-faint)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          ) : (
+            <button
+              onClick={() => setCollapsed((c) => !c)}
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: 7,
+                background: "rgb(var(--crm-overlay) / 0.04)",
+                border: "1px solid rgb(var(--crm-line) / 0.1)",
+                color: "var(--crm-faint)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+                transition: "all 0.2s",
+              }}
+              title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ transform: collapsed ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Nav */}
@@ -294,7 +352,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
                 padding: showLabels ? "0.6rem 0.75rem" : "0.6rem",
                 borderRadius: 10,
                 marginBottom: 2,
-                color: isActive ? "#818cf8" : "#818286",
+                color: isActive ? "#818cf8" : "var(--crm-muted)",
                 background: isActive ? "rgba(99,102,241,0.12)" : "transparent",
                 border: isActive ? "1px solid rgba(99,102,241,0.2)" : "1px solid transparent",
                 textDecoration: "none",
@@ -318,7 +376,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
       <div
         style={{
           padding: "0.75rem 0.5rem",
-          borderTop: "1px solid rgb(177 178 180 / 6%)",
+          borderTop: "1px solid rgb(var(--crm-line) / 6%)",
         }}
       >
         {showLabels && (
@@ -329,8 +387,8 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               gap: 10,
               padding: "0.6rem 0.75rem",
               borderRadius: 10,
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(177,178,180,0.08)",
+              background: "rgb(var(--crm-overlay) / 0.03)",
+              border: "1px solid rgb(var(--crm-line) / 0.08)",
               marginBottom: 6,
             }}
           >
@@ -353,7 +411,7 @@ export default function CRMSidebar({ profile }: { profile: UserProfile }) {
               {getInitials(profile.full_name || profile.email)}
             </div>
             <div style={{ minWidth: 0, flex: 1 }}>
-              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#fcfcfe", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--crm-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {profile.full_name || profile.email?.split("@")[0]}
               </div>
               <div

@@ -14,7 +14,7 @@ function getStatusStyle(status: string) {
     case "draft":
       return { bg: "rgba(245,158,11,0.12)", color: "#f59e0b" };
     default:
-      return { bg: "rgba(177,178,180,0.1)", color: "#818286" };
+      return { bg: "rgb(var(--crm-line) / 0.1)", color: "var(--crm-muted)" };
   }
 }
 
@@ -27,7 +27,7 @@ function getTypeColor(type: string) {
     freelance: "#a855f7",
     commission: "#ef4444",
   };
-  return colors[type] || "#818286";
+  return colors[type] || "var(--crm-muted)";
 }
 
 export default function JobsClient({
@@ -79,19 +79,19 @@ export default function JobsClient({
   const cellStyle: React.CSSProperties = {
     padding: "12px 16px",
     fontSize: "0.84rem",
-    color: "#a1a3a6",
-    borderBottom: "1px solid rgba(177,178,180,0.06)",
+    color: "var(--crm-text-2)",
+    borderBottom: "1px solid rgb(var(--crm-line) / 0.06)",
     verticalAlign: "middle",
   };
 
   const headerStyle: React.CSSProperties = {
     ...cellStyle,
-    color: "#5d5e60",
+    color: "var(--crm-faint)",
     fontWeight: 600,
     fontSize: "0.75rem",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
-    borderBottom: "1px solid rgba(177,178,180,0.1)",
+    borderBottom: "1px solid rgb(var(--crm-line) / 0.1)",
   };
 
   return (
@@ -106,10 +106,10 @@ export default function JobsClient({
         }}
       >
         <div>
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fcfcfe", margin: 0 }}>
+          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--crm-text)", margin: 0 }}>
             Job Listings
           </h1>
-          <p style={{ color: "#5d5e60", fontSize: "0.85rem", margin: "4px 0 0" }}>
+          <p style={{ color: "var(--crm-faint)", fontSize: "0.85rem", margin: "4px 0 0" }}>
             {jobs.length} job{jobs.length !== 1 ? "s" : ""} total
           </p>
         </div>
@@ -165,20 +165,20 @@ export default function JobsClient({
           style={{
             textAlign: "center",
             padding: "4rem 2rem",
-            background: "rgba(255,255,255,0.02)",
+            background: "rgb(var(--crm-overlay) / 0.02)",
             borderRadius: 16,
-            border: "1px solid rgba(177,178,180,0.08)",
+            border: "1px solid rgb(var(--crm-line) / 0.08)",
           }}
         >
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#5d5e60" strokeWidth="1.5" style={{ marginBottom: 16 }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--crm-faint)" strokeWidth="1.5" style={{ marginBottom: 16 }}>
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
             <polyline points="14 2 14 8 20 8" />
             <line x1="16" y1="13" x2="8" y2="13" />
             <line x1="16" y1="17" x2="8" y2="17" />
             <polyline points="10 9 9 9 8 9" />
           </svg>
-          <h3 style={{ color: "#fcfcfe", fontSize: "1.1rem", fontWeight: 600, marginBottom: 8 }}>No jobs yet</h3>
-          <p style={{ color: "#5d5e60", fontSize: "0.9rem", marginBottom: 20 }}>
+          <h3 style={{ color: "var(--crm-text)", fontSize: "1.1rem", fontWeight: 600, marginBottom: 8 }}>No jobs yet</h3>
+          <p style={{ color: "var(--crm-faint)", fontSize: "0.9rem", marginBottom: 20 }}>
             Create your first job listing to start attracting candidates.
           </p>
           <Link
@@ -207,9 +207,9 @@ export default function JobsClient({
       ) : (
         <div
           style={{
-            background: "rgba(255,255,255,0.02)",
+            background: "rgb(var(--crm-overlay) / 0.02)",
             borderRadius: 14,
-            border: "1px solid rgba(177,178,180,0.08)",
+            border: "1px solid rgb(var(--crm-line) / 0.08)",
             overflow: "hidden",
           }}
         >
@@ -236,7 +236,7 @@ export default function JobsClient({
                         href={`/careers/${job.slug}`}
                         target="_blank"
                         style={{
-                          color: "#fcfcfe",
+                          color: "var(--crm-text)",
                           fontWeight: 600,
                           textDecoration: "none",
                           fontSize: "0.88rem",
@@ -245,7 +245,7 @@ export default function JobsClient({
                           (e.currentTarget as HTMLElement).style.color = "#818cf8";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = "#fcfcfe";
+                          (e.currentTarget as HTMLElement).style.color = "var(--crm-text)";
                         }}
                       >
                         {job.title}
@@ -294,8 +294,8 @@ export default function JobsClient({
                           borderRadius: 999,
                           fontSize: "0.72rem",
                           fontWeight: 600,
-                          background: job.featured ? "rgba(245,158,11,0.12)" : "rgba(177,178,180,0.08)",
-                          color: job.featured ? "#f59e0b" : "#5d5e60",
+                          background: job.featured ? "rgba(245,158,11,0.12)" : "rgb(var(--crm-line) / 0.08)",
+                          color: job.featured ? "#f59e0b" : "var(--crm-faint)",
                           border: "none",
                           cursor: "pointer",
                           fontFamily: "inherit",
